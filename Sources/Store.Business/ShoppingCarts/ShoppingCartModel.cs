@@ -6,6 +6,8 @@ namespace Store.Business.ShoppingCarts;
 public record ShoppingCartModel
 {
     public IReadOnlyList<CartLineModel> Lines { get; init; } = [];
+
+    public Price TotalPrice => Lines.Sum(line => line.TotalPrice);
 }
 
 public record CartLineModel

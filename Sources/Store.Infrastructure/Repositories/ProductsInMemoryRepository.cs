@@ -16,7 +16,7 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
         },
         new Product
         {
-            Id = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
+            Id = "dc552437-0b7d-455a-afa0-e4949142a4ad",
             Name = "Orange",
             Price = Price.Euro(1.99)
         }
