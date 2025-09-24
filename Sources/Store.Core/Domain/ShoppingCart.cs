@@ -3,7 +3,7 @@ using Store.Core.Domain;
 
 public sealed class ShoppingCart : BaseEntity
 {
-    public List<CartLine> Lines { get; init; } = [];
+    public List<ShoppingCartLine> Lines { get; init; } = [];
 
     public void AddLine(string productId, int quantity)
     {
@@ -13,7 +13,7 @@ public sealed class ShoppingCart : BaseEntity
         var cartLine = Lines.FirstOrDefault(l => l.ProductId == productId);
         if (cartLine is null)
         {
-            Lines.Add(new CartLine(productId) { Quantity = quantity });
+            Lines.Add(new ShoppingCartLine(productId) { Quantity = quantity });
         }
         else
         {
@@ -27,9 +27,4 @@ public sealed class ShoppingCart : BaseEntity
     }
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
-}
-
-public sealed record CartLine(string ProductId)
-{
-    public int Quantity { get; set; } = 1;
 }

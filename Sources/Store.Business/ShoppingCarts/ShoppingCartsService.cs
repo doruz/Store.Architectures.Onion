@@ -21,7 +21,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories)
         };
     }
 
-    private async Task<List<CartLineModel>> ToCartLinesModel(IEnumerable<CartLine> cartLines)
+    private async Task<List<ShoppingCartLineModel>> ToCartLinesModel(IEnumerable<ShoppingCartLine> cartLines)
     {
         var lines = await cartLines
             .Select(async cartLine => new
@@ -37,12 +37,12 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories)
             .ToList();
     }
 
-    private static CartLineModel ToCartLineModel(CartLine cartLine, Product product)
+    private static ShoppingCartLineModel ToCartLineModel(ShoppingCartLine cartLine, Product product)
     {
         EnsureArg.IsNotNull(cartLine, nameof(cartLine));
         EnsureArg.IsNotNull(product, nameof(product));
 
-        return new CartLineModel
+        return new ShoppingCartLineModel
         {
             ProductId = product.Id,
             ProductName = product.Name,
