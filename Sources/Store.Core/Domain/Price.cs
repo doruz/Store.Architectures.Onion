@@ -5,6 +5,7 @@ namespace Store.Core.Domain
     public record Price
     {
         public double Amount { get; init; }
+
         public string Currency { get; init; }
 
         public Price(double value, string currency)

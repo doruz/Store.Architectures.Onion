@@ -1,17 +1,16 @@
 ﻿using Store.Core.Domain;
 
-namespace Store.Core.Repositories
+namespace Store.Core.Repositories;
+
+public interface IProductsRepository
 {
-    public interface IProductsRepository
-    {
-        Task<IEnumerable<Product>> GetAllAsync();
+    Task<IEnumerable<Product>> GetAllAsync();
 
-        Task<Product?> FindAsync(string id);
+    Task<Product?> FindAsync(string id);
 
-        Task AddAsync(Product product);
+    Task AddAsync(Product product);
 
-        Task UpdateAsync(Product product);
+    Task UpdateAsync(Product product);
 
-        Task DeleteAsync(string id);
-    }
+    Task DeleteAsync(string id);
 }
