@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{EA6D050B-DF2C-43C5-B673-F0A8051D2503}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Api.Controllers", "Store.Api.Controllers\Store.Api.Controllers.csproj", "{CD4F9C3D-37C8-49AF-9460-83E0F23C684D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Api", "Store.Api\Store.Api.csproj", "{CD4F9C3D-37C8-49AF-9460-83E0F23C684D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store.Business", "Store.Business\Store.Business.csproj", "{D549E482-F1D3-497D-A798-5F135FA8D367}"
 EndProject
