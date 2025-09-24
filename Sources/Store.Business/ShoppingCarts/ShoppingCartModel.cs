@@ -12,13 +12,13 @@ public record ShoppingCartModel
 
 public record CartLineModel
 {
-    public string ProductId { get; init; }
+    public required string ProductId { get; init; }
 
-    public string ProductName { get; init; }
+    public required string ProductName { get; init; }
 
-    public Price ProductPrice { get; set; }
+    public required Price ProductPrice { get; set; }
 
-    public int Quantity { get; init; }
+    public required int Quantity { get; init; }
 
     public Price TotalPrice => ProductPrice * Quantity;
 }
