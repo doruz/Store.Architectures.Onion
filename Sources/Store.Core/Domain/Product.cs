@@ -5,7 +5,5 @@
         public string Name { get; set; } = default!;
 
         public Price Price { get; set; } = default!;
-
-        // extend with quantity
     }
 }

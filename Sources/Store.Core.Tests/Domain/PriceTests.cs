@@ -35,7 +35,7 @@ namespace Store.Core.Domain.Tests
             var price = new Price(value, currency);
 
             // Assert
-            price.Amount.Should().Be(value);
+            price.Value.Should().Be(value);
             price.Currency.Should().Be(currency);
         }
 
@@ -53,7 +53,7 @@ namespace Store.Core.Domain.Tests
             var result = price * quantity;
 
             // Assert
-            result.Amount.Should().Be(expectedValue);
+            result.Value.Should().Be(expectedValue);
             result.Currency.Should().Be(price.Currency);
         }
     }

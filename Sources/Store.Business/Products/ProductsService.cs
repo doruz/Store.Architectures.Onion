@@ -61,6 +61,6 @@ public sealed class ProductsService(IProductsRepository productsRepository)
     {
         Id = product.Id,
         Name = product.Name,
-        Price = new PriceModel(product.Price.Amount, product.Price.ToString())
+        Price = product.Price
     };
 }

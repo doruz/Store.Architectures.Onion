@@ -46,10 +46,9 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories)
         {
             ProductId = product.Id,
             ProductName = product.Name,
-            ProductPrice = PriceModel.Create(product.Price),
+            ProductPrice = product.Price,
             
             Quantity = cartLine.Quantity,
-            TotalPrice = PriceModel.Create(product.Price * cartLine.Quantity)
         };
     }
 }

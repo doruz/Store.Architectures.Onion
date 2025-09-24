@@ -1,4 +1,5 @@
 ﻿using Store.Business.Products;
+using Store.Core.Domain;
 
 namespace Store.Business.ShoppingCarts;
 
@@ -13,9 +14,9 @@ public record CartLineModel
 
     public string ProductName { get; init; }
 
-    public PriceModel ProductPrice { get; set; }
+    public Price ProductPrice { get; set; }
 
     public int Quantity { get; init; }
 
-    public PriceModel TotalPrice { get; set; }
+    public Price TotalPrice => ProductPrice * Quantity;
 }

@@ -1,4 +1,6 @@
-﻿namespace Store.Business.Products;
+﻿using Store.Core.Domain;
+
+namespace Store.Business.Products;
 
 public record ProductReadModel
 {
@@ -6,5 +8,5 @@ public record ProductReadModel
 
     public string Name { get; init; } 
 
-    public PriceModel Price { get; init; }
+    public Price Price { get; init; }
 }
