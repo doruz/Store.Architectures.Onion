@@ -2,8 +2,8 @@
 {
     public sealed class Product : BaseEntity
     {
-        public string Name { get; set; } = default!;
+        public required string Name { get; set; }
 
-        public Price Price { get; set; } = default!;
+        public required Price Price { get; set; }
     }
 }
