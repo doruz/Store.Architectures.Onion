@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using Store.Presentation.Api;
 using Store.Core.Business;
 using Store.Infrastructure;
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+//builder.Services.AddSwaggerGen(c =>
+//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web", Version = "v1" }));
 
 builder.Services.AddCurrentProject();
 
@@ -19,6 +22,7 @@ if (app.Environment.IsDevelopment())
 
     app.UseSwaggerUI(options =>
     {
+        options.DocumentTitle = "Store API";
         options.SwaggerEndpoint("/openapi/v1.json", "v1");
     });
 }
