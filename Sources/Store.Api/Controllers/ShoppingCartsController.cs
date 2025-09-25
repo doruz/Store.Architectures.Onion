@@ -5,8 +5,6 @@ using Store.Business.ShoppingCarts;
 public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
 {
     [HttpGet]
-    public async Task<IActionResult> GetCurrentCart()
-    {
-        return Ok(await shoppingCarts.GetCurrentAccountCart());
-    }
+    public async Task<IActionResult> GetCurrentCart() 
+        => Ok(await shoppingCarts.GetCurrentAccountCart());
 }

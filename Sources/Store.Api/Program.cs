@@ -1,3 +1,4 @@
+using Store.Api;
 using Store.Business;
 using Store.Infrastructure;
 
@@ -8,9 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-builder.Services
-    .AddBusiness()
-    .AddInfrastructure();
+builder.Services.AddCurrentProject();
 
 var app = builder.Build();
 

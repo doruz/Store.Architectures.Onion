@@ -2,18 +2,16 @@
 using Store.Business.Products;
 using Store.Core.Domain;
 using Store.Core.Repositories;
+using Store.Shared;
 using Store.Shared.Extensions;
 
 namespace Store.Business.ShoppingCarts;
 
-public sealed class ShoppingCartsService(RepositoriesContext repositories)
+public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {
-    private const string DummyAccountId = "1";
-
     public async Task<ShoppingCartModel> GetCurrentAccountCart()
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindAsync(DummyAccountId)
-                           ?? ShoppingCart.CreateEmpty(DummyAccountId);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
 
         return new ShoppingCartModel
         {
