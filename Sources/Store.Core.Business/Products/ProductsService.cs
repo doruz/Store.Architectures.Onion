@@ -2,7 +2,7 @@
 using Store.Core.Repositories;
 using Store.Shared.Extensions;
 
-namespace Store.Business.Products;
+namespace Store.Core.Business.Products;
 
 public sealed class ProductsService(IProductsRepository productsRepository)
 {

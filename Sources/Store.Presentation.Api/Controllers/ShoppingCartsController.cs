@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Business.ShoppingCarts;
+using Store.Core.Business.ShoppingCarts;
 
 [ApiRoute("shopping-carts")]
 public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Store.Business.Products;
-using Store.Business.ShoppingCarts;
+using Store.Core.Business.Products;
+using Store.Core.Business.ShoppingCarts;
 
-namespace Store.Business;
+namespace Store.Core.Business;
 
 public static class BusinessLayer
 {

@@ -1,5 +1,5 @@
 using Store.Api;
-using Store.Business;
+using Store.Core.Business;
 using Store.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

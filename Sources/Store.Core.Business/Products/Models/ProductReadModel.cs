@@ -1,6 +1,6 @@
 ﻿using Store.Core.Domain;
 
-namespace Store.Business.Products;
+namespace Store.Core.Business.Products;
 
 public record ProductReadModel
 {

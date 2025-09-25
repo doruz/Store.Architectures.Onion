@@ -1,7 +1,7 @@
-﻿using Store.Business.Products;
+﻿using Store.Core.Business.Products;
 using Store.Core.Domain;
 
-namespace Store.Business.ShoppingCarts;
+namespace Store.Core.Business.ShoppingCarts;
 
 public record ShoppingCartModel
 {

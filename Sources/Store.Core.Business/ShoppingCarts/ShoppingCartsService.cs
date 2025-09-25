@@ -1,11 +1,11 @@
 ﻿using EnsureThat;
-using Store.Business.Products;
+using Store.Core.Business.Products;
 using Store.Core.Domain;
 using Store.Core.Repositories;
 using Store.Shared;
 using Store.Shared.Extensions;
 
-namespace Store.Business.ShoppingCarts;
+namespace Store.Core.Business.ShoppingCarts;
 
 public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {

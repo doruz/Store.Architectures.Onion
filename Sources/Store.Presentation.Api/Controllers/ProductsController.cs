@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Business.Products;
+using Store.Core.Business.Products;
 
 [ApiRoute("products")]
 public class ProductsController(ProductsService products) : BaseApiController

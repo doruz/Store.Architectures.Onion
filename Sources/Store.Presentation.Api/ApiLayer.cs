@@ -1,7 +1,7 @@
 ﻿using Store.Api.Security;
-using Store.Business;
-using Store.Business.Products;
-using Store.Business.ShoppingCarts;
+using Store.Core.Business;
+using Store.Core.Business.Products;
+using Store.Core.Business.ShoppingCarts;
 using Store.Infrastructure;
 using Store.Shared;
 

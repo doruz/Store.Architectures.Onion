@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Store.Business.Products;
+namespace Store.Core.Business.Products;
 
 public record ProductWriteModel
 {
