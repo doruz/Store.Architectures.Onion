@@ -6,31 +6,35 @@ public sealed class ShoppingCart : BaseEntity
 {
     public List<ShoppingCartLine> Lines { get; init; } = [];
 
-    public void AddLine(string productId, int quantity)
-    {
-        EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
-        EnsureArg.IsGte(quantity, 1, nameof(quantity));
+    public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
 
-        var cartLine = Lines.FirstOrDefault(l => l.ProductId == productId);
-        if (cartLine is null)
+
+    public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
+        => lines.ForEach(UpdateOrRemoveLine);
+
+    public void UpdateOrRemoveLine(ShoppingCartLine line)
+    {
+        EnsureArg.IsNotNull(line, nameof(line));
+
+        RemoveLine(line.ProductId);
+
+        if (line.Quantity > 0)
         {
-            Lines.Add(new ShoppingCartLine(productId) { Quantity = quantity });
+            AddLine(line);
         }
-        else
-        {
-            cartLine.Quantity = quantity;
-        }
+    }
+
+    private void AddLine(ShoppingCartLine line)
+    {
+        EnsureArg.IsNotNull(line, nameof(line));
+
+        Lines.Add(line);
     }
 
     public void RemoveLine(string productId)
     {
-        Lines.RemoveAll(line => line.ProductId == productId);
+        EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
+
+        Lines.RemoveAll(line => line.ProductId.IsEqualTo(productId));
     }
-
-    public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
-}
-
-public sealed record ShoppingCartLine(string ProductId)
-{
-    public int Quantity { get; set; } = 1;
 }

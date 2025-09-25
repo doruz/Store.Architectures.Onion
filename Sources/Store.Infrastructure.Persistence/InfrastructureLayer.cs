@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿global using Store.Core.Shared;
+
+using Microsoft.Extensions.DependencyInjection;
 using Store.Core.Domain.Repositories;
 
 namespace Store.Infrastructure.Persistence;

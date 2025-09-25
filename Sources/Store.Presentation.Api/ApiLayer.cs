@@ -1,7 +1,4 @@
 ﻿using Store.Core.Business;
-using Store.Core.Business.Products;
-using Store.Core.Business.ShoppingCarts;
-using Store.Infrastructure;
 using Store.Core.Shared;
 using Store.Infrastructure.Persistence;
 

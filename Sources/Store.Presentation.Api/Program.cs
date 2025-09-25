@@ -1,7 +1,4 @@
-using Microsoft.OpenApi.Models;
 using Store.Presentation.Api;
-using Store.Core.Business;
-using Store.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,16 +1,8 @@
-﻿using Store.Core.Business.Products;
-using Store.Core.Domain.Entities;
+﻿using Store.Core.Domain.Entities;
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public record ShoppingCartModel
-{
-    public IReadOnlyList<ShoppingCartLineModel> Lines { get; init; } = [];
-
-    public Price TotalPrice => Lines.Sum(line => line.TotalPrice);
-}
-
-public record ShoppingCartLineModel
+public record ShoppingCartLineReadModel
 {
     public required string ProductId { get; init; }
 

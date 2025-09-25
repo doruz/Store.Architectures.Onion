@@ -1,5 +1,4 @@
 ﻿using EnsureThat;
-using Store.Core.Domain;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 
@@ -26,8 +25,11 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
     public async Task<IEnumerable<Product>> GetAllAsync() 
         => products;
 
+    public async Task<bool> ExistsAsync(string id)
+        => products.Any(p => p.Id.IsEqualTo(id));
+
     public async Task<Product?> FindAsync(string id)
-        => products.FirstOrDefault(p => p.Id == id);
+        => products.Find(p => p.Id.IsEqualTo(id));
 
     public async Task AddAsync(Product product) 
         => products.Add(EnsureArg.IsNotNull(product, nameof(product)));
@@ -39,5 +41,5 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
     }
 
     public async Task DeleteAsync(string id)
-        => products.RemoveAll(p => p.Id == id);
+        => products.RemoveAll(p => p.Id.IsEqualTo(id));
 }

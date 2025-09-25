@@ -12,10 +12,37 @@ public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseA
     public async Task<IActionResult> GetCurrentCart() 
         => Ok(await shoppingCarts.GetCurrentAccountCart());
 
-    /*
-     * PUT: to update entire shopping cart
-     * DELETE: to remove entire shopping cart
-     * PUT: to update one line, if quantity is zero, to be removed
-     * DELETE: to remove entire shopping cart line
-     */
+    /// <summary>
+    /// Clear cart of authenticated account.
+    /// </summary>
+    [HttpDelete]
+    public async Task<IActionResult> ClearCurrentCart()
+    {
+        await shoppingCarts.ClearCurrentAccountCart();
+
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Update cart lines of authenticated account.
+    /// </summary>
+    [HttpPatch]
+    public async Task<IActionResult> UpdateCurrentCart([FromBody] ShoppingCartLineWriteModel[] lines)
+    {
+        await shoppingCarts.UpdateCurrentAccountCartAsync(lines);
+
+        return NoContent();
+    }
+
+    /// <summary>
+    /// Removed product from cart of authenticated account.
+    /// </summary>
+    /// <param name="productId">identifier of product to be removed.</param>
+    [HttpDelete("products/{productId}")]
+    public async Task<IActionResult> RemoveProductFromCurrentAccountCart([FromRoute] string productId)
+    {
+        await shoppingCarts.RemoveProductFromCurrentAccountCartAsync(productId);
+
+        return NoContent();
+    }
 }
