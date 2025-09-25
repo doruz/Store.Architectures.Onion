@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Store.Business\Store.Business.csproj" />
-    <ProjectReference Include="..\Store.Infrastructure\Store.Infrastructure.csproj" />
+    <ProjectReference Include="..\Store.Core.Business\Store.Core.Business.csproj" />
+    <ProjectReference Include="..\Store.Infrastructure.Persistence\Store.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

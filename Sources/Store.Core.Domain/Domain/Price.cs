@@ -2,7 +2,7 @@
 
 namespace Store.Core.Domain
 {
-    public record Price
+    public sealed record Price
     {
         public decimal Value { get; init; }
         public string Currency => "\u20ac"; // EURO symbol
