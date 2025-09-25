@@ -1,11 +1,11 @@
-﻿using Store.Api.Security;
-using Store.Core.Business;
+﻿using Store.Core.Business;
 using Store.Core.Business.Products;
 using Store.Core.Business.ShoppingCarts;
 using Store.Infrastructure;
 using Store.Core.Shared;
+using Store.Infrastructure.Persistence;
 
-namespace Store.Api;
+namespace Store.Presentation.Api;
 
 public static class ApiLayer
 {
@@ -13,7 +13,7 @@ public static class ApiLayer
     {
         return services
             .AddBusiness()
-            .AddInfrastructure()
+            .AddPersistence()
             .AddTransient<ICurrentAccount, CurrentAccount>();
     }
 }

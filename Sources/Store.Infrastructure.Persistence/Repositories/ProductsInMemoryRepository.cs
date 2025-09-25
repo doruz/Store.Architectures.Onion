@@ -3,7 +3,7 @@ using Store.Core.Domain;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 
-namespace Store.Infrastructure.Repositories;
+namespace Store.Infrastructure.Persistence;
 
 internal sealed class ProductsInMemoryRepository : IProductsRepository
 {
