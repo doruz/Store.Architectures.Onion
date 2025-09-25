@@ -2,8 +2,7 @@
 using Store.Core.Business.Products;
 using Store.Core.Domain;
 using Store.Core.Repositories;
-using Store.Shared;
-using Store.Shared.Extensions;
+using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 

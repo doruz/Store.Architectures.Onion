@@ -1,6 +1,6 @@
 ﻿using Store.Core.Domain;
 using Store.Core.Repositories;
-using Store.Shared.Extensions;
+using Store.Core.Shared;
 
 namespace Store.Core.Business.Products;
 

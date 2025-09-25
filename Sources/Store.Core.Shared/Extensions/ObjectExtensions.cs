@@ -1,4 +1,4 @@
-﻿namespace Store.Shared.Extensions;
+﻿namespace Store.Core.Shared;
 
 public static class ObjectExtensions
 {

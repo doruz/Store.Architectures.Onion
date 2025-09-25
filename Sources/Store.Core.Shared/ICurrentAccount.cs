@@ -1,7 +1,6 @@
-﻿namespace Store.Shared
+﻿namespace Store.Core.Shared;
+
+public interface ICurrentAccount
 {
-    public interface ICurrentAccount
-    {
-        string Id { get; }
-    }
+    string Id { get; }
 }

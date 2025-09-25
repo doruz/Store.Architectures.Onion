@@ -3,7 +3,7 @@ using Store.Core.Business;
 using Store.Core.Business.Products;
 using Store.Core.Business.ShoppingCarts;
 using Store.Infrastructure;
-using Store.Shared;
+using Store.Core.Shared;
 
 namespace Store.Api;
 

@@ -1,4 +1,4 @@
-﻿using Store.Shared;
+﻿using Store.Core.Shared;
 
 namespace Store.Api.Security
 {
