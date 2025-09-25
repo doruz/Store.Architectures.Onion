@@ -22,7 +22,7 @@ public sealed class ProductsService(IProductsRepository productsRepository)
         var newProduct = new Product
         {
             Name = product.Name,
-            Price = Price.Euro(product.Price)
+            Price = product.Price
         };
 
         await productsRepository.AddAsync(newProduct);
@@ -39,7 +39,7 @@ public sealed class ProductsService(IProductsRepository productsRepository)
         }
 
         existingProduct.Name = product.Name;
-        existingProduct.Price = Price.Euro(product.Price);
+        existingProduct.Price = product.Price;
 
         return true;
     }

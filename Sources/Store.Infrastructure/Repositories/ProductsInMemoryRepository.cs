@@ -12,13 +12,13 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
         {
             Id = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
             Name = "Apple",
-            Price = Price.Euro(2.5)
+            Price = 2.5m
         },
         new Product
         {
             Id = "dc552437-0b7d-455a-afa0-e4949142a4ad",
             Name = "Orange",
-            Price = Price.Euro(1.99)
+            Price = 1.99m
         }
     ];
 

@@ -8,5 +8,5 @@ public record ProductWriteModel
     public string Name { get; init; } = string.Empty;
 
     [Range(0, double.MaxValue)]
-    public double Price { get; init; }
+    public decimal Price { get; init; }
 }
