@@ -1,6 +1,7 @@
 ﻿using EnsureThat;
 using Store.Core.Domain;
-using Store.Core.Repositories;
+using Store.Core.Domain.Entities;
+using Store.Core.Domain.Repositories;
 
 namespace Store.Infrastructure.Repositories;
 

@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Domain;
+﻿namespace Store.Core.Domain.Entities;
 
 public abstract class BaseEntity
 {

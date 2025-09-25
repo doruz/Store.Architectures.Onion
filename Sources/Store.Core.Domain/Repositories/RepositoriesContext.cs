@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Repositories;
+﻿namespace Store.Core.Domain.Repositories;
 
 public sealed class RepositoriesContext(IProductsRepository products, IShoppingCartsRepository shoppingCarts)
 {

@@ -1,5 +1,6 @@
 ﻿using EnsureThat;
-using Store.Core.Domain;
+
+namespace Store.Core.Domain.Entities;
 
 public sealed class ShoppingCart : BaseEntity
 {
@@ -27,4 +28,9 @@ public sealed class ShoppingCart : BaseEntity
     }
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
+}
+
+public sealed record ShoppingCartLine(string ProductId)
+{
+    public int Quantity { get; set; } = 1;
 }

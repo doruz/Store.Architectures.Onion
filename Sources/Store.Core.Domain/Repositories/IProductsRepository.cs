@@ -1,6 +1,6 @@
-﻿using Store.Core.Domain;
+﻿using Store.Core.Domain.Entities;
 
-namespace Store.Core.Repositories;
+namespace Store.Core.Domain.Repositories;
 
 public interface IProductsRepository
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Store.Core.Repositories;
+using Store.Core.Domain.Repositories;
 using Store.Infrastructure.Repositories;
 
 namespace Store.Infrastructure;

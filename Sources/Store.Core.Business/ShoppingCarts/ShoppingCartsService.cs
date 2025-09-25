@@ -1,7 +1,8 @@
 ﻿using EnsureThat;
 using Store.Core.Business.Products;
 using Store.Core.Domain;
-using Store.Core.Repositories;
+using Store.Core.Domain.Entities;
+using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;

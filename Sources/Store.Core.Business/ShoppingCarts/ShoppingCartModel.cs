@@ -1,5 +1,5 @@
 ﻿using Store.Core.Business.Products;
-using Store.Core.Domain;
+using Store.Core.Domain.Entities;
 
 namespace Store.Core.Business.ShoppingCarts;
 

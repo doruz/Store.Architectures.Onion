@@ -1,4 +1,6 @@
-﻿namespace Store.Core.Repositories;
+﻿using Store.Core.Domain.Entities;
+
+namespace Store.Core.Domain.Repositories;
 
 public interface IShoppingCartsRepository
 {
