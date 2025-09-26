@@ -9,7 +9,7 @@ public interface IShoppingCartsRepository
     async Task<ShoppingCart> FindOrEmptyAsync(string accountId)
         => await FindAsync(accountId) ?? ShoppingCart.CreateEmpty(accountId);
 
-    Task UpdateAsync(ShoppingCart cart);
+    Task AddOrUpdateAsync(ShoppingCart cart);
 
     Task DeleteAsync(string accountId); 
 }

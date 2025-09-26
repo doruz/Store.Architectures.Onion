@@ -46,6 +46,6 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
         await AddAsync(product);
     }
 
-    public async Task DeleteAsync(string id)
-        => products.RemoveAll(p => p.Id.IsEqualTo(id));
+    public async Task<bool> DeleteAsync(string id)
+        => products.RemoveAll(p => p.Id.IsEqualTo(id)) > 0;
 }

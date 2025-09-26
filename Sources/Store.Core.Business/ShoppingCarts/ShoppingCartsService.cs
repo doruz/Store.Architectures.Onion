@@ -48,7 +48,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
         shoppingCart.UpdateOrRemoveLines(validLines);
        
-        await repositories.ShoppingCarts.UpdateAsync(shoppingCart);
+        await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
     }
 
     private async Task<ShoppingCartLine[]> GetValidLines(IEnumerable<ShoppingCartLineWriteModel> cartLines)
@@ -73,6 +73,6 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
         shoppingCart.RemoveLine(productId);
 
-        await repositories.ShoppingCarts.UpdateAsync(shoppingCart);
+        await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
     }
 }

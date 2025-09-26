@@ -1,52 +1,56 @@
-﻿using System.Net;
-using EnsureThat;
+﻿using EnsureThat;
 using Microsoft.Azure.Cosmos;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containers) : IProductsRepository
 {
-    public Task<IEnumerable<Product>> GetAllAsync()
+    public async Task<IEnumerable<Product>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return containers.Products
+            .GetItemLinqQueryable<Product>(true)
+            .AsEnumerable();
     }
 
-    public Task<bool> ExistsAsync(string id)
+    public async Task<bool> ExistsAsync(string id)
     {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Product?> FindAsync(string id)
-    {
-        EnsureArg.IsNotNullOrEmpty(id, nameof(id));
-
-        try
+        var requestOptions = new QueryRequestOptions
         {
-            var entity = await containers.Products.ReadItemAsync<Product>(id, new PartitionKey(id));
-            return entity;
-        }
-        catch (CosmosException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
-        {
-            return default;
-        }
+            PartitionKey = id.ToPartitionKey(),
+            MaxItemCount = 1
+        };
+
+        return await containers.Products
+            .GetItemLinqQueryable<Product>(requestOptions: requestOptions)
+            .Where(product => product.Id == id)
+            .CountAsync() > 0;
     }
+
+    public Task<Product?> FindAsync(string id)
+        => containers.Products.FindAsync<Product>(id, id.ToPartitionKey());
 
     public async Task AddAsync(Product product)
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        await containers.Products.CreateItemAsync(product, new (product.Id));
+        await containers.Products.CreateItemAsync(product, product.Id.ToPartitionKey());
     }
 
-    public Task UpdateAsync(Product product)
+
+    public async Task UpdateAsync(Product product)
     {
-        throw new NotImplementedException();
+        EnsureArg.IsNotNull(product, nameof(product));
+
+        await containers.Products.ReplaceItemAsync(product, product.Id, product.Id.ToPartitionKey());
     }
 
-    public Task DeleteAsync(string id)
+    public async Task<bool> DeleteAsync(string id)
     {
-        throw new NotImplementedException();
+        EnsureArg.IsNotNullOrEmpty(id, nameof(id));
+
+        return await containers.Products.DeleteAsync<Product>(id, id.ToPartitionKey());
     }
 }

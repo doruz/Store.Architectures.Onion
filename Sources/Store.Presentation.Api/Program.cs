@@ -1,11 +1,19 @@
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CosmosExceptionFilter>();
+});
 builder.Services.AddOpenApi();
 
 builder.Services.AddCurrentSolution(builder.Configuration);
+
+builder.Services
+    .Configure<ApiBehaviorOptions>(options => options.SuppressMapClientErrors = true);
 
 var app = builder.Build();
 
