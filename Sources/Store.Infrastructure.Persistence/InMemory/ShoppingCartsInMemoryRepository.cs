@@ -26,7 +26,7 @@ internal sealed class ShoppingCartsInMemoryRepository : IShoppingCartsRepository
     public async Task AddAsync(ShoppingCart cart)
         => _shoppingCarts.Add(EnsureArg.IsNotNull(cart, nameof(cart)));
 
-    public async Task UpdateAsync(ShoppingCart cart)
+    public async Task AddOrUpdateAsync(ShoppingCart cart)
     {
         await DeleteAsync(cart.Id);
         await AddAsync(cart);

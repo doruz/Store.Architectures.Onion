@@ -1,5 +1,4 @@
 ﻿using EnsureThat;
-using System.Diagnostics;
 
 namespace Store.Core.Domain.Entities;
 
