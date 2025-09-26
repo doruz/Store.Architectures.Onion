@@ -2,15 +2,15 @@
 using Store.Core.Shared;
 using Store.Infrastructure.Persistence;
 
-namespace Store.Presentation.Api;
-
 public static class ApiLayer
 {
-    public static IServiceCollection AddCurrentProject(this IServiceCollection services)
+    public static IServiceCollection AddCurrentSolution(this IServiceCollection services, IConfiguration configuration)
     {
         return services
             .AddBusiness()
-            .AddPersistence()
-            .AddTransient<ICurrentAccount, CurrentAccount>();
+            .AddPersistence(configuration)
+
+            .AddTransient<ICurrentAccount, CurrentAccount>()
+            .AddHostedService<PersistenceInitializationService>();
     }
 }
