@@ -2,9 +2,8 @@
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryCollectionsInitializer(
-    InMemoryCollections collections,
-    ICurrentAccount currentAccount) : IAppInitializer
+internal sealed class InMemoryCollectionsInitializer(InMemoryCollections collections, ICurrentAccount currentAccount)
+    : IAppInitializer
 {
     public async Task Execute()
     {
