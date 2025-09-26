@@ -1,5 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
 namespace Store.Core.Business.Products;
@@ -9,28 +8,24 @@ public sealed class ProductsService(IProductsRepository productsRepository)
     public Task<IEnumerable<ProductReadModel>> GetAllAsync() =>
         productsRepository
             .GetAllAsync()
-            .SelectAsync(ToReadModel);
+            .SelectAsync(ProductsMapper.ToReadModel);
 
     public Task<ProductReadModel?> FindProductAsync(string id) =>
         productsRepository
             .FindAsync(id)
-            .MapAsync(ToReadModel);
+            .MapAsync(ProductsMapper.ToReadModel);
 
 
-    public async Task<ProductReadModel> CreateAsync(ProductWriteModel product)
+    public async Task<ProductReadModel> CreateAsync(ProductWriteModel productModel)
     {
-        var newProduct = new Product
-        {
-            Name = product.Name,
-            Price = product.Price
-        };
+        var newProduct = productModel.ToProduct();
 
         await productsRepository.AddAsync(newProduct);
 
-        return ToReadModel(newProduct);
+        return newProduct.ToReadModel();
     }
 
-    public async Task<bool> UpdateAsync(string id, ProductWriteModel product)
+    public async Task<bool> UpdateAsync(string id, ProductWriteModel productModel)
     {
         var existingProduct = await productsRepository.FindAsync(id);
         if (existingProduct is null)
@@ -38,8 +33,8 @@ public sealed class ProductsService(IProductsRepository productsRepository)
             return false;
         }
 
-        existingProduct.Name = product.Name;
-        existingProduct.Price = product.Price;
+        existingProduct.Name = productModel.Name;
+        existingProduct.Price = productModel.Price;
 
         return true;
     }
@@ -56,11 +51,4 @@ public sealed class ProductsService(IProductsRepository productsRepository)
 
         return true;
     }
-
-    private static ProductReadModel ToReadModel(Product product) => new()
-    {
-        Id = product.Id,
-        Name = product.Name,
-        Price = product.Price
-    };
 }

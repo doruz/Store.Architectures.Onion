@@ -31,11 +31,17 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
     public async Task<Product?> FindAsync(string id)
         => products.Find(p => p.Id.IsEqualTo(id));
 
-    public async Task AddAsync(Product product) 
-        => products.Add(EnsureArg.IsNotNull(product, nameof(product)));
+    public async Task AddAsync(Product product)
+    {
+        EnsureArg.IsNotNull(product, nameof(product))l
+
+        products.Add(product);
+    }
 
     public async Task UpdateAsync(Product product)
     {
+        EnsureArg.IsNotNull(product, nameof(product));
+
         await DeleteAsync(product.Id);
         await AddAsync(product);
     }
