@@ -30,31 +30,13 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
         return lines
             .Where(x => x.Product != null)
-            .Select(x => ToCartLineModel(x.CartLine, x.Product!))
+            .Select(x => x.CartLine.ToShoppingCartLineReadModel(x.Product!))
             .ToList();
     }
 
-    private static ShoppingCartLineReadModel ToCartLineModel(ShoppingCartLine cartLine, Product product)
-    {
-        EnsureArg.IsNotNull(cartLine, nameof(cartLine));
-        EnsureArg.IsNotNull(product, nameof(product));
-
-        return new ShoppingCartLineReadModel
-        {
-            ProductId = product.Id,
-            ProductName = product.Name,
-            ProductPrice = product.Price,
-            
-            Quantity = cartLine.Quantity,
-        };
-    }
-
-
-    // DELETE CART
     public Task ClearCurrentAccountCart()
         => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
 
-    // UPDATE CART LINES
     public async Task UpdateCurrentAccountCartAsync(params ShoppingCartLineWriteModel[] lines)
     {
         var validLines = await GetValidLines(lines);
@@ -82,11 +64,10 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
         return lines
             .Where(x => x.IsValidProduct)
-            .Select(x => new ShoppingCartLine(x.CartLine.ProductId, x.CartLine.Quantity))
+            .Select(x => x.CartLine.ToShoppingCartLine())
             .ToArray();
     }
 
-    // DELETE cart product
     public async Task RemoveProductFromCurrentAccountCartAsync(string productId)
     {
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
