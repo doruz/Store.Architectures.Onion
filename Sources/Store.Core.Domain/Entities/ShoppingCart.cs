@@ -4,13 +4,13 @@ namespace Store.Core.Domain.Entities;
 
 public sealed class ShoppingCart : BaseEntity
 {
+    // TODO: to rename it to Products
     public List<ShoppingCartLine> Lines { get; init; } = [];
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
 
-
     public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
-        => lines.ForEach(UpdateOrRemoveLine);
+        => lines.Merge().ForEach(UpdateOrRemoveLine);
 
     public void UpdateOrRemoveLine(ShoppingCartLine line)
     {
@@ -24,17 +24,17 @@ public sealed class ShoppingCart : BaseEntity
         }
     }
 
-    private void AddLine(ShoppingCartLine line)
-    {
-        EnsureArg.IsNotNull(line, nameof(line));
-
-        Lines.Add(line);
-    }
-
     public void RemoveLine(string productId)
     {
         EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
 
         Lines.RemoveAll(line => line.ProductId.IsEqualTo(productId));
+    }
+
+    private void AddLine(ShoppingCartLine line)
+    {
+        EnsureArg.IsNotNull(line, nameof(line));
+
+        Lines.Add(line);
     }
 }

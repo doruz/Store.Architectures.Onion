@@ -65,7 +65,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
 
-        shoppingCart.UpdateOrRemoveLines(await GetValidLines(lines));
+        shoppingCart.UpdateOrRemoveLines(validLines);
        
         await repositories.ShoppingCarts.UpdateAsync(shoppingCart);
     }

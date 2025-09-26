@@ -7,5 +7,5 @@ public record ShoppingCartReadModel
     // TODO: maybe to rename to Products
     public IReadOnlyList<ShoppingCartLineReadModel> Lines { get; init; } = [];
 
-    public Price TotalPrice => Lines.Sum(line => line.TotalPrice);
+    public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
 }
