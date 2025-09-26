@@ -33,7 +33,7 @@ internal sealed class ProductsInMemoryRepository : IProductsRepository
 
     public async Task AddAsync(Product product)
     {
-        EnsureArg.IsNotNull(product, nameof(product))l
+        EnsureArg.IsNotNull(product, nameof(product));
 
         products.Add(product);
     }

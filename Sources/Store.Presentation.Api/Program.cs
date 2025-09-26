@@ -1,15 +1,11 @@
-using Store.Presentation.Api;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-//builder.Services.AddSwaggerGen(c =>
-//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Web", Version = "v1" }));
 
-builder.Services.AddCurrentProject();
+builder.Services.AddCurrentSolution(builder.Configuration);
 
 var app = builder.Build();
 
