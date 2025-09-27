@@ -2,7 +2,7 @@
 using Store.Core.Business.Orders;
 
 [ApiRoute("accounts/current/orders")]
-public sealed class OrdersController(OrdersService orders) : BaseApiController
+public sealed class AccountsOrdersController(OrdersService orders) : BaseApiController
 {
     [HttpGet]
     public async Task<IActionResult> GetOrdersSummary()

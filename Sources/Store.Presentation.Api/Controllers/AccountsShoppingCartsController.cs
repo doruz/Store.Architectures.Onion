@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Core.Business.ShoppingCarts;
 
-[ApiRoute("shopping-carts/current")]
-public sealed class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
+[ApiRoute("accounts/current/shopping-cart")]
+public sealed class AccountsShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
 {
     /// <summary>
     /// Get current cart of authenticated account.
