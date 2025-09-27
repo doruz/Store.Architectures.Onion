@@ -8,7 +8,7 @@ internal static class InMemoryDependencyInjection
     internal static IServiceCollection AddInMemoryPersistence(this IServiceCollection services) =>
         services
             .AddSingleton<InMemoryDatabase>()
-            .AddSingleton<IAppInitializer, InMemoryCollectionsInitializer>()
+            .AddTransient<IAppInitializer, InMemoryCollectionsInitializer>()
 
             .AddSingleton<IProductsRepository, InMemoryProductsRepository>()
             .AddSingleton<IShoppingCartsRepository, InMemoryShoppingCartsRepository>()

@@ -7,4 +7,6 @@ public interface IOrdersRepository
     Task<IEnumerable<Order>> GetAccountOrdersAsync(string accountId);
 
     Task<Order?> FindOrderAsync(string accountId, string id);
+
+    Task SaveOrderAsync(Order order);
 }

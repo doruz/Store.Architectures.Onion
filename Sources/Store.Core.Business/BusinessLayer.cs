@@ -10,8 +10,9 @@ public static class BusinessLayer
     public static IServiceCollection AddBusiness(this IServiceCollection services)
     {
         return services
-            .AddSingleton<ShoppingCartsService>()
-            .AddSingleton<ProductsService>()
-            .AddSingleton<OrdersService>();
+            .AddScoped<ShoppingCartsService>()
+            .AddScoped<ProductsService>()
+            .AddScoped<OrdersService>()
+            .AddScoped<ShoppingCartCheckoutService>();
     }
 }

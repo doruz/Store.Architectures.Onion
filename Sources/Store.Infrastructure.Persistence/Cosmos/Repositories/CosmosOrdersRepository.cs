@@ -14,4 +14,9 @@ internal sealed class CosmosOrdersRepository : IOrdersRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task SaveOrderAsync(Order order)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -24,7 +24,7 @@ public class ShoppingCart : BaseEntity
         }
     }
 
-    public void RemoveLine(string productId)
+    private void RemoveLine(string productId)
     {
         EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
 

@@ -4,9 +4,11 @@
     {
         public required string AccountId { get; init; }
 
-        public List<OrderProductDetails> Products { get; init; } = [];
+        public required IReadOnlyList<OrderProductDetails> Products { get; init; } = [];
 
-        public Price TotalPrice => Products.Select(item => item.Price).Sum();
+        public Price TotalPrice => Products.Select(item => item.TotalPrice).Sum();
+
+        public bool IsNotEmpty() => Products.IsNotEmpty();
     }
 
     public record OrderProductDetails
@@ -18,5 +20,7 @@
         public required Price Price { get; init; }
 
         public required int Quantity { get; init; }
+
+        public Price TotalPrice => Price * Quantity;
     }
 }

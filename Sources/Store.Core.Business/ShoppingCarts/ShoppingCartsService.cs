@@ -66,13 +66,4 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             .Select(x => x.CartLine.ToShoppingCartLine())
             .ToArray();
     }
-
-    public async Task RemoveProductFromCurrentAccountCart(string productId)
-    {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
-
-        shoppingCart.RemoveLine(productId);
-
-        await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
-    }
 }
