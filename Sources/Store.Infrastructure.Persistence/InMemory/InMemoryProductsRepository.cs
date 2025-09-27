@@ -4,22 +4,24 @@ using Store.Core.Domain.Repositories;
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryProductsRepository(InMemoryCollections collections) : IProductsRepository
+internal sealed class InMemoryProductsRepository(InMemoryDatabase database) : IProductsRepository
 {
-    public async Task<IEnumerable<Product>> GetAllAsync() 
-        => collections.Products;
+    public Task<IEnumerable<Product>> GetAllAsync() 
+        => Task.FromResult(database.Products.AsEnumerable());
 
-    public async Task<bool> ExistsAsync(string id)
-        => collections.Products.Any(p => p.Id.IsEqualTo(id));
+    public Task<bool> ExistsAsync(string id)
+        => Task.FromResult(database.Products.Any(p => p.Id.IsEqualTo(id)));
 
-    public async Task<Product?> FindAsync(string id)
-        => collections.Products.Find(p => p.Id.IsEqualTo(id));
+    public Task<Product?> FindAsync(string id)
+        => Task.FromResult(database.Products.Find(p => p.Id.IsEqualTo(id)));
 
-    public async Task AddAsync(Product product)
+    public Task AddAsync(Product product)
     {
         EnsureArg.IsNotNull(product, nameof(product));
 
-        collections.Products.Add(product);
+        database.Products.Add(product);
+
+        return Task.CompletedTask;
     }
 
     public async Task UpdateAsync(Product product)
@@ -30,6 +32,6 @@ internal sealed class InMemoryProductsRepository(InMemoryCollections collections
         await AddAsync(product);
     }
 
-    public async Task<bool> DeleteAsync(string id)
-        => collections.Products.RemoveAll(p => p.Id.IsEqualTo(id)) > 0;
+    public Task<bool> DeleteAsync(string id)
+        => Task.FromResult(database.Products.RemoveAll(p => p.Id.IsEqualTo(id)) > 0);
 }

@@ -10,13 +10,22 @@ namespace Store.Infrastructure.Persistence;
 
 public static class InfrastructureLayer
 {
-    // TODO: to add a configuration in app settings
-    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) =>
-        services
-            //.AddInMemoryPersistence()
-            .AddCosmosPersistence(configuration)
-            .AddSingleton<RepositoriesContext>();
+    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+    {
+        if (configuration.UseCosmos())
+        {
+            services.AddCosmosPersistence(configuration);
+        }
+        else
+        {
+            services.AddInMemoryPersistence();
+        }
 
+        return services.AddSingleton<RepositoriesContext>();
+    }
+
+    private static bool UseCosmos(this IConfiguration configuration)
+        => configuration["AllowedPersistence"].IsEqualTo("cosmos");
 
     private static IServiceCollection AddCosmosPersistence(this IServiceCollection services, IConfiguration configuration) =>
         services
@@ -29,10 +38,11 @@ public static class InfrastructureLayer
             .AddSingleton<IProductsRepository, CosmosProductsRepository>()
             .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
 
-    public static IServiceCollection AddInMemoryPersistence(this IServiceCollection services) =>
+    private static IServiceCollection AddInMemoryPersistence(this IServiceCollection services) =>
         services
-            .AddSingleton<InMemoryCollections>()
+            .AddSingleton<InMemoryDatabase>()
             .AddSingleton<IAppInitializer, InMemoryCollectionsInitializer>()
+
             .AddSingleton<IProductsRepository, InMemoryProductsRepository>()
             .AddSingleton<IShoppingCartsRepository, InMemoryShoppingCartsRepository>();
 }

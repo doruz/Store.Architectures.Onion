@@ -7,7 +7,7 @@ using Store.Core.Domain.Entities;
 
 namespace Store.Infrastructure.Persistence.InMemory
 {
-    internal sealed class InMemoryCollections
+    internal sealed class InMemoryDatabase
     {
         public List<Product> Products { get; } = [];
 

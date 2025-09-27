@@ -4,13 +4,17 @@ using Store.Core.Domain.Repositories;
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryShoppingCartsRepository(InMemoryCollections collections) : IShoppingCartsRepository
+internal sealed class InMemoryShoppingCartsRepository(InMemoryDatabase database) : IShoppingCartsRepository
 {
-    public async Task<ShoppingCart?> FindAsync(string accountId)
-        => collections.ShoppingCarts.Find(cart => cart.Id.IsEqualTo(accountId));
+    public Task<ShoppingCart?> FindAsync(string id)
+        => Task.FromResult(database.ShoppingCarts.Find(cart => cart.Id.IsEqualTo(id)));
 
-    public async Task AddAsync(ShoppingCart cart)
-        => collections.ShoppingCarts.Add(EnsureArg.IsNotNull(cart, nameof(cart)));
+    public Task AddAsync(ShoppingCart cart)
+    {
+        database.ShoppingCarts.Add(EnsureArg.IsNotNull(cart, nameof(cart)));
+
+        return Task.CompletedTask;
+    }
 
     public async Task AddOrUpdateAsync(ShoppingCart cart)
     {
@@ -18,8 +22,10 @@ internal sealed class InMemoryShoppingCartsRepository(InMemoryCollections collec
         await AddAsync(cart);
     }
 
-    public async Task DeleteAsync(string accountId)
+    public Task DeleteAsync(string id)
     {
-        collections.ShoppingCarts.RemoveAll(cart => cart.Id.IsEqualTo(accountId));
+        database.ShoppingCarts.RemoveAll(cart => cart.Id.IsEqualTo(id));
+
+        return Task.CompletedTask;
     }
 }

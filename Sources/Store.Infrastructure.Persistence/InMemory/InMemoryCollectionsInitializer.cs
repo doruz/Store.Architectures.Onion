@@ -2,13 +2,15 @@
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryCollectionsInitializer(InMemoryCollections collections, ICurrentAccount currentAccount)
+internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, ICurrentAccount currentAccount)
     : IAppInitializer
 {
-    public async Task Execute()
+    public Task Execute()
     {
-        collections.Products.AddRange(GetProducts());
-        collections.ShoppingCarts.AddRange(GetShoppingCarts());
+        database.Products.AddRange(GetProducts());
+        database.ShoppingCarts.AddRange(GetShoppingCarts());
+
+        return Task.CompletedTask;
     }
 
     private List<Product> GetProducts() =>
