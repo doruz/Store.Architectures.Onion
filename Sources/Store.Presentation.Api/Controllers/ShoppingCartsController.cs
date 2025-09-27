@@ -2,7 +2,7 @@
 using Store.Core.Business.ShoppingCarts;
 
 [ApiRoute("shopping-carts/current")]
-public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
+public sealed class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
 {
     /// <summary>
     /// Get current cart of authenticated account.
@@ -29,7 +29,7 @@ public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseA
     [HttpPatch]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] ShoppingCartLineWriteModel[] lines)
     {
-        await shoppingCarts.UpdateCurrentAccountCartAsync(lines);
+        await shoppingCarts.UpdateCurrentAccountCart(lines);
 
         return NoContent();
     }
@@ -41,7 +41,7 @@ public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseA
     [HttpDelete("products/{productId}")]
     public async Task<IActionResult> RemoveProductFromCurrentAccountCart([FromRoute] string productId)
     {
-        await shoppingCarts.RemoveProductFromCurrentAccountCartAsync(productId);
+        await shoppingCarts.RemoveProductFromCurrentAccountCart(productId);
 
         return NoContent();
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Store.Core.Business.Orders;
 using Store.Core.Business.Products;
 using Store.Core.Business.ShoppingCarts;
 
@@ -10,6 +11,7 @@ public static class BusinessLayer
     {
         return services
             .AddSingleton<ShoppingCartsService>()
-            .AddSingleton<ProductsService>();
+            .AddSingleton<ProductsService>()
+            .AddSingleton<OrdersService>();
     }
 }

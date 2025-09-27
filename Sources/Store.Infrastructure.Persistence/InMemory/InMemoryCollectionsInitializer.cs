@@ -9,6 +9,7 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
     {
         database.Products.AddRange(GetProducts());
         database.ShoppingCarts.AddRange(GetShoppingCarts());
+        database.Orders.AddRange(GetOrders());
 
         return Task.CompletedTask;
     }
@@ -39,6 +40,33 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
                 new ShoppingCartLine("9952a5da-9945-11f0-9ae5-2f38b5112d0d", 3),
                 new ShoppingCartLine("dc552437-0b7d-455a-afa0-e4949142a4ad", 2),
                 new ShoppingCartLine("non-existing", 2)
+            ]
+        }
+    ];
+
+    private List<Order> GetOrders() =>
+    [
+        new Order
+        {
+            AccountId = currentAccount.Id,
+
+            Products =
+            [
+                new OrderProductDetails
+                {
+                    Id = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
+                    Name = "Apple",
+                    Price = 2.5m,
+                    Quantity = 2
+                },
+
+                new OrderProductDetails
+                {
+                    Id = "dc552437-0b7d-455a-afa0-e4949142a4ad",
+                    Name = "Orange",
+                    Price = 1.99m,
+                    Quantity = 3
+                }
             ]
         }
     ];

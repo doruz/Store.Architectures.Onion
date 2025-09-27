@@ -36,7 +36,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
     public Task ClearCurrentAccountCart()
         => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
 
-    public async Task UpdateCurrentAccountCartAsync(params ShoppingCartLineWriteModel[] lines)
+    public async Task UpdateCurrentAccountCart(params ShoppingCartLineWriteModel[] lines)
     {
         var validLines = await GetValidLines(lines);
         if (validLines.IsEmpty())
@@ -67,7 +67,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             .ToArray();
     }
 
-    public async Task RemoveProductFromCurrentAccountCartAsync(string productId)
+    public async Task RemoveProductFromCurrentAccountCart(string productId)
     {
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
 
