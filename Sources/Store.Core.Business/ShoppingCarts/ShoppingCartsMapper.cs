@@ -20,6 +20,6 @@ internal static class ShoppingCartsMapper
         };
     }
 
-    public static ShoppingCartLine ToShoppingCartLine(this ShoppingCartLineEditModel model)
+    public static ShoppingCartLine ToShoppingCartLine(this EditShoppingCartLineModel model)
         => new ShoppingCartLine(model.ProductId, model.Quantity);
 }

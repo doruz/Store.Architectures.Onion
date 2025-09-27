@@ -29,7 +29,7 @@ public sealed class AccountsShoppingCartsController(
     /// Update cart lines of authenticated account.
     /// </summary>
     [HttpPatch]
-    public async Task<IActionResult> UpdateCurrentCart([FromBody] ShoppingCartLineEditModel[] lines)
+    public async Task<IActionResult> UpdateCurrentCart([FromBody] EditShoppingCartLineModel[] lines)
     {
         await shoppingCarts.UpdateCurrentAccountCart(lines);
 

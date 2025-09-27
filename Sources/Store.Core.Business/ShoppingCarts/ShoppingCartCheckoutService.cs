@@ -5,16 +5,30 @@ using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 
+/*
+ * TODO: to ensure stock is available at checkout
+ */
 public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {
     public async Task CheckoutCurrentAccountCart()
     {
-        var accountOrder = CreateOrder(await GetShoppingCartItems());
-        if (accountOrder.IsNotEmpty())
+        var orderLines = await CreateOrderLinesFromShoppingCart();
+        if (orderLines.IsNotEmpty())
         {
+            var accountOrder = Order.Create(currentAccount.Id, orderLines);
             await repositories.Orders.SaveOrderAsync(accountOrder);
+
             await repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
         }
+    }
+
+    private async Task<List<OrderLine>> CreateOrderLinesFromShoppingCart()
+    {
+        var shoppingCartItems = await GetShoppingCartItems();
+
+        return shoppingCartItems
+            .Select(item => OrderLine.Create(item.CartLine, item.Product))
+            .ToList();
     }
 
     private async Task<List<(ShoppingCartLine CartLine, Product Product)>> GetShoppingCartItems()
@@ -29,28 +43,5 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
                 (await repositories.Products.FindAsync(cartLine.ProductId))!
             ))
             .ToListAsync();
-    }
-
-    private Order CreateOrder(List<(ShoppingCartLine CartLine, Product Product)> items) => new()
-    {
-        AccountId = currentAccount.Id,
-
-        Lines = items
-            .Select(i => CreateOrderLine(i.CartLine, i.Product))
-            .ToList()
-    };
-
-    private OrderLine CreateOrderLine(ShoppingCartLine cartLine, Product product)
-    {
-        EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
-
-        return new OrderLine
-        {
-            ProductId = product.Id,
-            ProductName = product.Name,
-            ProductPrice = product.Price,
-
-            Quantity = cartLine.Quantity
-        };
     }
 }

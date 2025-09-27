@@ -19,7 +19,6 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
     private async Task<List<ShoppingCartLineModel>> ToCartLinesModel(IEnumerable<ShoppingCartLine> cartLines)
     {
         var lines = await cartLines
-            .Where(cartLine => cartLine.Quantity > 0)
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
@@ -36,7 +35,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
     public Task ClearCurrentAccountCart()
         => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
 
-    public async Task UpdateCurrentAccountCart(params ShoppingCartLineEditModel[] lines)
+    public async Task UpdateCurrentAccountCart(params EditShoppingCartLineModel[] lines)
     {
         var validLines = await GetValidLines(lines);
         if (validLines.IsEmpty())
@@ -51,7 +50,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
         await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
     }
 
-    private async Task<ShoppingCartLine[]> GetValidLines(IEnumerable<ShoppingCartLineEditModel> cartLines)
+    private async Task<ShoppingCartLine[]> GetValidLines(IEnumerable<EditShoppingCartLineModel> cartLines)
     {
         var lines = await cartLines
             .Select(async cartLine => new

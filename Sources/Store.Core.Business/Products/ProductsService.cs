@@ -16,7 +16,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
             .MapAsync(ProductsMapper.ToProductModel);
 
 
-    public async Task<ProductModel> Create(ProductEditModel productModel)
+    public async Task<ProductModel> Create(NewProductModel productModel)
     {
         var newProduct = productModel.ToProduct();
 
@@ -25,7 +25,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
         return newProduct.ToProductModel();
     }
 
-    public async Task<bool> Update(string id, ProductEditModel productModel)
+    public async Task<bool> Update(string id, EditProductModel productModel)
     {
         var existingProduct = await repositories.Products.FindAsync(id);
         if (existingProduct is null)
@@ -33,8 +33,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
             return false;
         }
 
-        existingProduct.Name = productModel.Name;
-        existingProduct.Price = productModel.Price;
+        existingProduct.Update(productModel.Name, productModel.Price, productModel.Stock);
 
         await repositories.Products.UpdateAsync(existingProduct);
 

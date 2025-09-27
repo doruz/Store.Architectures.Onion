@@ -9,4 +9,6 @@ public record ProductModel
     public required string Name { get; init; } 
 
     public required Price Price { get; init; }
+
+    public required int Stock { get; init; }
 }

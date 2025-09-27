@@ -8,12 +8,14 @@ internal static class ProductsMapper
     {
         Id = product.Id,
         Name = product.Name,
-        Price = product.Price
+        Price = product.Price,
+        Stock = product.Stock
     };
 
-    public static Product ToProduct(this ProductEditModel model) => new()
+    public static Product ToProduct(this NewProductModel model) => new()
     {
         Name = model.Name,
-        Price = model.Price
+        Price = model.Price,
+        Stock = model.Stock
     };
 }

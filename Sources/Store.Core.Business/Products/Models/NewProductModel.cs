@@ -2,7 +2,7 @@
 
 namespace Store.Core.Business.Products;
 
-public record ProductEditModel
+public record NewProductModel
 {
     [Required]
     [MaxLength(100)]
@@ -10,4 +10,7 @@ public record ProductEditModel
 
     [Range(0, double.MaxValue)]
     public decimal Price { get; init; }
+
+    [Range(0, int.MaxValue)]
+    public int Stock { get; init; }
 }

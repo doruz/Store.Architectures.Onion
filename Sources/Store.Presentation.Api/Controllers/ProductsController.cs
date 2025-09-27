@@ -13,7 +13,7 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
         => OkOrNotFound(await products.FindProductAsync(id));
 
     [HttpPost]
-    public async Task<IActionResult> AddProduct([FromBody] ProductEditModel model)
+    public async Task<IActionResult> AddProduct([FromBody] NewProductModel model)
     {
         var newProduct = await products.Create(model);
 
@@ -21,7 +21,7 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateProduct([FromRoute] string id, [FromBody] ProductEditModel model)
+    public async Task<IActionResult> UpdateProduct([FromRoute] string id, [FromBody] EditProductModel model)
         => NoContentOrNotFound(await products.Update(id, model));
 
     [HttpDelete("{id}")]

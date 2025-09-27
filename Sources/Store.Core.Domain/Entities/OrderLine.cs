@@ -1,4 +1,6 @@
-﻿namespace Store.Core.Domain.Entities;
+﻿using EnsureThat;
+
+namespace Store.Core.Domain.Entities;
 
 public record OrderLine
 {
@@ -11,4 +13,18 @@ public record OrderLine
     public required int Quantity { get; init; }
 
     public Price TotalPrice => ProductPrice * Quantity;
+
+    public static OrderLine Create(ShoppingCartLine cartLine, Product product)
+    {
+        EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
+
+        return new OrderLine
+        {
+            ProductId = product.Id,
+            ProductName = product.Name,
+            ProductPrice = product.Price,
+
+            Quantity = cartLine.Quantity
+        };
+    }
 }
