@@ -2,7 +2,14 @@
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public record ShoppingCartLineReadModel
+public record ShoppingCartModel
+{
+    public IReadOnlyList<ShoppingCartLineModel> Lines { get; init; } = [];
+
+    public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
+}
+
+public record ShoppingCartLineModel
 {
     public required string ProductId { get; init; }
 

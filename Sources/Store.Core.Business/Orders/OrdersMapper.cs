@@ -5,7 +5,7 @@ namespace Store.Core.Business.Orders;
 
 internal static class OrdersMapper
 {
-    public static OrderSummaryModel ToSummaryModel(this Order order) => new()
+    public static OrderSummaryModel ToOrderSummaryModel(this Order order) => new()
     {
         Id = order.Id,
         OrderedAt = order.CreatedAt.ToOrderedAt(),
@@ -14,7 +14,7 @@ internal static class OrdersMapper
         TotalPrice = order.TotalPrice
     };
 
-    public static OrderDetailedModel ToDetailedModel(this Order order) => new ()
+    public static OrderDetailedModel ToOrderDetailedModel(this Order order) => new ()
     {
         Id = order.Id,
         OrderedAt = order.CreatedAt.ToOrderedAt(),

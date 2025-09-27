@@ -2,7 +2,7 @@
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public record ShoppingCartLineWriteModel
+public record ShoppingCartLineEditModel
 {
     [Required]
     public required string ProductId { get; init; }

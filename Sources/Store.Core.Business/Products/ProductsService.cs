@@ -5,27 +5,27 @@ namespace Store.Core.Business.Products;
 
 public sealed class ProductsService(RepositoriesContext repositories)
 {
-    public Task<IEnumerable<ProductReadModel>> GetAll() =>
+    public Task<IEnumerable<ProductModel>> GetAll() =>
         repositories.Products
             .GetAllAsync()
-            .SelectAsync(ProductsMapper.ToReadModel);
+            .SelectAsync(ProductsMapper.ToProductModel);
 
-    public Task<ProductReadModel?> FindProductAsync(string id) =>
+    public Task<ProductModel?> FindProductAsync(string id) =>
         repositories.Products
             .FindAsync(id)
-            .MapAsync(ProductsMapper.ToReadModel);
+            .MapAsync(ProductsMapper.ToProductModel);
 
 
-    public async Task<ProductReadModel> Create(ProductWriteModel productModel)
+    public async Task<ProductModel> Create(ProductEditModel productModel)
     {
         var newProduct = productModel.ToProduct();
 
         await repositories.Products.AddAsync(newProduct);
 
-        return newProduct.ToReadModel();
+        return newProduct.ToProductModel();
     }
 
-    public async Task<bool> Update(string id, ProductWriteModel productModel)
+    public async Task<bool> Update(string id, ProductEditModel productModel)
     {
         var existingProduct = await repositories.Products.FindAsync(id);
         if (existingProduct is null)

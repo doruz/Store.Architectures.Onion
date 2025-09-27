@@ -9,13 +9,13 @@ public sealed class OrdersService(RepositoriesContext repositories, ICurrentAcco
     {
         var orders = await repositories.Orders.GetAccountOrdersAsync(currentAccount.Id);
 
-        return orders.Select(OrdersMapper.ToSummaryModel);
+        return orders.Select(OrdersMapper.ToOrderSummaryModel);
     }
 
     public async Task<OrderDetailedModel?> FindCurrentAccountOrder(string id)
     {
         var order = await repositories.Orders.FindOrderAsync(currentAccount.Id, id);
 
-        return order.Map(OrdersMapper.ToDetailedModel);
+        return order.Map(OrdersMapper.ToOrderDetailedModel);
     }
 }

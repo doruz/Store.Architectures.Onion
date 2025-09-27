@@ -5,12 +5,12 @@ namespace Store.Core.Business.ShoppingCarts;
 
 internal static class ShoppingCartsMapper
 {
-    public static ShoppingCartLineReadModel ToShoppingCartLineReadModel(this ShoppingCartLine cartLine, Product product)
+    public static ShoppingCartLineModel ToShoppingCartLineModel(this ShoppingCartLine cartLine, Product product)
     {
         EnsureArg.IsNotNull(cartLine, nameof(cartLine));
         EnsureArg.IsNotNull(product, nameof(product));
 
-        return new ShoppingCartLineReadModel
+        return new ShoppingCartLineModel
         {
             ProductId = product.Id,
             ProductName = product.Name,
@@ -20,6 +20,6 @@ internal static class ShoppingCartsMapper
         };
     }
 
-    public static ShoppingCartLine ToShoppingCartLine(this ShoppingCartLineWriteModel model)
+    public static ShoppingCartLine ToShoppingCartLine(this ShoppingCartLineEditModel model)
         => new ShoppingCartLine(model.ProductId, model.Quantity);
 }
