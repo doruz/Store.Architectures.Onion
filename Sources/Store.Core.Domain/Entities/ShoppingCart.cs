@@ -2,9 +2,8 @@
 
 namespace Store.Core.Domain.Entities;
 
-public sealed class ShoppingCart : BaseEntity
+public class ShoppingCart : BaseEntity
 {
-    // TODO: to rename it to Products
     public List<ShoppingCartLine> Lines { get; init; } = [];
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
@@ -24,7 +23,7 @@ public sealed class ShoppingCart : BaseEntity
         }
     }
 
-    public void RemoveLine(string productId)
+    private void RemoveLine(string productId)
     {
         EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
 

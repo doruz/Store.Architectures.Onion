@@ -6,9 +6,8 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal static class CosmosClientFactory
 {
-    public static CosmosClient Create(IConfiguration configuration)
-    {
-        return new CosmosClientBuilder(configuration.GetConnectionString("Cosmos"))
+    public static CosmosClient Create(IConfiguration configuration) =>
+        new CosmosClientBuilder(configuration["CosmosOptions:ConnectionString"])
             .WithContentResponseOnWrite(false)
             .WithSerializerOptions(new CosmosSerializationOptions
             {
@@ -17,5 +16,4 @@ internal static class CosmosClientFactory
             })
             .BuildAndInitializeAsync([])
             .Result;
-    }
 }

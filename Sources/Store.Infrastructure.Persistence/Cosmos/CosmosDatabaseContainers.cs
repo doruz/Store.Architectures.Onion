@@ -6,10 +6,12 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 internal sealed class CosmosDatabaseContainers(CosmosClient cosmosClient, IOptions<CosmosOptions> options)
 {
     public const string ProductsName = "Products";
-    public const string ShoppingCartsName = "ShoppingCarts";
+    public const string ShoppingCartsName = "AccountsShoppingCarts";
+    public const string OrdersName = "AccountsOrders";
 
     public Container Products => GetContainer(ProductsName);
     public Container ShoppingCarts => GetContainer(ShoppingCartsName);
+    public Container Orders => GetContainer(OrdersName);
 
     private Container GetContainer(string containerName)
         => cosmosClient.GetContainer(options.Value.DatabaseName, containerName);

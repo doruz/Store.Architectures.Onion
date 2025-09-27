@@ -4,12 +4,12 @@ namespace Store.Core.Domain.Repositories;
 
 public interface IShoppingCartsRepository
 {
-    Task<ShoppingCart?> FindAsync(string accountId);
+    Task<ShoppingCart?> FindAsync(string id);
     
-    async Task<ShoppingCart> FindOrEmptyAsync(string accountId)
-        => await FindAsync(accountId) ?? ShoppingCart.CreateEmpty(accountId);
+    async Task<ShoppingCart> FindOrEmptyAsync(string id)
+        => await FindAsync(id) ?? ShoppingCart.CreateEmpty(id);
 
     Task AddOrUpdateAsync(ShoppingCart cart);
 
-    Task DeleteAsync(string accountId); 
+    Task DeleteAsync(string id); 
 }

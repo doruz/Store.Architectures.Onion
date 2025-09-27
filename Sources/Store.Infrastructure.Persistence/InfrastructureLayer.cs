@@ -4,24 +4,26 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Store.Core.Domain.Repositories;
 using Store.Infrastructure.Persistence.Cosmos;
+using Store.Infrastructure.Persistence.InMemory;
 
 namespace Store.Infrastructure.Persistence;
 
 public static class InfrastructureLayer
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) =>
-        services
-            .AddCosmosPersistence(configuration)
-            .AddSingleton<RepositoriesContext>();
+    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+    {
+        if (configuration.UseCosmos())
+        {
+            services.AddCosmosPersistence(configuration);
+        }
+        else
+        {
+            services.AddInMemoryPersistence();
+        }
 
-    public static IServiceCollection AddCosmosPersistence(this IServiceCollection services, IConfiguration configuration) =>
-        services
-            .Configure<CosmosOptions>(configuration.GetRequiredSection(nameof(CosmosOptions)).Bind)
+        return services.AddSingleton<RepositoriesContext>();
+    }
 
-            .AddSingleton(CosmosClientFactory.Create(configuration))
-            .AddSingleton<CosmosDatabaseContainers>()
-            .AddTransient<IAppInitializer, CosmosDatabaseInitializer>()
-
-            .AddSingleton<IProductsRepository, CosmosProductsRepository>()
-            .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>();
+    internal static bool UseCosmos(this IConfiguration configuration)
+        => configuration["AllowedPersistence"].IsEqualTo("cosmos");
 }

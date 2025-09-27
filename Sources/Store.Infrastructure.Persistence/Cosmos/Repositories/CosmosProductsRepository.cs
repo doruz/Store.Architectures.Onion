@@ -8,15 +8,19 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containers) : IProductsRepository
 {
-    public async Task<IEnumerable<Product>> GetAllAsync()
+    public Task<IEnumerable<Product>> GetAllAsync()
     {
-        return containers.Products
+        var products = containers.Products
             .GetItemLinqQueryable<Product>(true)
             .AsEnumerable();
+
+        return Task.FromResult(products);
     }
 
     public async Task<bool> ExistsAsync(string id)
     {
+        EnsureArg.IsNotNullOrEmpty(id, nameof(id));
+
         var requestOptions = new QueryRequestOptions
         {
             PartitionKey = id.ToPartitionKey(),
@@ -47,10 +51,6 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
         await containers.Products.ReplaceItemAsync(product, product.Id, product.Id.ToPartitionKey());
     }
 
-    public async Task<bool> DeleteAsync(string id)
-    {
-        EnsureArg.IsNotNullOrEmpty(id, nameof(id));
-
-        return await containers.Products.DeleteAsync<Product>(id, id.ToPartitionKey());
-    }
+    public Task<bool> DeleteAsync(string id) 
+        => containers.Products.DeleteAsync<Product>(id, id.ToPartitionKey());
 }

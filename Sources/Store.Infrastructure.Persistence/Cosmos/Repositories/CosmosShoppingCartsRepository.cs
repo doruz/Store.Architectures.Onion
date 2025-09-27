@@ -6,8 +6,8 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal sealed class CosmosShoppingCartsRepository(CosmosDatabaseContainers containers) : IShoppingCartsRepository
 {
-    public Task<ShoppingCart?> FindAsync(string accountId)
-        => containers.ShoppingCarts.FindAsync<ShoppingCart>(accountId, accountId.ToPartitionKey());
+    public Task<ShoppingCart?> FindAsync(string id)
+        => containers.ShoppingCarts.FindAsync<ShoppingCart>(id, id.ToPartitionKey());
 
     public async Task AddOrUpdateAsync(ShoppingCart cart)
     {
@@ -16,6 +16,6 @@ internal sealed class CosmosShoppingCartsRepository(CosmosDatabaseContainers con
         await containers.ShoppingCarts.UpsertItemAsync(cart);
     }
 
-    public Task DeleteAsync(string accountId)
-        => containers.ShoppingCarts.DeleteAsync<ShoppingCart>(accountId, accountId.ToPartitionKey());
+    public Task DeleteAsync(string id)
+        => containers.ShoppingCarts.DeleteAsync<ShoppingCart>(id, id.ToPartitionKey());
 }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Core.Business.ShoppingCarts;
 
-[ApiRoute("shopping-carts/current")]
-public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseApiController
+[ApiRoute("accounts/current/shopping-carts/current")]
+public sealed class AccountsShoppingCartsController(
+    ShoppingCartsService shoppingCarts,
+    ShoppingCartCheckoutService shoppingCartCheckout) : BaseApiController
 {
     /// <summary>
     /// Get current cart of authenticated account.
@@ -29,19 +31,16 @@ public class ShoppingCartsController(ShoppingCartsService shoppingCarts) : BaseA
     [HttpPatch]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] ShoppingCartLineWriteModel[] lines)
     {
-        await shoppingCarts.UpdateCurrentAccountCartAsync(lines);
+        await shoppingCarts.UpdateCurrentAccountCart(lines);
 
         return NoContent();
     }
 
-    /// <summary>
-    /// Removed product from cart of authenticated account.
-    /// </summary>
-    /// <param name="productId">identifier of product to be removed.</param>
-    [HttpDelete("products/{productId}")]
-    public async Task<IActionResult> RemoveProductFromCurrentAccountCart([FromRoute] string productId)
+    // TODO: in case cart is empty should return 404
+    [HttpPost("checkout")]
+    public async Task<IActionResult> CheckoutCart()
     {
-        await shoppingCarts.RemoveProductFromCurrentAccountCartAsync(productId);
+        await shoppingCartCheckout.CheckoutCurrentAccountCart();
 
         return NoContent();
     }
