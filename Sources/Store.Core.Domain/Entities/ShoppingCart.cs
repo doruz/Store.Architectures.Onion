@@ -4,7 +4,6 @@ namespace Store.Core.Domain.Entities;
 
 public class ShoppingCart : BaseEntity
 {
-    // TODO: to rename it to Products (ShoppingCartProduct)
     public List<ShoppingCartLine> Lines { get; init; } = [];
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };

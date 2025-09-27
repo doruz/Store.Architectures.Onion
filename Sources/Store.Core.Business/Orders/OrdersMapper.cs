@@ -9,7 +9,7 @@ internal static class OrdersMapper
     {
         Id = order.Id,
         OrderedAt = new (order.CreatedAt, order.CreatedAt.ToDateTimeString()),
-        TotalProducts = order.Products.Count,
+        TotalProducts = order.Products.Sum(p => p.Quantity),
         TotalPrice = order.TotalPrice
     };
 

@@ -9,7 +9,8 @@ internal sealed class CosmosDatabaseInitializer(CosmosClient cosmosClient, IOpti
     private static readonly List<ContainerProperties> Containers =
     [
         new ContainerProperties(CosmosDatabaseContainers.ProductsName, "/id"),
-        new ContainerProperties(CosmosDatabaseContainers.ShoppingCartsName, "/id")
+        new ContainerProperties(CosmosDatabaseContainers.ShoppingCartsName, "/id"),
+        new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/accountId")
     ];
 
     public async Task Execute()

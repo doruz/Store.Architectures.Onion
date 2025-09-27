@@ -5,6 +5,5 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal static class CosmosPartitionKeys
 {
-    public static PartitionKey ToPartitionKey(this string key) 
-        => new(EnsureArg.IsNotNullOrEmpty(key, nameof(key)));
+    public static PartitionKey ToPartitionKey(this string key) => new(key);
 }
