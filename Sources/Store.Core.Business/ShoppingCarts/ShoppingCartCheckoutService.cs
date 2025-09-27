@@ -35,20 +35,20 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
     {
         AccountId = currentAccount.Id,
 
-        Products = items
-            .Select(i => CreateOrderProductDetails(i.CartLine, i.Product))
+        Lines = items
+            .Select(i => CreateOrderLine(i.CartLine, i.Product))
             .ToList()
     };
 
-    private OrderProductDetails CreateOrderProductDetails(ShoppingCartLine cartLine, Product product)
+    private OrderLine CreateOrderLine(ShoppingCartLine cartLine, Product product)
     {
         EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
 
-        return new OrderProductDetails
+        return new OrderLine
         {
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
+            ProductId = product.Id,
+            ProductName = product.Name,
+            ProductPrice = product.Price,
 
             Quantity = cartLine.Quantity
         };

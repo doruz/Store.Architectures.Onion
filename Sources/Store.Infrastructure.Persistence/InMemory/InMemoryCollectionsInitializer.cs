@@ -50,21 +50,21 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
         {
             AccountId = currentAccount.Id,
 
-            Products =
+            Lines =
             [
-                new OrderProductDetails
+                new OrderLine
                 {
-                    Id = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
-                    Name = "Apple",
-                    Price = 2.5m,
+                    ProductId = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
+                    ProductName = "Apple",
+                    ProductPrice = 2.5m,
                     Quantity = 2
                 },
 
-                new OrderProductDetails
+                new OrderLine
                 {
-                    Id = "dc552437-0b7d-455a-afa0-e4949142a4ad",
-                    Name = "Orange",
-                    Price = 1.99m,
+                    ProductId = "dc552437-0b7d-455a-afa0-e4949142a4ad",
+                    ProductName = "Orange",
+                    ProductPrice = 1.99m,
                     Quantity = 3
                 }
             ]

@@ -8,25 +8,31 @@ internal static class OrdersMapper
     public static OrderSummaryModel ToSummaryModel(this Order order) => new()
     {
         Id = order.Id,
-        OrderedAt = new (order.CreatedAt, order.CreatedAt.ToDateTimeString()),
-        TotalProducts = order.Products.Sum(p => p.Quantity),
+        OrderedAt = order.CreatedAt.ToOrderedAt(),
+
+        TotalProducts = order.TotalProducts,
         TotalPrice = order.TotalPrice
     };
 
     public static OrderDetailedModel ToDetailedModel(this Order order) => new ()
     {
         Id = order.Id,
-        OrderedAt = new(order.CreatedAt, order.CreatedAt.ToDateTimeString()),
+        OrderedAt = order.CreatedAt.ToOrderedAt(),
+
+        TotalProducts = order.TotalProducts,
         TotalPrice = order.TotalPrice,
 
-        Products = order.Products.Select(ToOrderDetailedProductModel).ToList()
+        Lines = order.Lines.Select(ToOrderLineModel).ToList()
     };
 
-    private static OrderDetailedProductModel ToOrderDetailedProductModel(this OrderProductDetails product) => new()
+    private static OrderDetailedLineModel ToOrderLineModel(this OrderLine product) => new()
     {
-        Id = product.Id,
-        Name = product.Name,
-        Price = product.Price,
+        ProductId = product.ProductId,
+        ProductName = product.ProductName,
+        ProductPrice = product.ProductPrice,
         Quantity = product.Quantity
     };
+
+    private static ValueLabel<DateTime> ToOrderedAt(this DateTime orderedAt)
+        => new(orderedAt, orderedAt.ToDateTimeString());
 }

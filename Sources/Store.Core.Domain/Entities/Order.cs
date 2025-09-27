@@ -4,10 +4,12 @@
     {
         public required string AccountId { get; init; }
 
-        public required IReadOnlyList<OrderProductDetails> Products { get; init; } = [];
+        public required IReadOnlyList<OrderLine> Lines { get; init; } = [];
 
-        public Price TotalPrice => Products.Select(item => item.TotalPrice).Sum();
+        public int TotalProducts => Lines.Sum(line => line.Quantity);
 
-        public bool IsNotEmpty() => Products.IsNotEmpty();
+        public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
+
+        public bool IsNotEmpty() => Lines.IsNotEmpty();
     }
 }

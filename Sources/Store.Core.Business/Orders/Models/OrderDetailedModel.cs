@@ -9,7 +9,8 @@ public record OrderDetailedModel
 
     public required ValueLabel<DateTime> OrderedAt { get; init; }
 
+    public required int TotalProducts { get; init; }
     public required Price TotalPrice { get; init; }
 
-    public required IReadOnlyList<OrderDetailedProductModel> Products { get; init; } = [];
+    public required IReadOnlyList<OrderDetailedLineModel> Lines { get; init; } = [];
 }
