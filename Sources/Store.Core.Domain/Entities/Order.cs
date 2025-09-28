@@ -16,7 +16,7 @@ public class Order : BaseEntity
 
     public static Order Create(string accountId, params IEnumerable<OrderLine> lines) => new()
     {
-        AccountId = EnsureArg.IsNotNullOrEmpty(accountId, nameof(accountId)),
+        AccountId = EnsureArg.IsNotNullOrEmpty(accountId),
         Lines = Ensure.Enumerable.HasItems(lines).ToList()
     };
 }

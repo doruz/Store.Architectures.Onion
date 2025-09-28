@@ -17,6 +17,16 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
         return Task.FromResult(products);
     }
 
+    public Task<IEnumerable<Product>> FilterAsync(Func<Product, bool> filter)
+    {
+        var products = containers.Products
+            .GetItemLinqQueryable<Product>(true)
+            .Where(filter)
+            .AsEnumerable();
+
+        return Task.FromResult(products);
+    }
+
     public async Task<bool> ExistsAsync(string id)
     {
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));

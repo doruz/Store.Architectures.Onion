@@ -5,6 +5,11 @@ namespace Store.Core.Business.Products;
 
 public sealed class ProductsService(RepositoriesContext repositories)
 {
+    public Task<IEnumerable<ProductModel>> GetAllAvailable() =>
+        repositories.Products
+            .FilterAsync(product => product.Stock > 0)
+            .SelectAsync(ProductsMapper.ToProductModel);
+
     public Task<IEnumerable<ProductModel>> GetAll() =>
         repositories.Products
             .GetAllAsync()
@@ -14,7 +19,6 @@ public sealed class ProductsService(RepositoriesContext repositories)
         repositories.Products
             .FindAsync(id)
             .MapAsync(ProductsMapper.ToProductModel);
-
 
     public async Task<ProductModel> Create(NewProductModel productModel)
     {
@@ -40,6 +44,5 @@ public sealed class ProductsService(RepositoriesContext repositories)
         return true;
     }
 
-    public Task<bool> Delete(string id) 
-        => repositories.Products.DeleteAsync(id);
+    public Task<bool> Delete(string id) => repositories.Products.DeleteAsync(id);
 }
