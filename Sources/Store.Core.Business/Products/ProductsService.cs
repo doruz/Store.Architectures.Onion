@@ -15,9 +15,10 @@ public sealed class ProductsService(RepositoriesContext repositories)
             .GetAllAsync()
             .SelectAsync(ProductsMapper.ToProductModel);
 
-    public Task<ProductModel?> FindProductAsync(string id) =>
+    public Task<ProductModel> FindProductAsync(string id) =>
         repositories.Products
             .FindAsync(id)
+            .EnsureIsNotNull(id)
             .MapAsync(ProductsMapper.ToProductModel);
 
     public async Task<ProductModel> CreateAsync(NewProductModel productModel)
@@ -29,21 +30,24 @@ public sealed class ProductsService(RepositoriesContext repositories)
         return newProduct.ToProductModel();
     }
 
-    public async Task<bool> UpdateAsync(string id, EditProductModel productModel)
+    public async Task UpdateAsync(string id, EditProductModel productModel)
     {
-        var existingProduct = await repositories.Products.FindAsync(id);
-        if (existingProduct is null)
-        {
-            return false;
-        }
-
+        var existingProduct = await repositories.Products
+            .FindAsync(id)
+            .EnsureIsNotNull(id);
+      
         existingProduct.Update(productModel.Name, productModel.Price, productModel.Stock);
 
         await repositories.Products.UpdateAsync(existingProduct);
-
-        return true;
     }
 
-    // TODO: to mark product as deleted
-    public Task<bool> DeleteAsync(string id) => repositories.Products.DeleteAsync(id);
+    public async Task DeleteAsync(string id)
+    {
+        if (await repositories.Products.ExistsAsync(id) is false)
+        {
+            throw ProductErrors.NotFound(id);
+        }
+
+        await repositories.Products.DeleteAsync(id);
+    }
 }
