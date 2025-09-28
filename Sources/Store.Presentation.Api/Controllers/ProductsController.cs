@@ -13,7 +13,7 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
     [ProducesResponseType<ProductModel>(StatusCodes.Status200OK)]
     [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindProduct([FromRoute] string id) 
-        => OkOrNotFound(await products.FindProductAsync(id));
+        => Ok(await products.FindProductAsync(id));
 
     [HttpPost]
     [ProducesResponseType<ProductModel>(StatusCodes.Status201Created)]
