@@ -17,6 +17,7 @@ public record OrderLine
     public static OrderLine Create(ShoppingCartLine cartLine, Product product)
     {
         EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
+        EnsureArg.IsInRange(cartLine.Quantity, 1, product.Stock);
 
         return new OrderLine
         {
