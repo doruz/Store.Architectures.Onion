@@ -1,4 +1,6 @@
-﻿namespace Store.Core.Domain.Entities;
+﻿using EnsureThat;
+
+namespace Store.Core.Domain.Entities;
 
 public class Product : BaseEntity
 {
@@ -13,5 +15,19 @@ public class Product : BaseEntity
         Name = name ?? Name;
         Price = price ?? Price;
         Stock = stock ?? Stock;
+    }
+
+    public void DecreaseStock(int quantity)
+    {
+        EnsureStockIsAvailable(quantity);
+        Stock -= quantity;
+    }
+
+    internal void EnsureStockIsAvailable(int quantity)
+    {
+        if (quantity.IsNotInRange(0, Stock))
+        {
+            throw AppError.Conflict("product_stock_not_available", Id);
+        }
     }
 }

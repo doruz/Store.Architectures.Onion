@@ -5,7 +5,7 @@ using Store.Core.Business.Products;
 public sealed class AccountsProductsController(ProductsService products) : BaseApiController
 {
     [HttpGet]
-    public async Task<IActionResult> GetAvailableProduct()
+    public async Task<IActionResult> GetAvailableProducts()
         => Ok(await products.GetAllAvailable());
 
     [HttpGet("{id}")]
