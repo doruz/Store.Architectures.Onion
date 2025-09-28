@@ -15,16 +15,16 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
     [HttpPost]
     public async Task<IActionResult> AddProduct([FromBody] NewProductModel model)
     {
-        var newProduct = await products.Create(model);
+        var newProduct = await products.CreateAsync(model);
 
         return CreatedAtAction(nameof(FindProduct), new { newProduct.Id }, newProduct);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProduct([FromRoute] string id, [FromBody] EditProductModel model)
-        => NoContentOrNotFound(await products.Update(id, model));
+        => NoContentOrNotFound(await products.UpdateAsync(id, model));
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct([FromRoute] string id)
-        => NoContentOrNotFound(await products.Delete(id));
+        => NoContentOrNotFound(await products.DeleteAsync(id));
 }

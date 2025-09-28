@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Core.Business.ShoppingCarts;
+using Store.Core.Shared;
 
 [ApiRoute("accounts/current/shopping-carts/current")]
 public sealed class AccountsShoppingCartsController(
@@ -11,6 +12,7 @@ public sealed class AccountsShoppingCartsController(
     /// If there is no cart created, create an empty one.
     /// </summary>
     [HttpGet]
+    [ProducesResponseType<ShoppingCartModel>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCurrentCart() 
         => Ok(await shoppingCarts.GetCurrentAccountCart());
 
@@ -18,6 +20,7 @@ public sealed class AccountsShoppingCartsController(
     /// Clear cart of authenticated account.
     /// </summary>
     [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> ClearCurrentCart()
     {
         await shoppingCarts.ClearCurrentAccountCart();
@@ -29,6 +32,9 @@ public sealed class AccountsShoppingCartsController(
     /// Update cart lines of authenticated account.
     /// </summary>
     [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] EditShoppingCartLineModel[] lines)
     {
         await shoppingCarts.UpdateCurrentAccountCart(lines);
@@ -36,8 +42,9 @@ public sealed class AccountsShoppingCartsController(
         return NoContent();
     }
 
-    // TODO: in case cart is empty should return 404
     [HttpPost("checkout")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> CheckoutCart()
     {
         await shoppingCartCheckout.CheckoutCurrentAccountCart();

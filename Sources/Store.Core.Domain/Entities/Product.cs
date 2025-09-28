@@ -17,17 +17,9 @@ public class Product : BaseEntity
         Stock = stock ?? Stock;
     }
 
-    public void DecreaseStock(int quantity)
-    {
-        EnsureStockIsAvailable(quantity);
-        Stock -= quantity;
-    }
+    public bool StockIsNotAvailable(int quantity)
+        => quantity.IsNotInRange(0, Stock);
 
-    internal void EnsureStockIsAvailable(int quantity)
-    {
-        if (quantity.IsNotInRange(0, Stock))
-        {
-            throw AppError.Conflict("product_stock_not_available", Id);
-        }
-    }
+    public void DecreaseStock(int quantity)
+        => Stock -= quantity;
 }

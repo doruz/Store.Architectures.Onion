@@ -1,18 +1,18 @@
 ﻿using EnsureThat;
+using Store.Core.Business.Products;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 
-/*
- * TODO: to ensure stock is available at checkout
- */
 public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {
     public async Task CheckoutCurrentAccountCart()
     {
         var shoppingCartItems = await GetShoppingCartItems();
+
+        shoppingCartItems.ForEach(l => l.Product.EnsureStockIsAvailable(l.CartLine.Quantity));
 
         var orderLines = shoppingCartItems
             .Select(item => OrderLine.Create(item.CartLine, item.Product))
@@ -42,8 +42,6 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
             .ToListAsync();
     }
 
-    // TODO: it's better to let the stock on minus, instead of throwing an exception to the client and to go on an incosisten state
-    // TODO: in this case it's better to notify an admin
     private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Product Product)> items)
     {
         foreach (var item in items)

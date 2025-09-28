@@ -13,7 +13,7 @@ internal sealed class AppErrorFilter : IExceptionFilter
     {
         if (context.Exception is AppError appError)
         {
-            context.Result = new ObjectResult(new { appError.Id, appError.ErrorCode })
+            context.Result = new ObjectResult(new AppErrorModel(appError.ErrorCode, appError.ErrorDetails))
             {
                 StatusCode = appError.StatusCode
             };
@@ -22,3 +22,5 @@ internal sealed class AppErrorFilter : IExceptionFilter
         }
     }
 }
+
+internal record AppErrorModel(string ErrorCode, object ErrorDetails);

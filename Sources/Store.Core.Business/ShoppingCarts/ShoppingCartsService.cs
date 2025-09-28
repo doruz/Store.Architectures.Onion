@@ -1,4 +1,6 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Core.Business.Products;
+using Store.Core.Domain;
+using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
@@ -37,15 +39,14 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
 
     public async Task UpdateCurrentAccountCart(params EditShoppingCartLineModel[] lines)
     {
-        var validLines = await GetValidLines(lines);
-        if (validLines.IsEmpty())
+        if (lines.IsEmpty())
         {
             return;
         }
 
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
 
-        shoppingCart.UpdateOrRemoveLines(validLines);
+        shoppingCart.UpdateOrRemoveLines(await GetValidLines(lines));
        
         await repositories.ShoppingCarts.AddOrUpdateAsync(shoppingCart);
     }
@@ -56,13 +57,19 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
-                IsValidProduct = await repositories.Products.ExistsAsync(cartLine.ProductId)
+                Product = await repositories.Products.FindAsync(cartLine.ProductId)
             })
             .ToListAsync();
 
+        lines.ForEach(l =>
+        {
+            l.Product
+                .EnsureIsNotNull(l.CartLine.ProductId)
+                .EnsureStockIsAvailable(l.CartLine.Quantity);
+        });
+
         return lines
-            .Where(x => x.IsValidProduct)
-            .Select(x => x.CartLine.ToShoppingCartLine())
+            .Select(l => l.CartLine.ToShoppingCartLine())
             .ToArray();
     }
 }

@@ -20,7 +20,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
             .FindAsync(id)
             .MapAsync(ProductsMapper.ToProductModel);
 
-    public async Task<ProductModel> Create(NewProductModel productModel)
+    public async Task<ProductModel> CreateAsync(NewProductModel productModel)
     {
         var newProduct = productModel.ToProduct();
 
@@ -29,7 +29,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
         return newProduct.ToProductModel();
     }
 
-    public async Task<bool> Update(string id, EditProductModel productModel)
+    public async Task<bool> UpdateAsync(string id, EditProductModel productModel)
     {
         var existingProduct = await repositories.Products.FindAsync(id);
         if (existingProduct is null)
@@ -44,5 +44,6 @@ public sealed class ProductsService(RepositoriesContext repositories)
         return true;
     }
 
-    public Task<bool> Delete(string id) => repositories.Products.DeleteAsync(id);
+    // TODO: to mark product as deleted
+    public Task<bool> DeleteAsync(string id) => repositories.Products.DeleteAsync(id);
 }

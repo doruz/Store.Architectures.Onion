@@ -1,17 +1,24 @@
 ﻿namespace Store.Core.Shared;
 
-public sealed class AppError : Exception
+public sealed class AppError(int statusCode, string errorCode) : Exception
 {
-    public int StatusCode { get; private init; }
-    public string ErrorCode { get; private init; }
-    public string? Id { get; private init; }
+    public int StatusCode { get; private init; } = statusCode;
+    public string ErrorCode { get; private init; } = errorCode;
+    public object ErrorDetails { get; private set; } = new { };
 
-    private AppError(int statusCode, string errorCode)
+    public AppError WithDetails(object details)
     {
-        StatusCode = statusCode;
-        ErrorCode = errorCode;
+        ErrorDetails = details;
+        return this;
     }
 
+    public static AppError NotFound(string errorCode, string id) => new(404, errorCode)
+    {
+        ErrorDetails = new { id }
+    };
 
-    public static AppError Conflict(string error, string id) => new(409, error) { Id = id };
+    public static AppError Conflict(string error, string id) => new(409, error)
+    {
+        ErrorDetails = new { id }
+    };
 }
