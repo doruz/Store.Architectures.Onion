@@ -44,6 +44,7 @@ public sealed class AccountsShoppingCartsController(
         return NoContent();
     }
 
+    // TODO: in case cart is empty should return 404
     [HttpPost("checkout")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType<BusinessError>(StatusCodes.Status409Conflict)]
