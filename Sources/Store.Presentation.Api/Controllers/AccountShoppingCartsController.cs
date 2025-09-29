@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Core.Business.Errors;
 using Store.Core.Business.ShoppingCarts;
-using Store.Core.Shared;
 
 [ApiRoute("accounts/current/shopping-carts/current")]
 public sealed class AccountsShoppingCartsController(
@@ -21,6 +21,7 @@ public sealed class AccountsShoppingCartsController(
     /// </summary>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+   
     public async Task<IActionResult> ClearCurrentCart()
     {
         await shoppingCarts.ClearCurrentAccountCart();
@@ -33,8 +34,9 @@ public sealed class AccountsShoppingCartsController(
     /// </summary>
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> UpdateCurrentCart([FromBody] EditShoppingCartLineModel[] lines)
     {
         await shoppingCarts.UpdateCurrentAccountCart(lines);
@@ -44,7 +46,7 @@ public sealed class AccountsShoppingCartsController(
 
     [HttpPost("checkout")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status409Conflict)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> CheckoutCart()
     {
         await shoppingCartCheckout.CheckoutCurrentAccountCart();

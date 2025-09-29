@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Store.Core.Domain.Entities;
+﻿using Store.Core.Domain.Entities;
 
 namespace Store.Infrastructure.Persistence.InMemory
 {

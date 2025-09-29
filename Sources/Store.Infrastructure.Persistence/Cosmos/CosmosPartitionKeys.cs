@@ -1,5 +1,4 @@
-﻿using EnsureThat;
-using Microsoft.Azure.Cosmos;
+﻿using Microsoft.Azure.Cosmos;
 
 namespace Store.Infrastructure.Persistence.Cosmos;
 

@@ -1,6 +1,4 @@
-﻿using EnsureThat;
-
-namespace Store.Core.Domain.Entities;
+﻿namespace Store.Core.Domain.Entities;
 
 public class Product : BaseEntity
 {

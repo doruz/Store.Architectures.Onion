@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Core.Business.Errors;
 using Store.Core.Business.Orders;
 
 [ApiRoute("accounts/current/orders")]
@@ -11,7 +12,7 @@ public sealed class AccountsOrdersController(OrdersService orders) : BaseApiCont
 
     [HttpGet("{orderId}")]
     [ProducesResponseType<OrderDetailedModel>(StatusCodes.Status200OK)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindOrderDetails([FromRoute] string orderId)
         => Ok(await orders.FindCurrentAccountOrder(orderId));
 }

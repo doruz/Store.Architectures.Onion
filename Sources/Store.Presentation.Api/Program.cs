@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(options =>
 {
-    options.Filters.Add<CosmosExceptionFilter>();
-    options.Filters.Add<AppErrorFilter>();
+    options.Filters.Add<CosmosExceptionsFilter>();
+    options.Filters.Add<BusinessExceptionsFilter>();
 });
 builder.Services.AddOpenApi();
 

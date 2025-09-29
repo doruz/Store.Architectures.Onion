@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Core.Business.Errors;
 using Store.Core.Business.Products;
 
 [ApiRoute("products")]
@@ -11,12 +12,13 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
 
     [HttpGet("{id}")]
     [ProducesResponseType<ProductModel>(StatusCodes.Status200OK)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindProduct([FromRoute] string id) 
         => Ok(await products.FindProductAsync(id));
 
     [HttpPost]
     [ProducesResponseType<ProductModel>(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddProduct([FromBody] NewProductModel model)
     {
         var newProduct = await products.CreateAsync(model);
@@ -26,7 +28,8 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
 
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> UpdateProduct([FromRoute] string id, [FromBody] EditProductModel model)
     {
         await products.UpdateAsync(id, model);
@@ -36,7 +39,7 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteProduct([FromRoute] string id)
     {
         await products.DeleteAsync(id);

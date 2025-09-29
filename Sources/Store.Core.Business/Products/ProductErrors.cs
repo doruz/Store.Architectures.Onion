@@ -1,12 +1,12 @@
-﻿using Store.Core.Domain.Entities;
-using Store.Core.Shared;
+﻿using Store.Core.Business.Errors;
+using Store.Core.Domain.Entities;
 
 namespace Store.Core.Business.Products;
 
 internal static class ProductErrors
 {
-    public static AppError NotFound(string productId) 
-        => AppError.NotFound("product_not_found", productId);
+    public static BusinessException NotFound(string productId) 
+        => new BusinessException(BusinessError.NotFound("product_not_found", productId));
 
     public static async Task<Product> EnsureIsNotNull(this Task<Product?> product, string productId)
         => await product ?? throw NotFound(productId);
@@ -16,6 +16,6 @@ internal static class ProductErrors
 
     public static Product EnsureStockIsAvailable(this Product product, int quantity) =>
         product.StockIsNotAvailable(quantity)
-            ? throw AppError.Conflict("product_stock_not_available", product.Id)
+            ? throw new BusinessException(BusinessError.Conflict("product_stock_not_available", product.Id))
             : product;
 }

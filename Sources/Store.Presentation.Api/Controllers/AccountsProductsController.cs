@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Store.Core.Business.Errors;
 using Store.Core.Business.Products;
 
 [ApiRoute("accounts/current/products")]
@@ -11,7 +12,7 @@ public sealed class AccountsProductsController(ProductsService products) : BaseA
 
     [HttpGet("{id}")]
     [ProducesResponseType<ProductModel>(StatusCodes.Status200OK)]
-    [ProducesResponseType<AppErrorModel>(StatusCodes.Status404NotFound)]
+    [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindProduct([FromRoute] string id)
         => Ok(await products.FindProductAsync(id));
 }

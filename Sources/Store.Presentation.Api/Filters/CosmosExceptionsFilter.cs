@@ -6,7 +6,7 @@ using System.Net;
 /// <summary>
 /// In case Cosmos DB throws a NotFound or Conflict exception to return status code to the client.
 /// </summary>
-internal sealed class CosmosExceptionFilter : IExceptionFilter
+internal sealed class CosmosExceptionsFilter : IExceptionFilter
 {
     public void OnException(ExceptionContext context)
     {
