@@ -9,6 +9,9 @@ internal sealed class InMemoryProductsRepository(InMemoryDatabase database) : IP
     public Task<IEnumerable<Product>> GetAllAsync() 
         => Task.FromResult(database.Products.AsEnumerable());
 
+    public Task<IEnumerable<Product>> FilterAsync(Func<Product, bool> filter)
+        => Task.FromResult(database.Products.Where(filter));
+
     public Task<bool> ExistsAsync(string id)
         => Task.FromResult(database.Products.Any(p => p.Id.IsEqualTo(id)));
 
@@ -32,6 +35,6 @@ internal sealed class InMemoryProductsRepository(InMemoryDatabase database) : IP
         await AddAsync(product);
     }
 
-    public Task<bool> DeleteAsync(string id)
-        => Task.FromResult(database.Products.RemoveAll(p => p.Id.IsEqualTo(id)) > 0);
+    public Task DeleteAsync(string id)
+        => Task.FromResult(database.Products.RemoveAll(p => p.Id.IsEqualTo(id)));
 }

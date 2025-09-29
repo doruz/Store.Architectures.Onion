@@ -1,5 +1,7 @@
-﻿namespace Store.Core.Domain.Entities
-{
+﻿using EnsureThat;
+
+namespace Store.Core.Domain.Entities;
+
     public class Order : BaseEntity
     {
         public required string AccountId { get; init; }
@@ -11,5 +13,10 @@
         public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
 
         public bool IsNotEmpty() => Lines.IsNotEmpty();
-    }
+
+    public static Order Create(string accountId, params IEnumerable<OrderLine> lines) => new()
+    {
+        AccountId = EnsureArg.IsNotNullOrEmpty(accountId),
+        Lines = Ensure.Enumerable.HasItems(lines).ToList()
+    };
 }

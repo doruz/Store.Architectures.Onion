@@ -17,6 +17,16 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
         return Task.FromResult(products);
     }
 
+    public Task<IEnumerable<Product>> FilterAsync(Func<Product, bool> filter)
+    {
+        var products = containers.Products
+            .GetItemLinqQueryable<Product>(true)
+            .Where(filter)
+            .AsEnumerable();
+
+        return Task.FromResult(products);
+    }
+
     public async Task<bool> ExistsAsync(string id)
     {
         EnsureArg.IsNotNullOrEmpty(id, nameof(id));
@@ -51,6 +61,6 @@ internal sealed class CosmosProductsRepository(CosmosDatabaseContainers containe
         await containers.Products.ReplaceItemAsync(product, product.Id, product.Id.ToPartitionKey());
     }
 
-    public Task<bool> DeleteAsync(string id) 
-        => containers.Products.DeleteAsync<Product>(id, id.ToPartitionKey());
+    public Task DeleteAsync(string id) 
+        => containers.Products.DeleteItemAsync<Product>(id, id.ToPartitionKey());
 }

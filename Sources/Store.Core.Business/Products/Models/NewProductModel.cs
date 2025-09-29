@@ -2,12 +2,15 @@
 
 namespace Store.Core.Business.Products;
 
-public record ProductWriteModel
+public record NewProductModel
 {
     [Required]
     [MaxLength(100)]
-    public string Name { get; init; } = string.Empty;
+    public required string Name { get; init; }
 
     [Range(0, double.MaxValue)]
     public decimal Price { get; init; }
+
+    [Range(0, int.MaxValue)]
+    public int Stock { get; init; }
 }

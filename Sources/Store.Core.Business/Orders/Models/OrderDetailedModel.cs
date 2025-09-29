@@ -14,3 +14,16 @@ public record OrderDetailedModel
 
     public required IReadOnlyList<OrderDetailedLineModel> Lines { get; init; } = [];
 }
+
+public record OrderDetailedLineModel
+{
+    public required string ProductId { get; init; }
+
+    public required string ProductName { get; init; }
+
+    public required Price ProductPrice { get; init; }
+
+    public required int Quantity { get; init; }
+
+    public Price TotalPrice => ProductPrice * Quantity;
+}

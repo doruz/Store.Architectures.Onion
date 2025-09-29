@@ -5,42 +5,49 @@ namespace Store.Core.Business.Products;
 
 public sealed class ProductsService(RepositoriesContext repositories)
 {
-    public Task<IEnumerable<ProductReadModel>> GetAll() =>
+    public Task<IEnumerable<ProductModel>> GetAllAvailable() =>
+        repositories.Products
+            .FilterAsync(product => product.Stock > 0)
+            .SelectAsync(ProductsMapper.ToProductModel);
+
+    public Task<IEnumerable<ProductModel>> GetAll() =>
         repositories.Products
             .GetAllAsync()
-            .SelectAsync(ProductsMapper.ToReadModel);
+            .SelectAsync(ProductsMapper.ToProductModel);
 
-    public Task<ProductReadModel?> FindProductAsync(string id) =>
+    public Task<ProductModel> FindProductAsync(string id) =>
         repositories.Products
             .FindAsync(id)
-            .MapAsync(ProductsMapper.ToReadModel);
+            .EnsureIsNotNull(id)
+            .MapAsync(ProductsMapper.ToProductModel);
 
-
-    public async Task<ProductReadModel> Create(ProductWriteModel productModel)
+    public async Task<ProductModel> CreateAsync(NewProductModel productModel)
     {
         var newProduct = productModel.ToProduct();
 
         await repositories.Products.AddAsync(newProduct);
 
-        return newProduct.ToReadModel();
+        return newProduct.ToProductModel();
     }
 
-    public async Task<bool> Update(string id, ProductWriteModel productModel)
+    public async Task UpdateAsync(string id, EditProductModel productModel)
     {
-        var existingProduct = await repositories.Products.FindAsync(id);
-        if (existingProduct is null)
-        {
-            return false;
-        }
-
-        existingProduct.Name = productModel.Name;
-        existingProduct.Price = productModel.Price;
+        var existingProduct = await repositories.Products
+            .FindAsync(id)
+            .EnsureIsNotNull(id);
+      
+        existingProduct.Update(productModel.Name, productModel.Price, productModel.Stock);
 
         await repositories.Products.UpdateAsync(existingProduct);
-
-        return true;
     }
 
-    public Task<bool> Delete(string id) 
-        => repositories.Products.DeleteAsync(id);
+    public async Task DeleteAsync(string id)
+    {
+        if (await repositories.Products.ExistsAsync(id) is false)
+        {
+            throw ProductErrors.NotFound(id);
+        }
+
+        await repositories.Products.DeleteAsync(id);
+    }
 }

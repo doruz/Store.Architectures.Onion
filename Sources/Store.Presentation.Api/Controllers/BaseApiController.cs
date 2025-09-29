@@ -9,6 +9,7 @@ public abstract class BaseApiController : ControllerBase
             ? NotFound()
             : Ok(value);
 
+    // TODO: to be deleted
     protected IActionResult NoContentOrNotFound(bool exists) =>
         exists
             ? NoContent()

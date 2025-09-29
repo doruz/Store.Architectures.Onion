@@ -1,4 +1,4 @@
-﻿using EnsureThat;
+﻿using Store.Core.Business.Products;
 using Store.Core.Domain.Entities;
 using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
@@ -9,11 +9,21 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
 {
     public async Task CheckoutCurrentAccountCart()
     {
-        var accountOrder = CreateOrder(await GetShoppingCartItems());
-        if (accountOrder.IsNotEmpty())
+        var shoppingCartItems = await GetShoppingCartItems();
+
+        shoppingCartItems.ForEach(l => l.Product.EnsureStockIsAvailable(l.CartLine.Quantity));
+
+        var orderLines = shoppingCartItems
+            .Select(item => OrderLine.Create(item.CartLine, item.Product))
+            .ToList();
+
+        if (orderLines.IsNotEmpty())
         {
+            var accountOrder = Order.Create(currentAccount.Id, orderLines);
             await repositories.Orders.SaveOrderAsync(accountOrder);
             await repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
+
+            await UpdateProductsStock(shoppingCartItems);
         }
     }
 
@@ -31,26 +41,12 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
             .ToListAsync();
     }
 
-    private Order CreateOrder(List<(ShoppingCartLine CartLine, Product Product)> items) => new()
+    private async Task UpdateProductsStock(List<(ShoppingCartLine CartLine, Product Product)> items)
     {
-        AccountId = currentAccount.Id,
-
-        Lines = items
-            .Select(i => CreateOrderLine(i.CartLine, i.Product))
-            .ToList()
-    };
-
-    private OrderLine CreateOrderLine(ShoppingCartLine cartLine, Product product)
-    {
-        EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));
-
-        return new OrderLine
+        foreach (var item in items)
         {
-            ProductId = product.Id,
-            ProductName = product.Name,
-            ProductPrice = product.Price,
-
-            Quantity = cartLine.Quantity
-        };
+            item.Product.DecreaseStock(item.CartLine.Quantity);
+            await repositories.Products.UpdateAsync(item.Product);
+        }
     }
 }
