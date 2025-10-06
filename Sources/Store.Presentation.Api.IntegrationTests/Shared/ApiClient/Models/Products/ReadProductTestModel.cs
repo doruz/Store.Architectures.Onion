@@ -1,6 +1,6 @@
 ﻿using Store.Core.Domain.Entities;
 
-namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
+namespace Store.Presentation.Api.IntegrationTests;
 
 internal record ReadProductTestModel
 {
@@ -16,10 +16,4 @@ internal record ReadProductTestModel
         Stock = product.Stock,
         Price = new PriceTestModel(product.Price.Value)
     };
-}
-
-public record PriceTestModel(decimal Value)
-{
-    public string Currency => "€";
-    public string Display => $"€{Value:F2}";
 }

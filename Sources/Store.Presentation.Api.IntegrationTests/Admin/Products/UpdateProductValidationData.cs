@@ -1,10 +1,10 @@
 ﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-internal sealed class EditProductValidationData : ValidationTheoryData<object>
+internal sealed class UpdateProductValidationData : ValidationTheoryData<object>
 {
     protected override object ValidModel { get; } = new();
 
-    public EditProductValidationData()
+    public UpdateProductValidationData()
     {
         Add(
             new { Name = TestRandom.Strings.Generate(101) },

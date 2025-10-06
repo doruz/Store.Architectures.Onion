@@ -5,7 +5,7 @@ namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
 {
     [Theory]
-    [ClassData(typeof(EditProductValidationData))]
+    [ClassData(typeof(UpdateProductValidationData))]
     public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(object invalidDetails, ValidationError expectedError)
     {
         // Act
