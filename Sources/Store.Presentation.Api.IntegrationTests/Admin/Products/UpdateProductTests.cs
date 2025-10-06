@@ -9,7 +9,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(object invalidDetails, ValidationError expectedError)
     {
         // Act
-        var response = await Api.Admin.EditProductAsync(ProductsTestData.UnknownId, invalidDetails);
+        var response = await Api.Admin.EditProductAsync(TestProducts.UnknownId, invalidDetails);
 
         // Assert
         response.Should()
@@ -21,7 +21,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductDoesNotExist_Should_ReturnNotFound()
     {
         // Act
-        var response = await Api.Admin.EditProductAsync(ProductsTestData.UnknownId, new {});
+        var response = await Api.Admin.EditProductAsync(TestProducts.UnknownId, new {});
 
         // Assert
         response.Should().HaveStatusCode(HttpStatusCode.NotFound);
@@ -31,7 +31,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductExists_Should_ReturnNoContent()
     {
         // Act
-        var response = await Api.Admin.EditProductAsync(ProductsTestData.Apples.Id, new {});
+        var response = await Api.Admin.EditProductAsync(TestProducts.Apples.Id, new {});
 
         // Assert
         response.Should().HaveStatusCode(HttpStatusCode.NoContent);
@@ -41,7 +41,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_NoUpdatesAreProvided_Should_KeepSameDetails()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples);
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples);
 
         // Act
         await UpdateProductDetails(expectedProduct.Id, new { });
@@ -54,7 +54,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_NewNameIsProvided_Should_UpdateWithTheNewValue()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples) with
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples) with
         {
             Name = "Red Apples"
         };
@@ -70,7 +70,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_NewPriceIsProvided_Should_UpdateWithTheNewValue()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples) with
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples) with
         {
             Price = new(1.75m)
         };
@@ -86,7 +86,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_NewStockIsProvided_Should_UpdateWithTheNewValue()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples) with
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples) with
         {
             Stock = 10
         };
@@ -102,7 +102,7 @@ public class UpdateProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_AllDetailsProvided_Should_UpdateWithTheNewValues()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples) with
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples) with
         {
             Name = "Green Apples",
             Stock = 25,

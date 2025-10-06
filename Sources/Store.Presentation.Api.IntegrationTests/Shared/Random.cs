@@ -3,9 +3,9 @@ using EnsureThat;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal static class TestRandom
+internal static class Random
 {
-    private static readonly Random SystemRandom = Random.Shared;
+    private static readonly System.Random SystemRandom = System.Random.Shared;
 
     public static class Numbers
     {

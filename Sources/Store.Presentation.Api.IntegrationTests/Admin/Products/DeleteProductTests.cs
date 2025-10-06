@@ -6,7 +6,7 @@ public class DeleteProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductDoesNotExist_Should_ReturnNotFound()
     {
         // Act
-        var response = await Api.Admin.DeleteProductAsync(ProductsTestData.UnknownId);
+        var response = await Api.Admin.DeleteProductAsync(TestProducts.UnknownId);
 
         // Assert
         response.Should().HaveStatusCode(HttpStatusCode.NotFound);
@@ -16,7 +16,7 @@ public class DeleteProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductExists_Should_ReturnNoContent()
     {
         // Act
-        var response = await Api.Admin.DeleteProductAsync(ProductsTestData.Apples.Id);
+        var response = await Api.Admin.DeleteProductAsync(TestProducts.Apples.Id);
 
         // Assert
         response.Should().HaveStatusCode(HttpStatusCode.NoContent);
@@ -26,7 +26,7 @@ public class DeleteProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductWasDeleted_Should_ReturnNotFound()
     {
         // Act
-        var responses = await Api.Admin.DeleteProductAsync(ProductsTestData.Apples.Id, 2);
+        var responses = await Api.Admin.DeleteProductAsync(TestProducts.Apples.Id, 2);
 
         // Assert
         responses[0].Should().HaveStatusCode(HttpStatusCode.NoContent);

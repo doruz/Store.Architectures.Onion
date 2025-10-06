@@ -3,7 +3,7 @@
 [Collection("StoreApiTestsCollection")]
 public abstract class StoreApiBaseTests(StoreApiFactory factory) : IAsyncLifetime
 {
-    private readonly CosmosTestDatabase _database = factory.GetService<CosmosTestDatabase>();
+    private readonly TestCosmosDatabase _database = factory.GetService<TestCosmosDatabase>();
 
     protected StoreApiClient Api { get; } = new(factory.CreateDefaultClient());
 
@@ -14,9 +14,9 @@ public abstract class StoreApiBaseTests(StoreApiFactory factory) : IAsyncLifetim
 
     public async Task DisposeAsync()
     {
-        Api.Dispose();
-
         await _database.EnsureIsDeleted();
+
         await factory.DisposeAsync();
+        Api.Dispose();
     }
 }

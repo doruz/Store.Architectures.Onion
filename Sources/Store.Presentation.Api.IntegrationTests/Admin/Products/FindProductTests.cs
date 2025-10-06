@@ -8,7 +8,7 @@ public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(facto
     public async Task When_ProductDoesNotExist_Should_ReturnNotFound()
     {
         // Act
-        var response = await Api.Admin.FindProductAsync(ProductsTestData.UnknownId);
+        var response = await Api.Admin.FindProductAsync(TestProducts.UnknownId);
 
         // Assert
         response.Should().HaveStatusCode(HttpStatusCode.NotFound);
@@ -18,7 +18,7 @@ public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(facto
     public async Task When_ProductExists_Should_ReturnCorrectDetails()
     {
         // Arrange
-        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples);
+        var expectedProduct = ReadProductTestModel.Create(TestProducts.Apples);
 
         // Act
         var response = await Api.Admin.FindProductAsync(expectedProduct.Id);

@@ -2,13 +2,13 @@
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-public record AddProductTestModel(string Name, decimal Price, int Stock)
+public record NewProductTestModel(string Name, decimal Price, int Stock)
 {
-    internal static AddProductTestModel CreateRandomDetails() => new
+    internal static NewProductTestModel CreateRandom() => new
     (
-        Name: TestRandom.Strings.Generate(1, 100),
-        Price: TestRandom.Numbers.Generate(0, int.MaxValue),
-        Stock: TestRandom.Numbers.Generate(0, int.MaxValue)
+        Name: Random.Strings.Generate(1, 100),
+        Price: Random.Numbers.Generate(0, int.MaxValue),
+        Stock: Random.Numbers.Generate(0, int.MaxValue)
     );
 
     internal dynamic GetExpectedDetails() => new

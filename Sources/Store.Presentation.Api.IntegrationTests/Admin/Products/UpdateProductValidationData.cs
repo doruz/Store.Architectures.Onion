@@ -7,19 +7,19 @@ internal sealed class UpdateProductValidationData : ValidationTheoryData<object>
     public UpdateProductValidationData()
     {
         Add(
-            new { Name = TestRandom.Strings.Generate(101) },
+            new { Name = Random.Strings.Generate(101) },
             "Name", "" +
                     "Value must have maximum length 100."
         );
 
         Add(
-            new { Price = TestRandom.Numbers.Generate(int.MinValue, 0) },
+            new { Price = Random.Numbers.Generate(int.MinValue, 0) },
             "Price", "" +
                      "Value must be greater or equal than 0."
         );
 
         Add(
-            new { Stock = TestRandom.Numbers.Generate(int.MinValue, 0) },
+            new { Stock = Random.Numbers.Generate(int.MinValue, 0) },
             "Stock",
             "Value must be greater or equal than 0."
         );

@@ -2,7 +2,7 @@
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal static class ProductsTestData
+internal static class TestProducts
 {
     public const string UnknownId = "Unknown";
 

@@ -10,9 +10,9 @@ public class GetAllProductsTests(StoreApiFactory factory) : StoreApiBaseTests(fa
         // Arrange
         var expectedProducts = new List<ReadProductTestModel>
         {
-            ReadProductTestModel.Create(ProductsTestData.Apples),
-            ReadProductTestModel.Create(ProductsTestData.Bananas),
-            ReadProductTestModel.Create(ProductsTestData.Oranges)
+            ReadProductTestModel.Create(TestProducts.Apples),
+            ReadProductTestModel.Create(TestProducts.Bananas),
+            ReadProductTestModel.Create(TestProducts.Oranges)
         };
 
         // Act

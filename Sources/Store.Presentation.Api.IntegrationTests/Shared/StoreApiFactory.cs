@@ -18,7 +18,7 @@ public sealed class StoreApiFactory : WebApplicationFactory<Program>, IAsyncLife
             {
                 services
                     .AddSingleton<CosmosDatabaseInitializer>()
-                    .AddSingleton<CosmosTestDatabase>();
+                    .AddSingleton<TestCosmosDatabase>();
             })
             .UseEnvironment("development");
     }
@@ -30,12 +30,15 @@ public sealed class StoreApiFactory : WebApplicationFactory<Program>, IAsyncLife
         configuration.AddJsonFile(appSettingsPath);
     }
 
-    public async Task InitializeAsync()
+    public Task InitializeAsync()
     {
         Environment.SetEnvironmentVariable("CosmosOptions:DatabaseName", "Store-IntegrationTests");
+
+        return Task.CompletedTask;
     }
 
     public async Task DisposeAsync()
     {
+        await base.DisposeAsync();
     }
 }

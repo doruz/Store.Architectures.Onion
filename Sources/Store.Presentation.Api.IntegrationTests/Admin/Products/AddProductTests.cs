@@ -6,7 +6,7 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
 {
     [Theory]
     [ClassData(typeof(AddProductValidationData))]
-    public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(AddProductTestModel invalidProduct, ValidationError expectedError)
+    public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(NewProductTestModel invalidProduct, ValidationError expectedError)
     {
         // Act
         var response = await Api.Admin.AddProductAsync(invalidProduct);
@@ -21,7 +21,7 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
     public async Task When_ProductDetailsAreValid_Should_ReturnAddedProductDetails()
     {
         // Arrange
-        var newProduct = AddProductTestModel.CreateRandomDetails();
+        var newProduct = NewProductTestModel.CreateRandom();
 
         // Act
         var response = await Api.Admin.AddProductAsync(newProduct);
@@ -36,7 +36,7 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
     public async Task When_ProductDetailsAreValid_Should_ReturnAddedProductId()
     {
         // Arrange
-        var newProduct = AddProductTestModel.CreateRandomDetails();
+        var newProduct = NewProductTestModel.CreateRandom();
 
         // Act
         var response = await Api.Admin.AddProductAsync(newProduct);

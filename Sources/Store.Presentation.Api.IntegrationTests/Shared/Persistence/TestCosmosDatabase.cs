@@ -3,14 +3,14 @@ using Store.Infrastructure.Persistence.Cosmos;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal sealed class CosmosTestDatabase(
+internal sealed class TestCosmosDatabase(
     CosmosDatabaseInitializer cosmosInitializer,
     CosmosDatabaseContainers cosmosContainers)
 {
     public async Task EnsureIsCreated()
     {
-        await cosmosInitializer.Execute();
-        await ProductsTestData.All.ForEachAsync(p => cosmosContainers.Products.UpsertItemAsync(p));
+        await cosmosInitializer.InitializeDatabase();
+        await AddTestProducts();
     }
 
     public async Task EnsureIsDeleted()
@@ -18,6 +18,14 @@ internal sealed class CosmosTestDatabase(
         if (cosmosContainers.Products.Database.Id.Contains("IntegrationTests"))
         {
             await cosmosContainers.Products.Database.DeleteAsync();
+        }
+    }
+
+    private async Task AddTestProducts()
+    {
+        foreach (var product in TestProducts.All)
+        {
+            await cosmosContainers.Products.UpsertItemAsync(product);
         }
     }
 }

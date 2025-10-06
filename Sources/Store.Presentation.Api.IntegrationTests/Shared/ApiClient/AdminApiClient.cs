@@ -13,7 +13,7 @@ public sealed class AdminApiClient(HttpClient client)
     public Task<HttpResponseMessage> FindProductAsync(string productId)
         => client.GetAsync($"{ProductsRoute}/{productId}");
 
-    public Task<HttpResponseMessage> AddProductAsync(AddProductTestModel product)
+    public Task<HttpResponseMessage> AddProductAsync(NewProductTestModel product)
         => client.PostAsJsonAsync(ProductsRoute, product);
 
     public Task<HttpResponseMessage> EditProductAsync(string productId, object product)
