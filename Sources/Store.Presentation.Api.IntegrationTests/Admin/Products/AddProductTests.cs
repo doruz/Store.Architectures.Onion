@@ -2,15 +2,14 @@
 
 namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-// DONE
 public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
 {
     [Theory]
     [ClassData(typeof(AddProductValidationData))]
-    public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(AddProductTestModel product, ValidationError expectedError)
+    public async Task When_ProductDetailsAreInvalid_Should_ReturnValidationErrors(AddProductTestModel invalidProduct, ValidationError expectedError)
     {
         // Act
-        var response = await Api.Admin.AddProductAsync(product);
+        var response = await Api.Admin.AddProductAsync(invalidProduct);
 
         // Assert
         response.Should()

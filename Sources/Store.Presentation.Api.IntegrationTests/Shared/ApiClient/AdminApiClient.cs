@@ -16,7 +16,7 @@ public sealed class AdminApiClient(HttpClient client)
     public Task<HttpResponseMessage> AddProductAsync(AddProductTestModel product)
         => client.PostAsJsonAsync(ProductsRoute, product);
 
-    public Task<HttpResponseMessage> EditProductAsync(string productId, EditProductTestModel product)
+    public Task<HttpResponseMessage> EditProductAsync(string productId, object product)
         => client.PutAsJsonAsync($"{ProductsRoute}/{productId}", product);
 
     public Task<HttpResponseMessage> DeleteProductAsync(string productId)

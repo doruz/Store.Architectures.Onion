@@ -1,4 +1,6 @@
-﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
+﻿using Store.Core.Domain.Entities;
+
+namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
 public record AddProductTestModel(string Name, decimal Price, int Stock)
 {
@@ -12,7 +14,7 @@ public record AddProductTestModel(string Name, decimal Price, int Stock)
     internal dynamic GetExpectedDetails() => new
     {
         Name,
-        Price = new { Value = Price, Currency = "€", Display = $"€{Price:F2}" },
+        Price = new Price(Price),
         Stock
     };
 
@@ -20,14 +22,7 @@ public record AddProductTestModel(string Name, decimal Price, int Stock)
     {
         Id = id,
         Name,
-        Price = new { Value = Price, Currency = "€", Display = $"€{Price:F2}" },
+        Price = new Price(Price),
         Stock
     };
-}
-
-public record EditProductTestModel
-{
-    public string? Name { get; init; }
-    public decimal? Price { get; init; }
-    public int? Stock { get; init; }
 }

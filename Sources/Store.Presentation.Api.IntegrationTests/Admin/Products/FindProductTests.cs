@@ -2,7 +2,6 @@
 
 namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-// DONE
 public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
 {
     [Fact]
@@ -19,13 +18,7 @@ public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(facto
     public async Task When_ProductExists_Should_ReturnCorrectDetails()
     {
         // Arrange
-        var expectedProduct = new
-        {
-            Id = ProductsTestData.ApplesId,
-            Name = "Apples",
-            Price = new { Value = 0.75m, Currency = "€", Display = "€0.75" },
-            Stock = 10
-        };
+        var expectedProduct = ReadProductTestModel.Create(ProductsTestData.Apples);
 
         // Act
         var response = await Api.Admin.FindProductAsync(expectedProduct.Id);
