@@ -1,0 +1,27 @@
+﻿using Store.Presentation.Api.IntegrationTests.Admin.Products;
+using System.Net.Http.Json;
+
+namespace Store.Presentation.Api.IntegrationTests;
+
+public sealed class AdminApiClient(HttpClient client)
+{
+    private const string ProductsRoute = "/api/admins/products";
+
+    public Task<HttpResponseMessage> GetAllProductsAsync()
+        => client.GetAsync(ProductsRoute);
+
+    public Task<HttpResponseMessage> FindProductAsync(string productId)
+        => client.GetAsync($"{ProductsRoute}/{productId}");
+
+    public Task<HttpResponseMessage> AddProductAsync(AddProductTestModel product)
+        => client.PostAsJsonAsync(ProductsRoute, product);
+
+    public Task<HttpResponseMessage> EditProductAsync(string productId, EditProductTestModel product)
+        => client.PutAsJsonAsync($"{ProductsRoute}/{productId}", product);
+
+    public Task<HttpResponseMessage> DeleteProductAsync(string productId)
+        => client.DeleteAsync($"{ProductsRoute}/{productId}");
+
+    public Task<List<HttpResponseMessage>> DeleteProductAsync(string productId, int times)
+        => client.ExecuteMultiple(c => c.DeleteAsync($"{ProductsRoute}/{productId}"), times);
+}

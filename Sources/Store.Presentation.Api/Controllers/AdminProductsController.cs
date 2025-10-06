@@ -2,12 +2,12 @@
 using Store.Core.Business.Errors;
 using Store.Core.Business.Products;
 
-[ApiRoute("products")]
-public sealed class ProductsController(ProductsService products) : BaseApiController
+[ApiRoute("admins/products")]
+public sealed class AdminProductsController(ProductsService products) : BaseApiController
 {
     [HttpGet]
     [ProducesResponseType<IEnumerable<ProductModel>>(StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetProducts() 
+    public async Task<IActionResult> GetAllProducts() 
         => Ok(await products.GetAll());
 
     [HttpGet("{id}")]
@@ -21,7 +21,7 @@ public sealed class ProductsController(ProductsService products) : BaseApiContro
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddProduct([FromBody] NewProductModel model)
     {
-        var newProduct = await products.CreateAsync(model);
+        var newProduct = await products.AddAsync(model);
 
         return CreatedAtAction(nameof(FindProduct), new { newProduct.Id }, newProduct);
     }

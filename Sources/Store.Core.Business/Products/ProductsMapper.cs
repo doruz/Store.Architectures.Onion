@@ -8,7 +8,7 @@ internal static class ProductsMapper
     {
         Id = product.Id,
         Name = product.Name,
-        Price = product.Price,
+        Price = PriceModel.Create(product.Price),
         Stock = product.Stock
     };
 
