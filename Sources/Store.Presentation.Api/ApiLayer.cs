@@ -11,6 +11,6 @@ public static class ApiLayer
             .AddPersistence(configuration)
 
             .AddTransient<ICurrentCustomer, CurrentCustomer>()
-            .AddHostedService<PersistenceInitializationService>();
+            .AddHostedService<AppInitializationService>();
     }
 }

@@ -1,6 +1,0 @@
-@Store.Presentation.Api.Controllers_HostAddress = http://localhost:5268
-
-GET {{Store.Presentation.Api.Controllers_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

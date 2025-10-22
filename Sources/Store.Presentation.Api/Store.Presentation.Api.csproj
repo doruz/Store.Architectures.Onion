@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Store.Infrastructure.Persistence\Store.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Customers\" />
+  </ItemGroup>
+
 </Project>

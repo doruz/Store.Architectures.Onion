@@ -1,6 +1,6 @@
 ﻿using Store.Core.Shared;
 
-internal sealed class PersistenceInitializationService(IEnumerable<IAppInitializer> initializers) 
+internal sealed class AppInitializationService(IEnumerable<IAppInitializer> initializers) 
     : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
