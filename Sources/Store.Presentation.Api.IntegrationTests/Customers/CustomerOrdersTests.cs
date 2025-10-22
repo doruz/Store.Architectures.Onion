@@ -8,7 +8,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     public async Task When_CustomerDoesNotHaveOrders_Should_ReturnSuccessWithEmptyDetails()
     {
         // Arrange
-        await Database.DeleteOrders(CurrentAccount.Id);
+        await Database.DeleteOrders(CurrentCustomer.Id);
 
         // Act
         var response = await Api.Customer.Orders.GetAllAsync();
@@ -23,7 +23,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     public async Task When_CustomerHasOrders_Should_ReturnSuccessWithSummariesDetails()
     {
         // Arrange
-        await Database.DeleteOrders(CurrentAccount.Id);
+        await Database.DeleteOrders(CurrentCustomer.Id);
 
         var orders = new []
         {

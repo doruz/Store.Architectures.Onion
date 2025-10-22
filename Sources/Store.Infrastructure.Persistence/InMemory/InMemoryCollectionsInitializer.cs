@@ -2,7 +2,7 @@
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, ICurrentAccount currentAccount)
+internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, ICurrentCustomer currentCustomer)
     : IAppInitializer
 {
     public Task Execute()
@@ -34,7 +34,7 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
     [
         new ShoppingCart
         {
-            Id = currentAccount.Id,
+            Id = currentCustomer.Id,
             Lines =
             [
                 new ShoppingCartLine("9952a5da-9945-11f0-9ae5-2f38b5112d0d", 3),
@@ -48,7 +48,7 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
     [
         new Order
         {
-            CustomerId = currentAccount.Id,
+            CustomerId = currentCustomer.Id,
 
             Lines =
             [

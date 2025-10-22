@@ -9,7 +9,7 @@ public abstract class ApiBaseTests(ApiApplicationFactory factory) : IAsyncLifeti
 
     protected StoreApiClient Api { get; } = new(factory.CreateDefaultClient());
 
-    protected ICurrentAccount CurrentAccount { get; } = factory.GetService<ICurrentAccount>();
+    protected ICurrentCustomer CurrentCustomer { get; } = factory.GetService<ICurrentCustomer>();
 
     public virtual async Task InitializeAsync()
     {

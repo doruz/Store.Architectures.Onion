@@ -5,11 +5,11 @@ using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentAccount currentAccount)
+public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
 {
     public async Task<ShoppingCartModel> GetCurrentCustomerCart()
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         return new ShoppingCartModel
         {
@@ -34,7 +34,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
     }
 
     public Task ClearCurrentCustomerCart()
-        => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
+        => repositories.ShoppingCarts.DeleteAsync(currentCustomer.Id);
 
     public async Task UpdateCurrentCustomerCart(params EditShoppingCartLineModel[] lines)
     {
@@ -43,7 +43,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             return;
         }
 
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         shoppingCart.UpdateOrRemoveLines(await GetValidLines(lines));
        

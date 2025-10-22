@@ -4,11 +4,11 @@ using Store.Core.Shared;
 
 namespace Store.Core.Business.Orders;
 
-public sealed class OrdersService(RepositoriesContext repositories, ICurrentAccount currentAccount)
+public sealed class OrdersService(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
 {
     public async Task<IEnumerable<OrderSummaryModel>> GetCurrentCustomerOrders()
     {
-        var orders = await repositories.Orders.GetCustomerOrdersAsync(currentAccount.Id);
+        var orders = await repositories.Orders.GetCustomerOrdersAsync(currentCustomer.Id);
 
         return orders
             .OrderByDescending(order => order.CreatedAt)
@@ -18,7 +18,7 @@ public sealed class OrdersService(RepositoriesContext repositories, ICurrentAcco
     public async Task<OrderDetailedModel> FindCurrentCustomerOrder(string id)
     {
         var order = await repositories.Orders
-            .FindOrderAsync(currentAccount.Id, id)
+            .FindOrderAsync(currentCustomer.Id, id)
             .EnsureIsNotNull(id);
 
         return order.Map(OrdersMapper.ToOrderDetailedModel);

@@ -6,7 +6,7 @@ using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentAccount currentAccount)
+public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
 {
     public async Task<OrderSummaryModel> CheckoutCurrentCustomerCart()
     {
@@ -18,9 +18,9 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
             .Select(item => OrderLine.Create(item.CartLine, item.Product))
             .ToList();
 
-        var customerOrder = Order.Create(currentAccount.Id, orderLines);
+        var customerOrder = Order.Create(currentCustomer.Id, orderLines);
         await repositories.Orders.SaveOrderAsync(customerOrder);
-        await repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
+        await repositories.ShoppingCarts.DeleteAsync(currentCustomer.Id);
 
         await UpdateProductsStock(shoppingCartItems);
 
@@ -29,7 +29,7 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
 
     private async Task<List<(ShoppingCartLine CartLine, Product Product)>> GetShoppingCartItems()
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         shoppingCart.EnsureIsNotEmpty();
 

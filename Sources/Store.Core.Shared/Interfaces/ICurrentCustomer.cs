@@ -1,6 +1,6 @@
 ﻿namespace Store.Core.Shared;
 
-public interface ICurrentAccount
+public interface ICurrentCustomer
 {
     string Id { get; }
 }
