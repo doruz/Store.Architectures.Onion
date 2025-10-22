@@ -5,8 +5,8 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ShoppingCartTests
 {
-    private static readonly ShoppingCartLine _cartLine = new("apples", 1);
-    private static readonly ShoppingCartLine[] _cartLines =
+    private static readonly ShoppingCartLine CartLine = new("apples", 1);
+    private static readonly ShoppingCartLine[] CartLines =
     [
         new ShoppingCartLine("1", 1),
         new ShoppingCartLine("2", 2),
@@ -19,21 +19,21 @@ public class ShoppingCartTests
     public void When_ProductIsNew_Should_BeAdded()
     {
         // Act
-        _systemUnderTest.UpdateOrRemoveLine(_cartLine);
+        _systemUnderTest.UpdateOrRemoveLine(CartLine);
 
         // Assert
         _systemUnderTest.Lines.Should().HaveCount(1);
-        _systemUnderTest.Lines.Should().Contain(_cartLine);
+        _systemUnderTest.Lines.Should().Contain(CartLine);
     }
 
     [Fact]
     public void When_ProductExists_Should_BeUpdated()
     {
         // Arrange
-        ShoppingCartLine updatedCartLine = _cartLine.IncreaseQuantity(2);
+        ShoppingCartLine updatedCartLine = CartLine.IncreaseQuantity(2);
 
         // Act
-        _systemUnderTest.UpdateOrRemoveLine(_cartLine);
+        _systemUnderTest.UpdateOrRemoveLine(CartLine);
         _systemUnderTest.UpdateOrRemoveLine(updatedCartLine);
 
         // Assert
@@ -60,10 +60,10 @@ public class ShoppingCartTests
     public void When_ProductsAreNew_Should_AllBeAdded()
     {
         // Act
-        _systemUnderTest.UpdateOrRemoveLines(_cartLines);
+        _systemUnderTest.UpdateOrRemoveLines(CartLines);
 
         // Assert
-        _systemUnderTest.Lines.Should().BeEquivalentTo(_cartLines);
+        _systemUnderTest.Lines.Should().BeEquivalentTo(CartLines);
     }
 
     [Fact]
@@ -72,9 +72,9 @@ public class ShoppingCartTests
         // Arrange
         ShoppingCartLine[] updatedCartLines =
         [
-            _cartLines[0].IncreaseQuantity(3),
-            _cartLines[1].IncreaseQuantity(5),
-            _cartLines[2].WithQuantity(0)
+            CartLines[0].IncreaseQuantity(3),
+            CartLines[1].IncreaseQuantity(5),
+            CartLines[2].WithQuantity(0)
         ];
 
         // Act
@@ -88,13 +88,13 @@ public class ShoppingCartTests
     public void When_SameProductsAreUpdated_Should_BeMerged()
     {
         // Arrange
-        ShoppingCartLine expectedCartLine = _cartLine.WithQuantity(5);
+        ShoppingCartLine expectedCartLine = CartLine.WithQuantity(5);
 
         ShoppingCartLine[] updatedCartLines =
         [
-            _cartLine.WithQuantity(0),
-            _cartLine.WithQuantity(2),
-            _cartLine.WithQuantity(3),
+            CartLine.WithQuantity(0),
+            CartLine.WithQuantity(2),
+            CartLine.WithQuantity(3),
         ];
 
         // Act

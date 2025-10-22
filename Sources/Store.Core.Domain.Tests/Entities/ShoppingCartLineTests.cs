@@ -14,21 +14,17 @@ public class ShoppingCartLineTests
     [InlineData("       ")]
     public void When_InstanceIsCreatedWithNullOrEmptyProductId_Should_ThrowException(string? productId)
     {
-        // Arrange & Act
-        Action result = () => new ShoppingCartLine(productId, ValidQuantity);
-
-        // Assert
-        result.Should().Throw<ArgumentException>();
+        FluentActions
+            .Invoking(() => new ShoppingCartLine(productId, ValidQuantity))
+            .Should().Throw<ArgumentException>();
     }
 
     [Fact]
     public void When_InstanceIsCreatedWithNegativeQuantity_Should_ThrowException()
     {
-        // Arrange & Act
-        Action result = () => new ShoppingCartLine(ValidProductId, -1);
-
-        // Assert
-        result.Should().Throw<ArgumentException>();
+        FluentActions
+            .Invoking(() => new ShoppingCartLine(ValidProductId, -1))
+            .Should().Throw<ArgumentException>();
     }
 
     [Fact]
