@@ -8,11 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="appsettings.tests.json" />
-    <None Remove="qanh34wl.w4z~" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="appsettings.tests.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
