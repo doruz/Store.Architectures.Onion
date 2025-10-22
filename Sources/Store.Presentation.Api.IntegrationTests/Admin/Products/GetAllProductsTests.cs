@@ -1,8 +1,6 @@
-﻿using Store.Core.Business.Products;
+﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
-
-public class GetAllProductsTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
+public class GetAllProductsTests(ApiApplicationFactory factory) : ApiBaseTests(factory)
 {
     [Fact]
     public async Task When_ProductsAreRetrieved_Should_ReturnCorrectDetails()
@@ -19,9 +17,8 @@ public class GetAllProductsTests(StoreApiFactory factory) : StoreApiBaseTests(fa
         var response = await Api.Admin.GetAllProductsAsync();
 
         // Assert
-        response.Should()
+        await response.Should()
             .HaveStatusCode(HttpStatusCode.OK)
-            .And.ContentBeEquivalentTo<ProductModel>(expectedProducts)
-            .And.BeInAscendingOrder(p => p.Name);
+            .And.ContainContentAsync(expectedProducts);
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Store.Infrastructure.Persistence.Cosmos;
 namespace Store.Presentation.Api.IntegrationTests;
 
-public sealed class StoreApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
+public sealed class ApiApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
 {
     public T GetService<T>()
         where T: notnull => Services.GetRequiredService<T>();

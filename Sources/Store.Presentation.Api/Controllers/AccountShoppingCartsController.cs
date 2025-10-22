@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Core.Business.Errors;
+using Store.Core.Business.Orders;
 using Store.Core.Business.ShoppingCarts;
+
+// TODO: to rename from accounts to customers
 
 [ApiRoute("accounts/current/shopping-carts/current")]
 public sealed class AccountsShoppingCartsController(
@@ -44,13 +47,16 @@ public sealed class AccountsShoppingCartsController(
         return NoContent();
     }
 
+    /// <summary>
+    /// Make an order from current cart.
+    /// </summary>
     [HttpPost("checkout")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType<OrderSummaryModel>(StatusCodes.Status201Created)]
     [ProducesResponseType<BusinessError>(StatusCodes.Status409Conflict)]
     public async Task<IActionResult> CheckoutCart()
     {
-        await shoppingCartCheckout.CheckoutCurrentAccountCart();
+        OrderSummaryModel orderSummary = await shoppingCartCheckout.CheckoutCurrentAccountCart();
 
-        return NoContent();
+        return CreatedAtRoute("OrderDetails", new { OrderId = orderSummary.Id }, orderSummary);
     }
 }

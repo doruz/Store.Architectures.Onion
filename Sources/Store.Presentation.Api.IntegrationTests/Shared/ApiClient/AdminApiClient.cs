@@ -1,5 +1,4 @@
-﻿using Store.Presentation.Api.IntegrationTests.Admin.Products;
-using System.Net.Http.Json;
+﻿using System.Net.Http.Json;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
@@ -21,7 +20,4 @@ public sealed class AdminApiClient(HttpClient client)
 
     public Task<HttpResponseMessage> DeleteProductAsync(string productId)
         => client.DeleteAsync($"{ProductsRoute}/{productId}");
-
-    public Task<List<HttpResponseMessage>> DeleteProductAsync(string productId, int times)
-        => client.ExecuteMultiple(c => c.DeleteAsync($"{ProductsRoute}/{productId}"), times);
 }

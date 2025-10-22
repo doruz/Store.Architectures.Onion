@@ -13,7 +13,7 @@ internal sealed class BusinessExceptionsFilter : IExceptionFilter
         {
             context.Result = new ObjectResult(exception.Error)
             {
-                StatusCode = exception.StausCode
+                StatusCode = exception.StatusCode
             };
 
             context.ExceptionHandled = true;

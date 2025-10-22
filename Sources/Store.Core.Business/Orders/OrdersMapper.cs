@@ -1,4 +1,5 @@
-﻿using Store.Core.Domain.Entities;
+﻿using Store.Core.Business.Products;
+using Store.Core.Domain.Entities;
 using Store.Core.Shared;
 
 namespace Store.Core.Business.Orders;
@@ -11,7 +12,7 @@ internal static class OrdersMapper
         OrderedAt = order.CreatedAt.ToOrderedAt(),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = order.TotalPrice
+        TotalPrice = PriceModel.Create(order.TotalPrice)
     };
 
     public static OrderDetailedModel ToOrderDetailedModel(this Order order) => new ()
@@ -20,7 +21,7 @@ internal static class OrdersMapper
         OrderedAt = order.CreatedAt.ToOrderedAt(),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = order.TotalPrice,
+        TotalPrice = PriceModel.Create(order.TotalPrice),
 
         Lines = order.Lines.Select(ToOrderLineModel).ToList()
     };

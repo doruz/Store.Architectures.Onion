@@ -8,6 +8,8 @@ public class ShoppingCart : BaseEntity
 
     public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
 
+    public bool IsEmpty() => Lines.All(line => line.Quantity == 0);
+
     public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
         => lines.Merge().ForEach(UpdateOrRemoveLine);
 

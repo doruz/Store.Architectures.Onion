@@ -1,8 +1,6 @@
-﻿using Store.Core.Business.Products;
+﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
-
-public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
+public class AddProductTests(ApiApplicationFactory factory) : ApiBaseTests(factory)
 {
     [Theory]
     [ClassData(typeof(AddProductValidationData))]
@@ -12,9 +10,9 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
         var response = await Api.Admin.AddProductAsync(invalidProduct);
 
         // Assert
-        response.Should()
+        await response.Should()
             .HaveStatusCode(HttpStatusCode.BadRequest)
-            .And.ContainValidationError(expectedError);
+            .And.ContainValidationErrorAsync(expectedError);
     }
 
     [Fact]
@@ -27,9 +25,10 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
         var response = await Api.Admin.AddProductAsync(newProduct);
 
         // Assert
-        response.Should()
+        // Assert
+        await response.Should()
             .HaveStatusCode(HttpStatusCode.Created)
-            .And.ContentBeEquivalentTo<ProductModel>(newProduct.GetExpectedDetails());
+            .And.ContainContentAsync<ReadProductTestModel>(p => newProduct.GetExpectedDetails(p.Id));
     }
 
     [Fact]
@@ -42,6 +41,6 @@ public class AddProductTests(StoreApiFactory factory) : StoreApiBaseTests(factor
         var response = await Api.Admin.AddProductAsync(newProduct);
 
         // Assert
-        response.Should().ContentContainId();
+        await response.Should().ContainIdAsync();
     }
 }

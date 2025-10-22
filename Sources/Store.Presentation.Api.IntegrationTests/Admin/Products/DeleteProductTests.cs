@@ -1,6 +1,6 @@
 ﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-public class DeleteProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
+public class DeleteProductTests(ApiApplicationFactory factory) : ApiBaseTests(factory)
 {
     [Fact]
     public async Task When_ProductDoesNotExist_Should_ReturnNotFound()
@@ -26,7 +26,7 @@ public class DeleteProductTests(StoreApiFactory factory) : StoreApiBaseTests(fac
     public async Task When_ProductWasDeleted_Should_ReturnNotFound()
     {
         // Act
-        var responses = await Api.Admin.DeleteProductAsync(TestProducts.Apples.Id, 2);
+        var responses = await Api.ExecuteTwice(api => api.Admin.DeleteProductAsync(TestProducts.Apples.Id));
 
         // Assert
         responses[0].Should().HaveStatusCode(HttpStatusCode.NoContent);

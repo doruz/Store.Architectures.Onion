@@ -10,7 +10,7 @@ public sealed class AccountsOrdersController(OrdersService orders) : BaseApiCont
     public async Task<IActionResult> GetOrdersSummary()
         => Ok(await orders.GetCurrentAccountOrders());
 
-    [HttpGet("{orderId}")]
+    [HttpGet("{orderId}", Name = "OrderDetails")]
     [ProducesResponseType<OrderDetailedModel>(StatusCodes.Status200OK)]
     [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindOrderDetails([FromRoute] string orderId)

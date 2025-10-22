@@ -1,5 +1,4 @@
-﻿using Store.Core.Shared;
-using Store.Infrastructure.Persistence.Cosmos;
+﻿using Store.Infrastructure.Persistence.Cosmos;
 
 namespace Store.Presentation.Api.IntegrationTests;
 
@@ -19,6 +18,11 @@ internal sealed class TestCosmosDatabase(
         {
             await cosmosContainers.Products.Database.DeleteAsync();
         }
+    }
+
+    public Task DeleteOrders(string accountId)
+    {
+        return cosmosContainers.Orders.DeleteAllItemsByPartitionKeyStreamAsync(accountId.ToPartitionKey());
     }
 
     private async Task AddTestProducts()

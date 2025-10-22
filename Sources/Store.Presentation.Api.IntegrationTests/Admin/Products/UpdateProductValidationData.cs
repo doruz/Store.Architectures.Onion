@@ -8,14 +8,14 @@ internal sealed class UpdateProductValidationData : ValidationTheoryData<object>
     {
         Add(
             new { Name = Random.Strings.Generate(101) },
-            "Name", "" +
-                    "Value must have maximum length 100."
+            "Name", 
+            "Value must have maximum length 100."
         );
 
         Add(
             new { Price = Random.Numbers.Generate(int.MinValue, 0) },
-            "Price", "" +
-                     "Value must be greater or equal than 0."
+            "Price", 
+            "Value must be greater or equal than 0."
         );
 
         Add(

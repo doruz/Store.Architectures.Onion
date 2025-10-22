@@ -18,11 +18,11 @@ public record NewProductTestModel(string Name, decimal Price, int Stock)
         Stock
     };
 
-    internal dynamic GetExpectedDetails(string id) => new
+    internal ReadProductTestModel GetExpectedDetails(string id) => new()
     {
         Id = id,
-        Name,
-        Price = new Price(Price),
-        Stock
+        Name = Name,
+        Price = new PriceTestModel(Price),
+        Stock = Stock
     };
 }

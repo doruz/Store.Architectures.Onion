@@ -1,8 +1,6 @@
-﻿using Store.Core.Business.Products;
+﻿namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
 
-namespace Store.Presentation.Api.IntegrationTests.Admin.Products;
-
-public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(factory)
+public class FindProductTests(ApiApplicationFactory factory) : ApiBaseTests(factory)
 {
     [Fact]
     public async Task When_ProductDoesNotExist_Should_ReturnNotFound()
@@ -24,8 +22,8 @@ public class FindProductTests(StoreApiFactory factory) : StoreApiBaseTests(facto
         var response = await Api.Admin.FindProductAsync(expectedProduct.Id);
 
         // Assert
-        response.Should()
+        await response.Should()
             .HaveStatusCode(HttpStatusCode.OK)
-            .And.ContentBeEquivalentTo<ProductModel>(expectedProduct);
+            .And.ContainContentAsync(expectedProduct);
     }
 }

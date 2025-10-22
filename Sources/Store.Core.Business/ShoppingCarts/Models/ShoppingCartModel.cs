@@ -6,7 +6,7 @@ public record ShoppingCartModel
 {
     public IReadOnlyList<ShoppingCartLineModel> Lines { get; init; } = [];
 
-    public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
+    public PriceModel TotalPrice => PriceModel.Create(Lines.Select(line => line.TotalPrice).Sum());
 }
 
 public record ShoppingCartLineModel

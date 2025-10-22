@@ -10,7 +10,9 @@ public sealed class OrdersService(RepositoriesContext repositories, ICurrentAcco
     {
         var orders = await repositories.Orders.GetAccountOrdersAsync(currentAccount.Id);
 
-        return orders.Select(OrdersMapper.ToOrderSummaryModel);
+        return orders
+            .OrderByDescending(order => order.CreatedAt)
+            .Select(OrdersMapper.ToOrderSummaryModel);
     }
 
     public async Task<OrderDetailedModel> FindCurrentAccountOrder(string id)
