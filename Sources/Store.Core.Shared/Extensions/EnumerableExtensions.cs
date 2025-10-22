@@ -16,4 +16,16 @@ public static class EnumerableExtensions
 
         return itemsList;
     }
+
+    public static async Task<List<T>> ForEachAsync<T>(this IEnumerable<T> items, Func<T, Task> action)
+    {
+        var itemsList = items.ToList();
+
+        foreach (T item in itemsList)
+        {
+            await action(item);
+        }
+
+        return itemsList;
+    }
 }

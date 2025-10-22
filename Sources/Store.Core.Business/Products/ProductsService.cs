@@ -5,15 +5,23 @@ namespace Store.Core.Business.Products;
 
 public sealed class ProductsService(RepositoriesContext repositories)
 {
-    public Task<IEnumerable<ProductModel>> GetAllAvailable() =>
-        repositories.Products
-            .FilterAsync(product => product.Stock > 0)
-            .SelectAsync(ProductsMapper.ToProductModel);
+    public async Task<IEnumerable<ProductModel>> GetAllAvailable()
+    {
+        var products = await repositories.Products.FilterAsync(product => product.Stock > 0);
 
-    public Task<IEnumerable<ProductModel>> GetAll() =>
-        repositories.Products
-            .GetAllAsync()
-            .SelectAsync(ProductsMapper.ToProductModel);
+        return products
+            .OrderBy(p => p.Name, StringComparer.InvariantCultureIgnoreCase)
+            .Select(ProductsMapper.ToProductModel);
+    }
+
+    public async Task<IEnumerable<ProductModel>> GetAll()
+    {
+        var products = await repositories.Products.GetAllAsync();
+
+        return products
+            .OrderBy(p => p.Name, StringComparer.InvariantCultureIgnoreCase)
+            .Select(ProductsMapper.ToProductModel);
+    }
 
     public Task<ProductModel> FindProductAsync(string id) =>
         repositories.Products
@@ -21,7 +29,7 @@ public sealed class ProductsService(RepositoriesContext repositories)
             .EnsureIsNotNull(id)
             .MapAsync(ProductsMapper.ToProductModel);
 
-    public async Task<ProductModel> CreateAsync(NewProductModel productModel)
+    public async Task<ProductModel> AddAsync(NewProductModel productModel)
     {
         var newProduct = productModel.ToProduct();
 

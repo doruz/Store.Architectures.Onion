@@ -1,12 +1,10 @@
-﻿using Store.Core.Domain.Entities;
-
-namespace Store.Core.Business.ShoppingCarts;
+﻿namespace Store.Core.Business.ShoppingCarts;
 
 public record ShoppingCartModel
 {
-    public IReadOnlyList<ShoppingCartLineModel> Lines { get; init; } = [];
+    public IEnumerable<ShoppingCartLineModel> Lines { get; init; } = [];
 
-    public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
+    public required PriceModel TotalPrice { get; init; }
 }
 
 public record ShoppingCartLineModel
@@ -15,9 +13,9 @@ public record ShoppingCartLineModel
 
     public required string ProductName { get; init; }
 
-    public required Price ProductPrice { get; set; }
+    public required PriceModel ProductPrice { get; set; }
 
     public required int Quantity { get; init; }
 
-    public Price TotalPrice => ProductPrice * Quantity;
+    public required PriceModel TotalPrice { get; init; }
 }

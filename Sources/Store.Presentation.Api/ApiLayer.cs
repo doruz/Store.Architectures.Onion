@@ -10,7 +10,7 @@ public static class ApiLayer
             .AddBusiness()
             .AddPersistence(configuration)
 
-            .AddTransient<ICurrentAccount, CurrentAccount>()
-            .AddHostedService<PersistenceInitializationService>();
+            .AddTransient<ICurrentCustomer, CurrentCustomer>()
+            .AddHostedService<AppInitializationService>();
     }
 }

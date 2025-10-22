@@ -8,6 +8,7 @@ internal static class CosmosClientFactory
 {
     public static CosmosClient Create(IConfiguration configuration) =>
         new CosmosClientBuilder(configuration["CosmosOptions:ConnectionString"])
+            .WithApplicationRegion(configuration["CosmosOptions:ApplicationRegion"])
             .WithContentResponseOnWrite(false)
             .WithSerializerOptions(new CosmosSerializationOptions
             {

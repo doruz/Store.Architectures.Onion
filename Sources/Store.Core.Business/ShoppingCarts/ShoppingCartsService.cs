@@ -5,21 +5,13 @@ using Store.Core.Shared;
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentAccount currentAccount)
+public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
 {
-    public async Task<ShoppingCartModel> GetCurrentAccountCart()
+    public async Task<ShoppingCartModel> GetCurrentCustomerCart()
     {
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
-        return new ShoppingCartModel
-        {
-            Lines = await ToCartLinesModel(shoppingCart.Lines)
-        };
-    }
-
-    private async Task<List<ShoppingCartLineModel>> ToCartLinesModel(IEnumerable<ShoppingCartLine> cartLines)
-    {
-        var lines = await cartLines
+        var cartLines = await shoppingCart.Lines
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
@@ -27,23 +19,33 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             })
             .ToListAsync();
 
-        return lines
-            .Where(x => x.Product != null)
-            .Select(x => x.CartLine.ToShoppingCartLineModel(x.Product!))
-            .ToList();
+        var lines = cartLines
+            .Where(l => l.Product != null)
+            .Select(l => l.CartLine.ToShoppingCartLineModel(l.Product!));
+
+        var totalCartPrice = cartLines
+            .Where(l => l.Product != null)
+            .Select(l => l.Product!.Price * l.CartLine.Quantity)
+            .Sum();
+
+        return new ShoppingCartModel
+        {
+            Lines = lines,
+            TotalPrice = PriceModel.Create(totalCartPrice)
+        };
     }
 
-    public Task ClearCurrentAccountCart()
-        => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
+    public Task ClearCurrentCustomerCart()
+        => repositories.ShoppingCarts.DeleteAsync(currentCustomer.Id);
 
-    public async Task UpdateCurrentAccountCart(params EditShoppingCartLineModel[] lines)
+    public async Task UpdateCurrentCustomerCart(params EditShoppingCartLineModel[] lines)
     {
         if (lines.IsEmpty())
         {
             return;
         }
 
-        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
+        var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
         shoppingCart.UpdateOrRemoveLines(await GetValidLines(lines));
        

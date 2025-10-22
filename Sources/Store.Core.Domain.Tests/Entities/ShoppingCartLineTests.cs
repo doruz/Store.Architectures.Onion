@@ -5,7 +5,7 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ShoppingCartLineTests
 {
-    private const string ValidProductId = "apples";
+    private const string ValidProductId = "test";
     private const int ValidQuantity = 1;
 
     [Theory]
@@ -15,20 +15,20 @@ public class ShoppingCartLineTests
     public void When_InstanceIsCreatedWithNullOrEmptyProductId_Should_ThrowException(string? productId)
     {
         // Arrange & Act
-        Action result = () => new ShoppingCartLine(productId, ValidQuantity);
+        var action = () => new ShoppingCartLine(productId, ValidQuantity);
 
         // Assert
-        result.Should().Throw<ArgumentException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]
     public void When_InstanceIsCreatedWithNegativeQuantity_Should_ThrowException()
     {
         // Arrange & Act
-        Action result = () => new ShoppingCartLine(ValidProductId, -1);
+        var action = () => new ShoppingCartLine(ValidProductId, -1);
 
         // Assert
-        result.Should().Throw<ArgumentException>();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]

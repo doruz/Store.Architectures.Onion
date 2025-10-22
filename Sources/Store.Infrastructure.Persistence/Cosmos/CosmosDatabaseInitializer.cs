@@ -10,11 +10,20 @@ internal sealed class CosmosDatabaseInitializer(CosmosClient cosmosClient, IOpti
     [
         new ContainerProperties(CosmosDatabaseContainers.ProductsName, "/id"),
         new ContainerProperties(CosmosDatabaseContainers.ShoppingCartsName, "/id"),
-        new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/accountId")
+        new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/customerId")
     ];
 
     public async Task Execute()
-        => await InitializeContainers(await InitializeDatabase());
+    {
+        try
+        {
+            await InitializeContainers(await InitializeDatabase());
+        }
+        catch
+        {
+            // log details when database fails to be initialized
+        }
+    }
 
     private async Task<Database> InitializeDatabase()
     {

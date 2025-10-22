@@ -14,6 +14,8 @@ public record OrderLine
 
     public Price TotalPrice => ProductPrice * Quantity;
 
+    private OrderLine() { }
+
     public static OrderLine Create(ShoppingCartLine cartLine, Product product)
     {
         EnsureArg.IsTrue(cartLine.ProductId.IsEqualTo(product.Id));

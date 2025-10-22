@@ -6,14 +6,23 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Store.Presentation.Api.IntegrationTests" />
+	</ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+	  <PackageReference Include="FluentAssertions" Version="8.6.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Store.Core.Business\Store.Core.Business.csproj" />
     <ProjectReference Include="..\Store.Infrastructure.Persistence\Store.Infrastructure.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\Customers\" />
   </ItemGroup>
 
 </Project>

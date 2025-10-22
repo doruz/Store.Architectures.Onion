@@ -11,7 +11,7 @@ internal static class OrdersMapper
         OrderedAt = order.CreatedAt.ToOrderedAt(),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = order.TotalPrice
+        TotalPrice = PriceModel.Create(order.TotalPrice)
     };
 
     public static OrderDetailedModel ToOrderDetailedModel(this Order order) => new ()
@@ -20,7 +20,7 @@ internal static class OrdersMapper
         OrderedAt = order.CreatedAt.ToOrderedAt(),
 
         TotalProducts = order.TotalProducts,
-        TotalPrice = order.TotalPrice,
+        TotalPrice = PriceModel.Create(order.TotalPrice),
 
         Lines = order.Lines.Select(ToOrderLineModel).ToList()
     };

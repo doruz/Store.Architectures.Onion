@@ -1,6 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-
-namespace Store.Core.Business.Products;
+﻿namespace Store.Core.Business.Products;
 
 public record ProductModel
 {
@@ -8,7 +6,7 @@ public record ProductModel
 
     public required string Name { get; init; } 
 
-    public required Price Price { get; init; }
+    public required PriceModel Price { get; init; }
 
     public required int Stock { get; init; }
 }

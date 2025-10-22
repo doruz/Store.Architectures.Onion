@@ -1,16 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Store.Core.Shared;
 
 namespace Store.Core.Business.Products;
 
 public record NewProductModel
 {
-    [Required]
-    [MaxLength(100)]
+    [Required(ErrorMessage = ValidationMessages.Required)]
+    [MaxLength(100, ErrorMessage = ValidationMessages.MaxLength)]
     public required string Name { get; init; }
 
-    [Range(0, double.MaxValue)]
+    [Required(ErrorMessage = ValidationMessages.Required)]
+    [Range(0, int.MaxValue, ErrorMessage = ValidationMessages.MinValue)]
     public decimal Price { get; init; }
 
-    [Range(0, int.MaxValue)]
+    [Required(ErrorMessage = ValidationMessages.Required)]
+    [Range(0, int.MaxValue, ErrorMessage = ValidationMessages.MinValue)]
     public int Stock { get; init; }
 }

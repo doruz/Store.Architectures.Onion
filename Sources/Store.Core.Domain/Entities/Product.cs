@@ -4,9 +4,9 @@ public class Product : BaseEntity
 {
     public required string Name { get; set; }
 
-    public Price Price { get; set; } = 0;
+    public required Price Price { get; set; }
 
-    public int Stock { get; set; }
+    public required int Stock { get; set; }
 
     public void Update(string? name, decimal? price, int? stock)
     {
@@ -15,8 +15,8 @@ public class Product : BaseEntity
         Stock = stock ?? Stock;
     }
 
-    public bool StockIsNotAvailable(int quantity)
-        => quantity.IsNotInRange(0, Stock);
+    public bool StockIsAvailable(int quantity)
+        => quantity.IsInRange(0, Stock);
 
     public void DecreaseStock(int quantity)
         => Stock -= quantity;
