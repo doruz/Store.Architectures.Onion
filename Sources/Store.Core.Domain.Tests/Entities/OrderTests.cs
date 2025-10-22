@@ -20,7 +20,7 @@ public class OrderTests
         var action = () => Order.Create(string.Empty, OrderLines);
 
         // Assert
-        action.Should().Throw();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class OrderTests
         var action = () => Order.Create(CustomerId, []);
 
         // Assert
-        action.Should().Throw();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]

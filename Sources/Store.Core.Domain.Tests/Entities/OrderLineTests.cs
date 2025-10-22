@@ -17,7 +17,7 @@ public class OrderLineTests
         };
 
         // Assert
-        action.Should().Throw();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class OrderLineTests
         };
 
         // Assert
-        action.Should().Throw();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class OrderLineTests
         };
 
         // Assert
-        action.Should().Throw();
+        action.Should().Throw<ArgumentException>();
     }
 
     [Fact]

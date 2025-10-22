@@ -15,8 +15,8 @@ public class Product : BaseEntity
         Stock = stock ?? Stock;
     }
 
-    public bool StockIsNotAvailable(int quantity)
-        => quantity.IsNotInRange(0, Stock);
+    public bool StockIsAvailable(int quantity)
+        => quantity.IsInRange(0, Stock);
 
     public void DecreaseStock(int quantity)
         => Stock -= quantity;

@@ -5,7 +5,7 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ShoppingCartTests
 {
-    private static readonly ShoppingCartLine CartLine = new("apples", 1);
+    private static readonly ShoppingCartLine CartLine = new("4", 1);
     private static readonly ShoppingCartLine[] CartLines =
     [
         new ShoppingCartLine("1", 1),

@@ -14,7 +14,7 @@ internal static class ProductErrors
         => product ?? throw NotFound(productId);
 
     public static Product EnsureStockIsAvailable(this Product product, int quantity) =>
-        product.StockIsNotAvailable(quantity)
-            ? throw new BusinessException(BusinessError.Conflict("product_stock_not_available", product.Id))
-            : product;
+        product.StockIsAvailable(quantity)
+            ? product
+            : throw new BusinessException(BusinessError.Conflict("product_stock_not_available", product.Id));
 }
