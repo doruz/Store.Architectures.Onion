@@ -12,7 +12,7 @@ public class Order : BaseEntity
 
     public Price TotalPrice => Lines.Select(line => line.TotalPrice).Sum();
 
-    public bool IsNotEmpty() => Lines.IsNotEmpty();
+    private Order() { }
 
     public static Order Create(string customerId, params IEnumerable<OrderLine> lines) => new()
     {
