@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Core.Business.Errors;
 using Store.Core.Business.Products;
+using Store.Core.Business.Shared;
 
 [ApiRoute("admins/products")]
 public sealed class AdminProductsController(ProductsService products) : BaseApiController

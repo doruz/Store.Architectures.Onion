@@ -12,7 +12,7 @@ internal static class CosmosDependencyInjection
 
             .AddSingleton(CosmosClientFactory.Create(configuration))
             .AddSingleton<CosmosDatabaseContainers>()
-            .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>() // TODO: to fix crashes on tests
+            .AddSingleton<IAppInitializer, CosmosDatabaseInitializer>()
 
             .AddSingleton<IProductsRepository, CosmosProductsRepository>()
             .AddSingleton<IShoppingCartsRepository, CosmosShoppingCartsRepository>()

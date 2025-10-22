@@ -11,15 +11,7 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
     {
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentCustomer.Id);
 
-        return new ShoppingCartModel
-        {
-            Lines = await ToCartLinesModel(shoppingCart.Lines)
-        };
-    }
-
-    private async Task<List<ShoppingCartLineModel>> ToCartLinesModel(IEnumerable<ShoppingCartLine> cartLines)
-    {
-        var lines = await cartLines
+        var cartLines = await shoppingCart.Lines
             .Select(async cartLine => new
             {
                 CartLine = cartLine,
@@ -27,10 +19,20 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             })
             .ToListAsync();
 
-        return lines
-            .Where(x => x.Product != null)
-            .Select(x => x.CartLine.ToShoppingCartLineModel(x.Product!))
-            .ToList();
+        var lines = cartLines
+            .Where(l => l.Product != null)
+            .Select(l => l.CartLine.ToShoppingCartLineModel(l.Product!));
+
+        var totalCartPrice = cartLines
+            .Where(l => l.Product != null)
+            .Select(l => l.Product!.Price * l.CartLine.Quantity)
+            .Sum();
+
+        return new ShoppingCartModel
+        {
+            Lines = lines,
+            TotalPrice = PriceModel.Create(totalCartPrice)
+        };
     }
 
     public Task ClearCurrentCustomerCart()

@@ -1,5 +1,4 @@
-﻿using Store.Core.Business.Errors;
-using Store.Core.Domain.Repositories;
+﻿using Store.Core.Domain.Repositories;
 using Store.Core.Shared;
 
 namespace Store.Core.Business.Orders;

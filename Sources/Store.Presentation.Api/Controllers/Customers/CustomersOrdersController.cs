@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Core.Business.Errors;
 using Store.Core.Business.Orders;
+using Store.Core.Business.Shared;
 
 [ApiRoute("customers/current/orders")]
 public sealed class CustomersOrdersController(OrdersService orders) : BaseApiController

@@ -1,7 +1,4 @@
-﻿using Store.Core.Business.Products;
-using Store.Core.Shared;
-
-namespace Store.Core.Business.Orders;
+﻿namespace Store.Core.Business.Orders;
 
 public record OrderSummaryModel
 {

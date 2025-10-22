@@ -1,13 +1,18 @@
 ﻿using Store.Core.Shared;
 
 internal sealed class AppInitializationService(IEnumerable<IAppInitializer> initializers) 
-    : BackgroundService
+    : IHostedService
 {
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
         foreach (var initializer in initializers)
         {
             await initializer.Execute();
         }
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
     }
 }

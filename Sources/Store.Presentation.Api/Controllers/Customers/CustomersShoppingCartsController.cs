@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Core.Business.Errors;
 using Store.Core.Business.Orders;
+using Store.Core.Business.Shared;
 using Store.Core.Business.ShoppingCarts;
 
 [ApiRoute("customers/current/shopping-carts/current")]

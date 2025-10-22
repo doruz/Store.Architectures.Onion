@@ -13,10 +13,19 @@ internal sealed class CosmosDatabaseInitializer(CosmosClient cosmosClient, IOpti
         new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/customerId")
     ];
 
-    async Task IAppInitializer.Execute()
-        => await InitializeContainers(await InitializeDatabase());
+    public async Task Execute()
+    {
+        try
+        {
+            await InitializeContainers(await InitializeDatabase());
+        }
+        catch
+        {
+            // log details when database fails to be initialized
+        }
+    }
 
-    public async Task<Database> InitializeDatabase()
+    private async Task<Database> InitializeDatabase()
     {
         var throughput = ThroughputProperties.CreateAutoscaleThroughput(options.Value.MaxThroughput);
 

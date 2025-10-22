@@ -1,6 +1,6 @@
 ﻿using Store.Core.Domain.Entities;
 
-namespace Store.Core.Business;
+namespace Store.Core.Business.Shared;
 
 public record PriceModel(decimal Value, string Currency, string Display)
 {

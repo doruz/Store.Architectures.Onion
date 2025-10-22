@@ -8,7 +8,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     public async Task When_CustomerDoesNotHaveOrders_Should_ReturnSuccessWithEmptyDetails()
     {
         // Arrange
-        await Database.DeleteOrders(CurrentCustomer.Id);
+        await Database.DeleteCustomerOrders(CurrentCustomer.Id);
 
         // Act
         var response = await Api.Customer.Orders.GetAllAsync();
@@ -23,7 +23,7 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
     public async Task When_CustomerHasOrders_Should_ReturnSuccessWithSummariesDetails()
     {
         // Arrange
-        await Database.DeleteOrders(CurrentCustomer.Id);
+        await Database.DeleteCustomerOrders(CurrentCustomer.Id);
 
         var orders = new []
         {
@@ -35,17 +35,17 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
         {
             new OrderSummaryTestModel
             {
-                Id = orders[0].Id,
-                OrderedAt = new DateTimeTestModel(orders[0].OrderedAt.Value),
-                TotalProducts = 3,
-                TotalPrice = new PriceTestModel(2.49m)
-            },
-            new OrderSummaryTestModel
-            {
                 Id = orders[1].Id,
                 OrderedAt = new DateTimeTestModel(orders[1].OrderedAt.Value),
                 TotalProducts = 4,
                 TotalPrice = new PriceTestModel(3.72m)
+            },
+            new OrderSummaryTestModel
+            {
+                Id = orders[0].Id,
+                OrderedAt = new DateTimeTestModel(orders[0].OrderedAt.Value),
+                TotalProducts = 3,
+                TotalPrice = new PriceTestModel(2.49m)
             }
         };
 

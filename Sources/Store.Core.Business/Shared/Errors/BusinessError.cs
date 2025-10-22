@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Business.Errors;
+﻿namespace Store.Core.Business.Shared;
 
 public record BusinessError(int Status, string Error)
 {

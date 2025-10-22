@@ -1,4 +1,4 @@
-﻿namespace Store.Core.Business.Errors;
+﻿namespace Store.Core.Business.Shared;
 
 public sealed class BusinessException(BusinessError error) : Exception
 {

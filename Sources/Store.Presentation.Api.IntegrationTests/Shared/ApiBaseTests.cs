@@ -11,16 +11,15 @@ public abstract class ApiBaseTests(ApiApplicationFactory factory) : IAsyncLifeti
 
     protected ICurrentCustomer CurrentCustomer { get; } = factory.GetService<ICurrentCustomer>();
 
-    public virtual async Task InitializeAsync()
+    public async Task InitializeAsync()
     {
-        await Database.EnsureIsCreated();
+        await Database.EnsureIsInitialized();
     }
 
-    public async Task DisposeAsync()
+    public Task DisposeAsync()
     {
-    //    await _database.EnsureIsDeleted();
-
-        await factory.DisposeAsync();
         Api.Dispose();
+
+        return Task.CompletedTask;
     }
 }

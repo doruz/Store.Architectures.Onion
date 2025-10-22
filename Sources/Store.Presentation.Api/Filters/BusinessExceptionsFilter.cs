@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Store.Core.Business.Errors;
+using Store.Core.Business.Shared;
 
 /// <summary>
 /// In case a specific app error is thrown to return correct status code to the client.

@@ -14,12 +14,12 @@ internal static class ShoppingCartsMapper
         {
             ProductId = product.Id,
             ProductName = product.Name,
-            ProductPrice = product.Price,
-
+            ProductPrice = PriceModel.Create(product.Price),
+            TotalPrice = PriceModel.Create(product.Price * cartLine.Quantity),
             Quantity = cartLine.Quantity,
         };
     }
 
     public static ShoppingCartLine ToShoppingCartLine(this EditShoppingCartLineModel model)
-        => new ShoppingCartLine(model.ProductId, model.Quantity);
+        => new (model.ProductId, model.Quantity);
 }
