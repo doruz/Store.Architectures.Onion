@@ -2,6 +2,6 @@
 
 internal sealed class CurrentCustomer : ICurrentCustomer
 {
-    // TODO: Replace with real authentication mechanism.
-    public string Id => "32b1ed6f-f551-45ae-b6d3-695b86aacad8";
+    // TODO: replace with real authentication mechanism.
+    public string Id => Guid.Empty.ToString();
 }

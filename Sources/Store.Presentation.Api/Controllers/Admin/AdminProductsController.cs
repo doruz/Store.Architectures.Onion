@@ -5,17 +5,26 @@ using Store.Core.Business.Shared;
 [ApiRoute("admins/products")]
 public sealed class AdminProductsController(ProductsService products) : BaseApiController
 {
+    /// <summary>
+    /// Get details of all existing products.
+    /// </summary>
     [HttpGet]
     [ProducesResponseType<IEnumerable<ProductModel>>(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllProducts() 
         => Ok(await products.GetAll());
 
+    /// <summary>
+    /// Find details of a specific product.
+    /// </summary>
     [HttpGet("{id}")]
     [ProducesResponseType<ProductModel>(StatusCodes.Status200OK)]
     [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> FindProduct([FromRoute] string id) 
         => Ok(await products.FindProductAsync(id));
 
+    /// <summary>
+    /// Add new product details.
+    /// </summary>
     [HttpPost]
     [ProducesResponseType<ProductModel>(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -26,6 +35,9 @@ public sealed class AdminProductsController(ProductsService products) : BaseApiC
         return CreatedAtAction(nameof(FindProduct), new { newProduct.Id }, newProduct);
     }
 
+    /// <summary>
+    /// Update details of an existing product.
+    /// </summary>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -37,6 +49,9 @@ public sealed class AdminProductsController(ProductsService products) : BaseApiC
         return NoContent();
     }
 
+    /// <summary>
+    /// Remove details of an existing product.
+    /// </summary>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType<BusinessError>(StatusCodes.Status404NotFound)]

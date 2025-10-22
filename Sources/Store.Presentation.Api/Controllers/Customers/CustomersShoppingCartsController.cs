@@ -9,8 +9,7 @@ public sealed class CustomersShoppingCartsController(
     ShoppingCartCheckoutService shoppingCartCheckout) : BaseApiController
 {
     /// <summary>
-    /// Get current cart of authenticated customer.
-    /// If there is no cart created, create an empty one.
+    /// Get cart details of authenticated customer.
     /// </summary>
     [HttpGet]
     [ProducesResponseType<ShoppingCartModel>(StatusCodes.Status200OK)]
@@ -18,7 +17,7 @@ public sealed class CustomersShoppingCartsController(
         => Ok(await shoppingCarts.GetCurrentCustomerCart());
 
     /// <summary>
-    /// Clear cart of authenticated customer.
+    /// Clear cart details of authenticated customer.
     /// </summary>
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -31,7 +30,7 @@ public sealed class CustomersShoppingCartsController(
     }
 
     /// <summary>
-    /// Update cart lines of authenticated customer.
+    /// Update cart details of authenticated customer.
     /// </summary>
     [HttpPatch]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
