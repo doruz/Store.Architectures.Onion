@@ -6,7 +6,7 @@ public class ShoppingCart : BaseEntity
 {
     public List<ShoppingCartLine> Lines { get; init; } = [];
 
-    public static ShoppingCart CreateEmpty(string accountId) => new() { Id = accountId };
+    public static ShoppingCart CreateEmpty(string customerId) => new() { Id = customerId };
 
     public bool IsEmpty() => Lines.All(line => line.Quantity == 0);
 

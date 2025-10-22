@@ -4,7 +4,7 @@ namespace Store.Presentation.Api.IntegrationTests;
 
 public sealed class CustomerApiClient(HttpClient client)
 {
-    private const string BaseRoute = "/api/accounts/current";
+    private const string BaseRoute = "/api/customers/current";
 
     public CustomerShoppingCartApiClient Cart { get; } = new(client);
 
@@ -16,7 +16,7 @@ public sealed class CustomerApiClient(HttpClient client)
 
 public sealed class CustomerShoppingCartApiClient(HttpClient client)
 {
-    private const string Route = "/api/accounts/current/shopping-carts/current";
+    private const string Route = "/api/customers/current/shopping-carts/current";
 
     public Task<HttpResponseMessage> GetAsync()
         => client.GetAsync(Route);
@@ -39,7 +39,7 @@ public sealed class CustomerShoppingCartApiClient(HttpClient client)
 
 public sealed class CustomerOrdersApiClient(HttpClient client)
 {
-    private const string Route = "/api/accounts/current/orders";
+    private const string Route = "/api/customers/current/orders";
 
     public Task<HttpResponseMessage> GetAllAsync()
         => client.GetAsync(Route);

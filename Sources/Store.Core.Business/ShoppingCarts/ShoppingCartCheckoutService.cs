@@ -8,7 +8,7 @@ namespace Store.Core.Business.ShoppingCarts;
 
 public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {
-    public async Task<OrderSummaryModel> CheckoutCurrentAccountCart()
+    public async Task<OrderSummaryModel> CheckoutCurrentCustomerCart()
     {
         var shoppingCartItems = await GetShoppingCartItems();
 
@@ -18,13 +18,13 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
             .Select(item => OrderLine.Create(item.CartLine, item.Product))
             .ToList();
 
-        var accountOrder = Order.Create(currentAccount.Id, orderLines);
-        await repositories.Orders.SaveOrderAsync(accountOrder);
+        var customerOrder = Order.Create(currentAccount.Id, orderLines);
+        await repositories.Orders.SaveOrderAsync(customerOrder);
         await repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
 
         await UpdateProductsStock(shoppingCartItems);
 
-        return accountOrder.ToOrderSummaryModel();
+        return customerOrder.ToOrderSummaryModel();
     }
 
     private async Task<List<(ShoppingCartLine CartLine, Product Product)>> GetShoppingCartItems()

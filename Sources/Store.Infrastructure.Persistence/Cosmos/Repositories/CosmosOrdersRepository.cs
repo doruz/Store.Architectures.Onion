@@ -7,13 +7,13 @@ namespace Store.Infrastructure.Persistence.Cosmos;
 
 internal sealed class CosmosOrdersRepository(CosmosDatabaseContainers containers) : IOrdersRepository
 {
-    public Task<IEnumerable<Order>> GetAccountOrdersAsync(string accountId)
+    public Task<IEnumerable<Order>> GetCustomerOrdersAsync(string customerId)
     {
-        EnsureArg.IsNotNullOrEmpty(accountId, nameof(accountId));
+        EnsureArg.IsNotNullOrEmpty(customerId, nameof(customerId));
 
         var requestOptions = new QueryRequestOptions
         {
-            PartitionKey = accountId.ToPartitionKey()
+            PartitionKey = customerId.ToPartitionKey()
         };
 
         var orders = containers.Orders
@@ -23,8 +23,8 @@ internal sealed class CosmosOrdersRepository(CosmosDatabaseContainers containers
         return Task.FromResult(orders);
     }
 
-    public Task<Order?> FindOrderAsync(string accountId, string id) 
-        => containers.Orders.FindAsync<Order>(id, accountId.ToPartitionKey());
+    public Task<Order?> FindOrderAsync(string customerId, string id) 
+        => containers.Orders.FindAsync<Order>(id, customerId.ToPartitionKey());
 
     public async Task SaveOrderAsync(Order order)
     {

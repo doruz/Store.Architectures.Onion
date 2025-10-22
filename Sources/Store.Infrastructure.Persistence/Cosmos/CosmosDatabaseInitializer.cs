@@ -10,7 +10,7 @@ internal sealed class CosmosDatabaseInitializer(CosmosClient cosmosClient, IOpti
     [
         new ContainerProperties(CosmosDatabaseContainers.ProductsName, "/id"),
         new ContainerProperties(CosmosDatabaseContainers.ShoppingCartsName, "/id"),
-        new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/accountId")
+        new ContainerProperties(CosmosDatabaseContainers.OrdersName, "/customerId")
     ];
 
     async Task IAppInitializer.Execute()

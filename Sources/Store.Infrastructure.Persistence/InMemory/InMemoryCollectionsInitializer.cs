@@ -48,7 +48,7 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, 
     [
         new Order
         {
-            AccountId = currentAccount.Id,
+            CustomerId = currentAccount.Id,
 
             Lines =
             [

@@ -2,8 +2,8 @@
 using Store.Core.Business.Errors;
 using Store.Core.Business.Products;
 
-[ApiRoute("accounts/current/products")]
-public sealed class AccountsProductsController(ProductsService products) : BaseApiController
+[ApiRoute("customers/current/products")]
+public sealed class CustomersProductsController(ProductsService products) : BaseApiController
 {
     [HttpGet]
     [ProducesResponseType<IEnumerable<ProductModel>>(StatusCodes.Status200OK)]

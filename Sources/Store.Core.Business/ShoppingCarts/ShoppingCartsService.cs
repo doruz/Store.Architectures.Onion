@@ -7,7 +7,7 @@ namespace Store.Core.Business.ShoppingCarts;
 
 public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurrentAccount currentAccount)
 {
-    public async Task<ShoppingCartModel> GetCurrentAccountCart()
+    public async Task<ShoppingCartModel> GetCurrentCustomerCart()
     {
         var shoppingCart = await repositories.ShoppingCarts.FindOrEmptyAsync(currentAccount.Id);
 
@@ -33,10 +33,10 @@ public sealed class ShoppingCartsService(RepositoriesContext repositories, ICurr
             .ToList();
     }
 
-    public Task ClearCurrentAccountCart()
+    public Task ClearCurrentCustomerCart()
         => repositories.ShoppingCarts.DeleteAsync(currentAccount.Id);
 
-    public async Task UpdateCurrentAccountCart(params EditShoppingCartLineModel[] lines)
+    public async Task UpdateCurrentCustomerCart(params EditShoppingCartLineModel[] lines)
     {
         if (lines.IsEmpty())
         {
