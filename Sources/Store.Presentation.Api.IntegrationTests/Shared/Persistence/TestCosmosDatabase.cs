@@ -1,5 +1,6 @@
 ﻿using EnsureThat;
 using Store.Core.Domain.Entities;
+using Store.Core.Shared;
 using Store.Infrastructure.Persistence.Cosmos;
 
 namespace Store.Presentation.Api.IntegrationTests;
@@ -33,15 +34,13 @@ internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContaine
     {
         EnsureIsTestDatabase();
 
-        var products = cosmosContainers.Products
+        await cosmosContainers.Products
             .GetItemLinqQueryable<Product>(true)
-            .AsEnumerable();
-
-
-        foreach (var product in products)
-        {
-            await cosmosContainers.Products.DeleteAsync<Product>(product.Id, product.Id.ToPartitionKey());
-        }
+            .AsEnumerable()
+            .ForEachAsync(async p =>
+            {
+                await cosmosContainers.Products.DeleteAsync<Product>(p.Id, p.Id.ToPartitionKey());
+            });
     }
 
     private void EnsureIsTestDatabase()

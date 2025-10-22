@@ -5,6 +5,7 @@ public record OrderDetailsTestModel : OrderSummaryTestModel
     public required IReadOnlyList<OrderDetailsLineTestModel> Lines { get; init; } = [];
 }
 
+
 public record OrderDetailsLineTestModel
 {
     public required string ProductId { get; init; }

@@ -6,6 +6,7 @@ public record ReadShoppingCartTestModel
     public required PriceTestModel TotalPrice { get; init; }
 }
 
+
 public record ReadShoppingCartLineTestModel
 {
     public required string ProductId { get; init; }

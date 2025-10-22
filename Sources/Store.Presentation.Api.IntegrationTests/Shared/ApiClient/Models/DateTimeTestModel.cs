@@ -2,5 +2,5 @@
 
 public record DateTimeTestModel(DateTime Value)
 {
-    //public string Label => Value.ToString("dd MMM yyyy, HH:mm");
+    public string Label => Value.ToString("dd MMM yyyy, HH:mm");
 }

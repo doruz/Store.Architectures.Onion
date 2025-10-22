@@ -2,6 +2,7 @@
 
 public record UpdateShoppingCartLineTestModel(string ProductId, int Quantity);
 
+
 public sealed class UpdateShoppingCartTestModel
 {
     public List<UpdateShoppingCartLineTestModel> Lines { get; } = [];

@@ -11,13 +11,6 @@ public record NewProductTestModel(string Name, decimal Price, int Stock)
         Stock: Random.Numbers.Generate(0, int.MaxValue)
     );
 
-    internal dynamic GetExpectedDetails() => new
-    {
-        Name,
-        Price = new Price(Price),
-        Stock
-    };
-
     internal ReadProductTestModel GetExpectedDetails(string id) => new()
     {
         Id = id,

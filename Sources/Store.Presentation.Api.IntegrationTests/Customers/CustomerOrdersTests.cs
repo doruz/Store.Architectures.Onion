@@ -87,17 +87,20 @@ public class CustomerOrdersTests(ApiApplicationFactory factory) : ApiBaseTests(f
             [
                 new OrderDetailsLineTestModel
                 {
-                    ProductId = "9b5055cf-6cd0-4086-8d01-6e1582a7fb0a",
-                    ProductName = "Apples",
+                    ProductId = TestProducts.Apples.Id,
+                    ProductName = TestProducts.Apples.Name,
                     ProductPrice = new PriceTestModel(0.99m),
+
                     Quantity = 2,
                     TotalPrice = new PriceTestModel(1.98m)
                 },
+
                 new OrderDetailsLineTestModel
                 {
-                    ProductId = "b4f256a5-f65f-4811-a0d4-10d1fbba5f25",
-                    ProductName = "Bananas",
+                    ProductId = TestProducts.Bananas.Id,
+                    ProductName = TestProducts.Bananas.Name,
                     ProductPrice = new PriceTestModel(0.75m),
+
                     Quantity = 3,
                     TotalPrice = new PriceTestModel(2.25m)
                 }

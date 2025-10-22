@@ -2,7 +2,7 @@
 
 namespace Store.Presentation.Api.IntegrationTests;
 
-internal record ReadProductTestModel
+public record ReadProductTestModel
 {
     public required string Id { get; init; }
     public required string Name { get; init; }

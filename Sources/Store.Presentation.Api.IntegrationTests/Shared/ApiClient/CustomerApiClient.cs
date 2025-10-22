@@ -14,6 +14,7 @@ public sealed class CustomerApiClient(HttpClient client)
         => client.GetAsync($"{BaseRoute}/products/{id}");
 }
 
+
 public sealed class CustomerShoppingCartApiClient(HttpClient client)
 {
     private const string Route = "/api/customers/current/shopping-carts/current";
@@ -36,6 +37,7 @@ public sealed class CustomerShoppingCartApiClient(HttpClient client)
     public Task<HttpResponseMessage> CheckoutAsync()
         => client.PostAsJsonAsync($"{Route}/checkout", new { });
 }
+
 
 public sealed class CustomerOrdersApiClient(HttpClient client)
 {
