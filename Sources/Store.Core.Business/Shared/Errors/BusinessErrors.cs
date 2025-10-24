@@ -1,6 +1,6 @@
 ﻿namespace Store.Core.Business.Shared;
 
-public static class BusinessErrors
+internal static class BusinessErrors
 {
     public static async Task<T> EnsureIsNotNull<T>(this Task<T?> item, string id)
         => (await item).EnsureIsNotNull(id);

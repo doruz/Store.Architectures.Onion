@@ -33,6 +33,6 @@ internal static class OrdersMapper
         Quantity = product.Quantity
     };
 
-    private static ValueLabel<DateTime> ToOrderedAt(this DateTime orderedAt)
+    private static ValueLabelModel<DateTime> ToOrderedAt(this DateTime orderedAt)
         => new(orderedAt, orderedAt.ToDateTimeString());
 }
