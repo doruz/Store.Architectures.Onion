@@ -2,7 +2,7 @@
 
 namespace Store.Core.Domain.Entities;
 
-public class ShoppingCart : BaseEntity
+public sealed class ShoppingCart : BaseEntity
 {
     public List<ShoppingCartLine> Lines { get; init; } = [];
 

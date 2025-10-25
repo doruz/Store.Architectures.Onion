@@ -13,7 +13,7 @@ public record ShoppingCartLineModel
 
     public required string ProductName { get; init; }
 
-    public required PriceModel ProductPrice { get; set; }
+    public required PriceModel ProductPrice { get; init; }
 
     public required int Quantity { get; init; }
 

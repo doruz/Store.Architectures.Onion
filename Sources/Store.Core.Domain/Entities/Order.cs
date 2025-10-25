@@ -2,7 +2,7 @@
 
 namespace Store.Core.Domain.Entities;
 
-public class Order : BaseEntity
+public sealed class Order : BaseEntity
 {
     public required string CustomerId { get; init; }
 

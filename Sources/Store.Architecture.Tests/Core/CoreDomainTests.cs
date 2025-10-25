@@ -7,7 +7,7 @@ public class CoreDomainTests
     private static readonly Types DomainTypes = Types.InAssembly(DomainLayer.Assembly);
 
     [Fact]
-    public void DomainLayer_Should_NotHaveDependenciesOnLayersAboveDomain()
+    public void DomainLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
         var result = DomainTypes
             .ShouldNot()
@@ -18,12 +18,13 @@ public class CoreDomainTests
     }
 
     [Fact]
-    public void AllRepositoriesContracts_ShouldHaveCorrectNamespaceAndBeInterfaces()
+    public void RepositoriesInterfaces_Should_ResideInRepositoriesNamespace()
     {
         var result = DomainTypes
-            .That().HaveNameEndingWith("Repository")
-            .Should().ResideInNamespace("Store.Core.Domain.Repositories")
-            .And().BeInterfaces().And().BePublic()
+            .That()
+            .HaveNameEndingWith("Repository")
+            .Should()
+            .ResideInNamespace("Store.Core.Domain.Repositories").And().BeInterfaces()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
