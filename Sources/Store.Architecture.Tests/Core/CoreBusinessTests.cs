@@ -37,7 +37,21 @@ public class CoreBusinessTests
             .That()
             .HaveNameEndingWith("Service")
             .ShouldNot()
-            .MeetCustomRule(new ImplementInterfaces())
+            .ImplementInterfaces()
+            .GetResult();
+
+        result.FailingTypeNames.Should().BeNullOrEmpty();
+    }
+
+
+    [Fact]
+    public void BusinessServices_Should_UseDomainTypesOnPublicMethods()
+    {
+        var result = BusinessTypes
+            .That()
+            .HaveNameEndingWith("Service")
+            .ShouldNot()
+            .HaveDependencyOnPublicMethodsFrom("Domain")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -57,13 +71,13 @@ public class CoreBusinessTests
     }
 
     [Fact]
-    public void BusinessModels_Should_NotExposeDomainEntities()
+    public void BusinessModels_Should_UseDomainTypesOnProperties()
     {
         var result = BusinessTypes
             .That()
             .HaveNameEndingWith("Model")
             .ShouldNot()
-            .MeetCustomRule(new HavePropertiesAndFieldsFromNamespace("Store.Core.Domain.Entities"))
+            .HaveDependencyOnPublicPropertiesFrom("Domain")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -76,14 +90,14 @@ public class CoreBusinessTests
             .That()
             .HaveNameEndingWith("Model")
             .Should()
-            .MeetCustomRule(new HaveInitOnlyProperties())
+            .HaveInitOnlyProperties()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
 
     [Fact]
-    public void AllErrorsAndMappers_Should_FollowConventions()
+    public void ErrorsAndMappers_Should_FollowConventions()
     {
         var result = BusinessTypes
             .That()

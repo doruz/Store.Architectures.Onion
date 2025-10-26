@@ -2,7 +2,7 @@
 
 namespace Store.Architecture.Tests;
 
-internal sealed class HavePropertiesAndFieldsFromNamespace(string @namespace) : ICustomRule
+internal sealed class HaveDependencyOnPublicPropertiesFrom(string @namespace) : ICustomRule
 {
     public bool MeetsRule(TypeDefinition type)
         => type.Properties.Any(prop => prop.PropertyType.Namespace.Contains(@namespace)) ||

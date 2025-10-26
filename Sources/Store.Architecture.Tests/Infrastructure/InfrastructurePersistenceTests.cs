@@ -1,7 +1,6 @@
 ﻿using System.Reflection.Metadata;
 using Store.Core.Business;
 using Store.Infrastructure.Persistence;
-using TypeDefinition = Mono.Cecil.TypeDefinition;
 
 namespace Store.Architecture.Tests.Infrastructure;
 
@@ -24,8 +23,10 @@ public class InfrastructurePersistenceTests
     public void AllTypes_Should_NotBeExposedExternally()
     {
         var result = PersistenceTypes
-            .That().DoNotHaveName(nameof(InfrastructureLayer))
-            .ShouldNot().BePublic()
+            .That()
+            .DoNotHaveName(nameof(InfrastructureLayer))
+            .ShouldNot()
+            .BePublic()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -35,8 +36,10 @@ public class InfrastructurePersistenceTests
     public void AllTypes_Should_NotBeInterfacesOrAbstractions()
     {
         var result = PersistenceTypes
-            .That().DoNotHaveName(nameof(InfrastructureLayer))
-            .ShouldNot().BeInterfaces().And().NotBeAbstract()
+            .That()
+            .DoNotHaveName(nameof(InfrastructureLayer))
+            .ShouldNot()
+            .BeInterfaces().And().NotBeAbstract()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -48,8 +51,10 @@ public class InfrastructurePersistenceTests
         const string repositoriesSuffix = "Repository";
 
         var result = PersistenceTypes
-            .That().HaveNameEndingWith(repositoriesSuffix)
-            .Should().NotBePublic().And().BeSealed().And().MeetCustomRule(new NameEndsWith(repositoriesSuffix))
+            .That()
+            .HaveNameEndingWith(repositoriesSuffix)
+            .Should()
+            .NotBePublic().And().BeSealed().And().HaveNameEndingWith(repositoriesSuffix)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

@@ -1,5 +1,6 @@
 ﻿global using FluentAssertions;
 global using NetArchTest.Rules;
+
 using Store.Core.Business;
 using Store.Core.Shared;
 
@@ -42,7 +43,7 @@ public class GeneralArchitectureTests
             .That()
             .ImplementInterface(typeof(IAppInitializer))
             .Should()
-            .MeetCustomRule(new NameEndsWith("Initializer"))
+            .HaveNameEndingWith("Initializer")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
