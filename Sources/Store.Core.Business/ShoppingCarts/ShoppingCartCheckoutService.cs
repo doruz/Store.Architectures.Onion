@@ -8,6 +8,11 @@ namespace Store.Core.Business.ShoppingCarts;
 
 public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories, ICurrentCustomer currentCustomer)
 {
+    public void Test(Price price)
+    {
+
+    }
+
     public async Task<OrderSummaryModel> CheckoutCurrentCustomerCart()
     {
         var shoppingCartItems = await GetShoppingCartItems();

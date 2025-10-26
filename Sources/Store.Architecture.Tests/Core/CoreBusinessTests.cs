@@ -1,4 +1,5 @@
-﻿using Store.Core.Business;
+﻿using NetArchTest.Rules.Policies;
+using Store.Core.Business;
 
 namespace Store.Architecture.Tests.Core;
 
@@ -55,6 +56,35 @@ public class CoreBusinessTests
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
+    }
+
+    // TODO: to continue with this
+    [Fact]
+    public void Test()
+    {
+        var businessServicesPolicy = Policy
+            .Define("Business Services Policies", "Enforce all")
+            .For(BusinessTypes)
+
+            .Add(types => types
+                    .That()
+                    .HaveNameEndingWith("Service")
+                    .ShouldNot()
+                    .HaveDependencyOnPublicMethodsFrom("Domain"),
+                "",
+                "Business services should not depend on domain types in their public methods"
+            )
+
+            .Add(types => types
+                .That()
+                .HaveNameEndingWith("Service")
+                .ShouldNot()
+                .ImplementInterfaces(),
+                "",
+                "Business services should implement any interfaces"
+            );
+
+        businessServicesPolicy.Evaluate().ShouldBeSuccessful();
     }
 
     [Fact]
