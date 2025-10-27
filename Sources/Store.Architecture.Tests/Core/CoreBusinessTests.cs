@@ -44,9 +44,8 @@ public class CoreBusinessTests
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
 
-
     [Fact]
-    public void BusinessServices_Should_UseDomainTypesOnPublicMethods()
+    public void BusinessServices_Should_NotUseDomainTypesOnPublicMethods()
     {
         var result = BusinessTypes
             .That()

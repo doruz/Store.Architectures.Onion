@@ -4,7 +4,7 @@ using Store.Core.Domain.Entities;
 
 namespace Store.Architecture.Tests;
 
-internal static class NetArchCustomRules
+internal static partial class NetArchCustomRules
 {
     public static ConditionList ImplementInterfaces(this Conditions conditions)
         => conditions.MeetCustomRule(type => type is { HasInterfaces: true, IsInterface: false });
@@ -23,7 +23,7 @@ internal static class NetArchCustomRules
         return conditions.MeetCustomRule(new CustomRule(typeCheck));
     }
 
-    private class CustomRule(Func<TypeDefinition, bool> typeCheck) : ICustomRule
+    internal class CustomRule(Func<TypeDefinition, bool> typeCheck) : ICustomRule
     {
         public bool MeetsRule(TypeDefinition type) => typeCheck(type);
 

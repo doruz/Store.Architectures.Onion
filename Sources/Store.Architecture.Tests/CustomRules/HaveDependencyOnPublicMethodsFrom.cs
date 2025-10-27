@@ -1,4 +1,5 @@
-﻿using Mono.Cecil;
+﻿using Microsoft.AspNetCore.Mvc;
+using Mono.Cecil;
 using Mono.Cecil.Rocks;
 
 namespace Store.Architecture.Tests;
