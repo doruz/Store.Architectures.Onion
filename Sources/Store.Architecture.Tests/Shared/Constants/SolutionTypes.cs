@@ -4,7 +4,7 @@ using Store.Core.Shared;
 using Store.Infrastructure.Persistence;
 using System.Reflection;
 
-namespace Store.Architecture.Tests.Constants;
+namespace Store.Architecture.Tests;
 
 internal static class SolutionTypes
 {

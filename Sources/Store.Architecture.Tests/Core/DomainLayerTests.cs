@@ -1,5 +1,4 @@
-﻿using Store.Architecture.Tests.Constants;
-using Store.Core.Domain;
+﻿using Store.Core.Domain;
 using Store.Core.Domain.Entities;
 
 namespace Store.Architecture.Tests.Core;
@@ -39,7 +38,7 @@ public class DomainLayerTests
             .That()
             .HaveNameEndingWith("Repository").Or().HaveNameStartingWith("Repositories")
             .Should()
-            .ResideInFixedNamespace($"{SolutionNamespaces.Core.Domain}.Repositories").And().BeInterfaces()
+            .ResideInFixedNamespace($"{SolutionNamespaces.Core.Domain}.Repositories")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

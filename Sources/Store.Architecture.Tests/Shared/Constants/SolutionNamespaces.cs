@@ -1,4 +1,4 @@
-﻿namespace Store.Architecture.Tests.Constants;
+﻿namespace Store.Architecture.Tests;
 
 internal static class SolutionNamespaces
 {

@@ -1,5 +1,4 @@
 ﻿using NetArchTest.Rules.Policies;
-using Store.Architecture.Tests.Constants;
 using Store.Core.Business;
 
 namespace Store.Architecture.Tests.Core;

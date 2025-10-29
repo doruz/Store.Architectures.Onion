@@ -1,7 +1,4 @@
-﻿global using FluentAssertions;
-global using NetArchTest.Rules;
-
-using Store.Core.Business;
+﻿using Store.Core.Business;
 using Store.Core.Shared;
 
 namespace Store.Architecture.Tests;

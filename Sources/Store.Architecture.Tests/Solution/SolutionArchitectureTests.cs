@@ -1,5 +1,4 @@
-﻿using Store.Architecture.Tests.Constants;
-using Store.Core.Business;
+﻿using Store.Core.Business;
 using Store.Core.Domain;
 using Store.Core.Shared;
 using Store.Infrastructure.Persistence;

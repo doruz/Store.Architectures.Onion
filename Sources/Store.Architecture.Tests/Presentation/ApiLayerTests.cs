@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
-using Store.Architecture.Tests.Constants;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Architecture.Tests;

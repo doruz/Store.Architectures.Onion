@@ -1,5 +1,4 @@
 ﻿using System.Reflection.Metadata;
-using Store.Architecture.Tests.Constants;
 using Store.Core.Business;
 using Store.Infrastructure.Persistence;
 
