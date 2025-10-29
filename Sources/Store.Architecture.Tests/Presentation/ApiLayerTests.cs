@@ -1,22 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
+using Store.Architecture.Tests.Constants;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Architecture.Tests;
 
-public class PresentationApiTests
+public class ApiLayerTests
 {
-    private static readonly Types ApiTypes = Types.InAssembly(ApiLayer.Assembly);
-
     [Fact]
     public void ApiController_Should_NotDependOnDomain()
     {
-        var result = ApiTypes
+        var result = SolutionTypes.Presentation.Api
             .That()
             .Inherit(typeof(ControllerBase))
             .ShouldNot()
-            .MeetCustomRule(new MakeUseOfRule("Store.Core.Domain"))
+            .MeetCustomRule(new MakeUseOfRule(SolutionNamespaces.Core.Domain))
             //.HaveDependencyOn("")
             //.HaveDependencyOn("Store.Core.Domain")
             .GetResult();
@@ -27,7 +26,7 @@ public class PresentationApiTests
     [Fact]
     public void ApiControllersActions_Should_ReturnIActionResult()
     {
-        var result = ApiTypes
+        var result = SolutionTypes.Presentation.Api
             .That()
             .Inherit(typeof(ControllerBase))
             .Should()
@@ -40,7 +39,7 @@ public class PresentationApiTests
     [Fact]
     public void AdminControllersRoutes_Should_BePrefixedWithAdmin()
     {
-        var result = ApiTypes
+        var result = SolutionTypes.Presentation.Api
             .That()
             .Inherit(typeof(ControllerBase)).And().HaveNameStartingWith("Admin")
             .Should()
@@ -53,7 +52,7 @@ public class PresentationApiTests
     [Fact]
     public void CustomerControllersRoutes_Should_BePrefixedWithCustomer()
     {
-        var result = ApiTypes
+        var result = SolutionTypes.Presentation.Api
             .That()
             .Inherit(typeof(BaseApiController)).And().HaveNameStartingWith("Customer")
             .Should()

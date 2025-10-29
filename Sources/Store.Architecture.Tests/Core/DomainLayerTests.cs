@@ -37,7 +37,7 @@ public class DomainLayerTests
     {
         var result = SolutionTypes.Core.Domain
             .That()
-            .HaveNameEndingWith("Repository")
+            .HaveNameEndingWith("Repository").Or().HaveNameStartingWith("Repositories")
             .Should()
             .ResideInFixedNamespace($"{SolutionNamespaces.Core.Domain}.Repositories").And().BeInterfaces()
             .GetResult();
