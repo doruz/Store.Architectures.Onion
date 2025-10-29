@@ -1,4 +1,5 @@
 ﻿global using Store.Core.Business.Shared;
+
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Store.Core.Business.Orders;

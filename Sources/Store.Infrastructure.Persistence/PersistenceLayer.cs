@@ -9,9 +9,9 @@ using System.Reflection;
 
 namespace Store.Infrastructure.Persistence;
 
-public static class InfrastructureLayer
+public static class PersistenceLayer
 {
-    public static Assembly Assembly => typeof(InfrastructureLayer).Assembly;
+    public static Assembly Assembly => typeof(PersistenceLayer).Assembly;
 
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {

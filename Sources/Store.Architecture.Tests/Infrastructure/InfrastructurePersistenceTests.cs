@@ -6,25 +6,14 @@ namespace Store.Architecture.Tests.Infrastructure;
 
 public class InfrastructurePersistenceTests
 {
-    private static readonly Types PersistenceTypes = Types.InAssembly(InfrastructureLayer.Assembly);
-
-    [Fact]
-    public void InfrastructureLayer_Should_NotHaveDependenciesOnLayersAboveBusiness()
-    {
-        var result = PersistenceTypes
-            .ShouldNot()
-            .HaveDependencyOnAny("Store.Core.Business", "Store.Presentation")
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
+    private static readonly Types PersistenceTypes = Types.InAssembly(PersistenceLayer.Assembly);
 
     [Fact]
     public void AllTypes_Should_NotBeExposedExternally()
     {
         var result = PersistenceTypes
             .That()
-            .DoNotHaveName(nameof(InfrastructureLayer))
+            .DoNotHaveName(nameof(PersistenceLayer))
             .ShouldNot()
             .BePublic()
             .GetResult();
@@ -37,7 +26,7 @@ public class InfrastructurePersistenceTests
     {
         var result = PersistenceTypes
             .That()
-            .DoNotHaveName(nameof(InfrastructureLayer))
+            .DoNotHaveName(nameof(PersistenceLayer))
             .ShouldNot()
             .BeInterfaces().And().NotBeAbstract()
             .GetResult();

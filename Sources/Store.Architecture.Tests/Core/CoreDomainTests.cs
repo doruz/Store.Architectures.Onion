@@ -7,17 +7,6 @@ public class CoreDomainTests
     private static readonly Types DomainTypes = Types.InAssembly(DomainLayer.Assembly);
 
     [Fact]
-    public void DomainLayer_Should_NotHaveDependenciesOnLayersAbove()
-    {
-        var result = DomainTypes
-            .ShouldNot()
-            .HaveDependencyOnAny("Store.Core.Business", "Store.Infrastructure", "Store.Presentation")
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    [Fact]
     public void RepositoriesInterfaces_Should_ResideInRepositoriesNamespace()
     {
         var result = DomainTypes

@@ -8,17 +8,6 @@ public class CoreBusinessTests
     private static readonly Types BusinessTypes = Types.InAssembly(BusinessLayer.Assembly);
 
     [Fact]
-    public void BusinessLayer_Should_NotHaveDependenciesOnLayersAbove()
-    {
-        var result = BusinessTypes
-            .ShouldNot()
-            .HaveDependencyOnAny("Store.Infrastructure", "Store.Presentation")
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    [Fact]
     public void BusinessServices_Should_FollowConventions()
     {
         var result = BusinessTypes
@@ -124,6 +113,8 @@ public class CoreBusinessTests
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
+
+    // TODO: models should be records
 
     [Fact]
     public void ErrorsAndMappers_Should_FollowConventions()

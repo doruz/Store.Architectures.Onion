@@ -10,6 +10,21 @@ public class PresentationApiTests
     private static readonly Types ApiTypes = Types.InAssembly(ApiLayer.Assembly);
 
     [Fact]
+    public void ApiController_Should_NotDependOnDomain()
+    {
+        var result = ApiTypes
+            .That()
+            .Inherit(typeof(ControllerBase))
+            .ShouldNot()
+            .MeetCustomRule(new MakeUseOfRule("Store.Core.Domain"))
+            //.HaveDependencyOn("")
+            //.HaveDependencyOn("Store.Core.Domain")
+            .GetResult();
+
+        result.FailingTypeNames.Should().BeNullOrEmpty();
+    }
+
+    [Fact]
     public void ApiControllersActions_Should_ReturnIActionResult()
     {
         var result = ApiTypes
@@ -17,19 +32,6 @@ public class PresentationApiTests
             .Inherit(typeof(ControllerBase))
             .Should()
             .AllPublicMethodsReturn<IActionResult>()
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    [Fact]
-    public void ApiControllerActions_Should_NotUseDomainTypes()
-    {
-        var result = ApiTypes
-            .That()
-            .Inherit(typeof(ControllerBase))
-            .ShouldNot()
-            .HaveDependencyOnPublicMethodsFrom("Domain")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
