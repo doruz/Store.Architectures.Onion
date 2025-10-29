@@ -3,7 +3,7 @@ using Mono.Cecil.Rocks;
 
 namespace Store.Architecture.Tests;
 
-internal sealed class AllPublicMethodsReturnRule<T>() : ICustomRule
+internal sealed class PublicMethodsReturnRule<T>() : ICustomRule
 {
     private readonly string[] _allowedReturnTypes =
     [
@@ -23,6 +23,6 @@ internal sealed class AllPublicMethodsReturnRule<T>() : ICustomRule
 
 internal static partial class CustomRules
 {
-    public static ConditionList AllPublicMethodsReturn<T>(this Conditions conditions)
-        => conditions.MeetCustomRule(new AllPublicMethodsReturnRule<T>());
+    public static ConditionList PublicMethodsReturn<T>(this Conditions conditions)
+        => conditions.MeetCustomRule(new PublicMethodsReturnRule<T>());
 }

@@ -29,7 +29,7 @@ public class ApiLayerTests
             .That()
             .Inherit(typeof(ControllerBase))
             .Should()
-            .AllPublicMethodsReturn<IActionResult>()
+            .PublicMethodsReturn<IActionResult>()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

@@ -3,7 +3,7 @@ using Mono.Cecil.Rocks;
 
 namespace Store.Architecture.Tests;
 
-internal static class IsRecordRule
+internal static class TypeIsRecordRule
 {
     public static ConditionList IsRecord(this Conditions conditions)
         => conditions.MeetCustomRule(MeetsRule);
