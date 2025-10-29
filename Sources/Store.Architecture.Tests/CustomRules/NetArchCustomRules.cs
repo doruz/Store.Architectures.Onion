@@ -18,7 +18,7 @@ internal static partial class NetArchCustomRules
     public static ConditionList HaveDependencyOnPublicMethodsFrom(this Conditions conditions, string @namespace)
         => conditions.MeetCustomRule(new HaveDependencyOnPublicMethodsFrom(@namespace));
 
-    private static ConditionList MeetCustomRule(this Conditions conditions, Func<TypeDefinition, bool> typeCheck)
+    public static ConditionList MeetCustomRule(this Conditions conditions, Func<TypeDefinition, bool> typeCheck)
     {
         return conditions.MeetCustomRule(new CustomRule(typeCheck));
     }

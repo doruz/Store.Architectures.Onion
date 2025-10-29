@@ -1,16 +1,15 @@
 ﻿using NetArchTest.Rules.Policies;
+using Store.Architecture.Tests.Constants;
 using Store.Core.Business;
 
 namespace Store.Architecture.Tests.Core;
 
-public class CoreBusinessTests
+public class BusinessLayerTests
 {
-    private static readonly Types BusinessTypes = Types.InAssembly(BusinessLayer.Assembly);
-
     [Fact]
     public void BusinessServices_Should_FollowConventions()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Service")
             .Should()
@@ -23,7 +22,7 @@ public class CoreBusinessTests
     [Fact]
     public void BusinessServices_Should_NotImplementInterfaces()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Service")
             .ShouldNot()
@@ -36,11 +35,11 @@ public class CoreBusinessTests
     [Fact]
     public void BusinessServices_Should_NotUseDomainTypesOnPublicMethods()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Service")
             .ShouldNot()
-            .HaveDependencyOnPublicMethodsFrom("Domain")
+            .HaveDependencyOnPublicMethodsFrom(SolutionNamespaces.Core.Domain)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -52,7 +51,7 @@ public class CoreBusinessTests
     {
         var businessServicesPolicy = Policy
             .Define("Business Services Policies", "Enforce all")
-            .For(BusinessTypes)
+            .For(SolutionTypes.Core.Business)
 
             .Add(types => types
                     .That()
@@ -78,7 +77,7 @@ public class CoreBusinessTests
     [Fact]
     public void BusinessModels_Should_FollowConventions()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Model")
             .Should()
@@ -91,11 +90,11 @@ public class CoreBusinessTests
     [Fact]
     public void BusinessModels_Should_UseDomainTypesOnProperties()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Model")
             .ShouldNot()
-            .HaveDependencyOnPublicPropertiesFrom("Domain")
+            .HaveDependencyOnPublicPropertiesFrom(SolutionNamespaces.Core.Domain)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -104,7 +103,7 @@ public class CoreBusinessTests
     [Fact]
     public void BusinessModels_Should_InitializeAllPropertiesUsingInit()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Model")
             .Should()
@@ -119,7 +118,7 @@ public class CoreBusinessTests
     [Fact]
     public void ErrorsAndMappers_Should_FollowConventions()
     {
-        var result = BusinessTypes
+        var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith(@"\b\w+(Mapper|Errors)\b")
             .Should()
