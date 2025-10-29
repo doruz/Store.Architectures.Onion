@@ -11,14 +11,14 @@ public class SolutionArchitectureTests
     [Fact]
     public void SharedLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
-        var result = Types.InAssembly(SharedLayer.Assembly)
+        var result = SolutionTypes.Core.Shared
             .ShouldNot()
             .HaveDependencyOnAny
             (
-                Namespaces.Core.Domain,
-                Namespaces.Core.Business,
-                Namespaces.Infrastructure.All,
-                Namespaces.Presentation.All
+                SolutionNamespaces.Core.Domain,
+                SolutionNamespaces.Core.Business,
+                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.Presentation.All
             )
             .GetResult();
 
@@ -28,13 +28,13 @@ public class SolutionArchitectureTests
     [Fact]
     public void DomainLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
-        var result = Types.InAssembly(DomainLayer.Assembly)
+        var result = SolutionTypes.Core.Domain
             .ShouldNot()
             .HaveDependencyOnAny
             (
-                Namespaces.Core.Business,
-                Namespaces.Infrastructure.All,
-                Namespaces.Presentation.All
+                SolutionNamespaces.Core.Business,
+                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.Presentation.All
             )
             .GetResult();
 
@@ -44,12 +44,12 @@ public class SolutionArchitectureTests
     [Fact]
     public void BusinessLayer_Should_NotHaveDependenciesOnLayersAbove()
     {
-        var result = Types.InAssembly(BusinessLayer.Assembly)
+        var result = SolutionTypes.Core.Business
             .ShouldNot()
             .HaveDependencyOnAny
             (
-                Namespaces.Infrastructure.All,
-                Namespaces.Presentation.All
+                SolutionNamespaces.Infrastructure.All,
+                SolutionNamespaces.Presentation.All
             )
             .GetResult();
 
@@ -59,12 +59,12 @@ public class SolutionArchitectureTests
     [Fact]
     public void PersistenceLayer_Should_NotHaveDependenciesOnLayersAboveBusiness()
     {
-        var result = Types.InAssembly(PersistenceLayer.Assembly)
+        var result = SolutionTypes.Infrastructure.Persistence
             .ShouldNot()
             .HaveDependencyOnAny
             (
-                Namespaces.Core.Business,
-                Namespaces.Presentation.All
+                SolutionNamespaces.Core.Business,
+                SolutionNamespaces.Presentation.All
             )
             .GetResult();
 
