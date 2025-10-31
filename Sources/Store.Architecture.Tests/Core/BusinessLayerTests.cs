@@ -38,7 +38,7 @@ public class BusinessLayerTests
             .That()
             .HaveNameEndingWith("Service")
             .ShouldNot()
-            .HaveDependencyOnPublicMethodsFrom(SolutionNamespaces.Core.Domain)
+            .PublicMethodsUseTypesFrom(SolutionNamespaces.Core.Domain)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -56,7 +56,7 @@ public class BusinessLayerTests
                     .That()
                     .HaveNameEndingWith("Service")
                     .ShouldNot()
-                    .HaveDependencyOnPublicMethodsFrom("Domain"),
+                    .PublicMethodsUseTypesFrom("Domain"),
                 "",
                 "Business services should not depend on domain types in their public methods"
             )
@@ -93,7 +93,7 @@ public class BusinessLayerTests
             .That()
             .HaveNameEndingWith("Model")
             .ShouldNot()
-            .HaveDependencyOnPublicPropertiesFrom(SolutionNamespaces.Core.Domain)
+            .HavePropertiesWithTypesFrom(SolutionNamespaces.Core.Domain)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -106,7 +106,7 @@ public class BusinessLayerTests
             .That()
             .HaveNameEndingWith("Model")
             .Should()
-            .HaveInitOnlyProperties()
+            .HaveOnlyInitProperties()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

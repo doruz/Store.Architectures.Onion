@@ -25,7 +25,7 @@ public class DomainLayerTests
             .That()
             .AreRecords()
             .Should()
-            .BePublic().And().HaveInitOnlyProperties()
+            .BePublic().And().HaveOnlyInitProperties()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

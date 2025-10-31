@@ -6,7 +6,7 @@ using Store.Core.Shared;
 
 namespace Store.Architecture.Tests;
 
-internal sealed class HaveRoutePrefixRule(string prefix) : ICustomRule
+internal sealed class HaveAllRoutesPrefixedWithRule(string prefix) : ICustomRule
 {
     public bool MeetsRule(TypeDefinition type) 
         => IsControllerRouteValid(type) && AreActionsRoutesValid(type);
@@ -48,6 +48,6 @@ internal sealed class HaveRoutePrefixRule(string prefix) : ICustomRule
 
 internal static partial class CustomRules
 {
-    public static ConditionList HaveRoutePrefix(this Conditions conditions, string prefix)
-        => conditions.MeetCustomRule(new HaveRoutePrefixRule(prefix));
+    public static ConditionList HaveAllRoutesPrefixedWith(this Conditions conditions, string prefix)
+        => conditions.MeetCustomRule(new HaveAllRoutesPrefixedWithRule(prefix));
 }

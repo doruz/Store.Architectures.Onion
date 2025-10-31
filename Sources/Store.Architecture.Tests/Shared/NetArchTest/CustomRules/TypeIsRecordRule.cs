@@ -12,5 +12,7 @@ internal static class TypeIsRecordRule
         => predicates.MeetCustomRule(MeetsRule);
 
     private static bool MeetsRule(TypeDefinition type)
-        => type.GetMethods().Any(m => m.Name == "<Clone>$");
+        => type
+            .GetMethods()
+            .Any(m => m.Name == "<Clone>$");
 }

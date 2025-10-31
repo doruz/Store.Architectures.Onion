@@ -14,9 +14,7 @@ public class ApiLayerTests
             .That()
             .Inherit(typeof(ControllerBase))
             .ShouldNot()
-            .MeetCustomRule(new MakeUseOfRule(SolutionNamespaces.Core.Domain))
-            //.HaveDependencyOn("")
-            //.HaveDependencyOn("Store.Core.Domain")
+            .HaveDependencyOn(SolutionNamespaces.Core.Domain)
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -42,7 +40,7 @@ public class ApiLayerTests
             .That()
             .Inherit(typeof(ControllerBase)).And().HaveNameStartingWith("Admin")
             .Should()
-            .HaveRoutePrefix("admins")
+            .HaveAllRoutesPrefixedWith("admins")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
@@ -55,7 +53,7 @@ public class ApiLayerTests
             .That()
             .Inherit(typeof(BaseApiController)).And().HaveNameStartingWith("Customer")
             .Should()
-            .HaveRoutePrefix("customers/current")
+            .HaveAllRoutesPrefixedWith("customers/current")
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
