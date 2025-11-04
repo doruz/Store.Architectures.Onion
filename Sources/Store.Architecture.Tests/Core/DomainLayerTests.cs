@@ -6,7 +6,7 @@ namespace Store.Architecture.Tests.Core;
 public class DomainLayerTests
 {
     [Fact]
-    public void DomainEntities_Should_ResideInCorrectNamespace()
+    public void DomainEntitiesAndValues_Should_BePublicOnFixedNamespace()
     {
         var result = SolutionTypes.Core.Domain
             .That()
@@ -19,7 +19,7 @@ public class DomainLayerTests
     }
 
     [Fact]
-    public void DomainValues_Should_FollowConventions()
+    public void DomainValues_Should_BePublicImmutableRecords()
     {
         var result = SolutionTypes.Core.Domain
             .That()

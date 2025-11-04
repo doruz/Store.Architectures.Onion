@@ -6,20 +6,20 @@ namespace Store.Architecture.Tests.Core;
 public class BusinessLayerTests
 {
     [Fact]
-    public void BusinessServices_Should_FollowConventions()
+    public void BusinessServices_Should_BePublicSealedClasses()
     {
         var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith("Service")
             .Should()
-            .BePublic().And().BeSealed().And().BeClasses()
+            .BePublic().And().BeSealed().And().BeClasses().And().NotBeRecords()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
 
     [Fact]
-    public void BusinessServices_Should_NotImplementInterfaces()
+    public void BusinessServices_Should_NotExposeExtraLayerOfAbstraction()
     {
         var result = SolutionTypes.Core.Business
             .That()
@@ -32,96 +32,55 @@ public class BusinessLayerTests
     }
 
     [Fact]
-    public void BusinessServices_Should_NotUseDomainTypesOnPublicMethods()
+    public void BusinessModels_Should_BePublicImmutableRecords()
     {
         var result = SolutionTypes.Core.Business
             .That()
-            .HaveNameEndingWith("Service")
-            .ShouldNot()
-            .PublicMethodsUseTypesFrom(SolutionNamespaces.Core.Domain)
+            .HaveNameEndingWith("Model")
+            .Should()
+            .BePublic().And().BeRecords().And().HaveOnlyInitProperties()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();
     }
 
-    // TODO: to continue with this
     [Fact]
-    public void Test()
+    public void BusinessLayer_Should_NotExposeDomainTypes()
     {
-        var businessServicesPolicy = Policy
-            .Define("Business Services Policies", "Enforce all")
+        var policy = Policy
+            .Define("Business Layer", "Should not expose business domain types")
+
             .For(SolutionTypes.Core.Business)
+
+            .Add(types => types
+                    .That()
+                    .HaveNameEndingWith("Model")
+                    .ShouldNot()
+                    .HavePropertiesWithTypesFrom(SolutionNamespaces.Core.Domain),
+                "Business models",
+                "Models should not expose domain types through their properties."
+            )
 
             .Add(types => types
                     .That()
                     .HaveNameEndingWith("Service")
                     .ShouldNot()
-                    .PublicMethodsUseTypesFrom("Domain"),
-                "",
-                "Business services should not depend on domain types in their public methods"
-            )
-
-            .Add(types => types
-                .That()
-                .HaveNameEndingWith("Service")
-                .ShouldNot()
-                .ImplementInterfaces(),
-                "",
-                "Business services should implement any interfaces"
+                    .UseTypesOnPublicMethodsFrom(SolutionNamespaces.Core.Domain),
+                "Business services",
+                "Services should not expose domain types through their public methods."
             );
 
-        businessServicesPolicy.Evaluate().ShouldBeSuccessful();
+        policy.Evaluate().ShouldBeSuccessful();
     }
 
     [Fact]
-    public void BusinessModels_Should_FollowConventions()
-    {
-        var result = SolutionTypes.Core.Business
-            .That()
-            .HaveNameEndingWith("Model")
-            .Should()
-            .BePublic().And().BeClasses().And().NotBeStatic()
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    [Fact]
-    public void BusinessModels_Should_UseDomainTypesOnProperties()
-    {
-        var result = SolutionTypes.Core.Business
-            .That()
-            .HaveNameEndingWith("Model")
-            .ShouldNot()
-            .HavePropertiesWithTypesFrom(SolutionNamespaces.Core.Domain)
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    [Fact]
-    public void BusinessModels_Should_InitializeAllPropertiesUsingInit()
-    {
-        var result = SolutionTypes.Core.Business
-            .That()
-            .HaveNameEndingWith("Model")
-            .Should()
-            .HaveOnlyInitProperties()
-            .GetResult();
-
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
-
-    // TODO: models should be records
-
-    [Fact]
-    public void ErrorsAndMappers_Should_FollowConventions()
+    public void ErrorsAndMappers_Should_StaticInternalClasses()
     {
         var result = SolutionTypes.Core.Business
             .That()
             .HaveNameEndingWith(@"\b\w+(Mapper|Errors)\b")
             .Should()
-            .NotBePublic().And().BeStatic()
+            .BeStatic().And().NotBePublic()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

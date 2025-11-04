@@ -5,13 +5,16 @@ namespace Store.Architecture.Tests;
 
 internal static class TypeIsRecordRule
 {
-    public static ConditionList IsRecord(this Conditions conditions)
-        => conditions.MeetCustomRule(MeetsRule);
+    public static ConditionList BeRecords(this Conditions conditions)
+        => conditions.MeetCustomRule(IsRecord);
+
+    public static ConditionList NotBeRecords(this Conditions conditions)
+        => conditions.MeetCustomRule(type => IsRecord(type) is false);
 
     public static PredicateList AreRecords(this Predicates predicates)
-        => predicates.MeetCustomRule(MeetsRule);
+        => predicates.MeetCustomRule(IsRecord);
 
-    private static bool MeetsRule(TypeDefinition type)
+    private static bool IsRecord(TypeDefinition type)
         => type
             .GetMethods()
             .Any(m => m.Name == "<Clone>$");

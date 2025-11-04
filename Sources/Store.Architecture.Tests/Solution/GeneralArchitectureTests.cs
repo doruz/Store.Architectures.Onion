@@ -8,7 +8,7 @@ public class GeneralArchitectureTests
     private static readonly Types AllTypes = Types.FromPath(Directory.GetCurrentDirectory());
 
     [Fact]
-    public void Extensions_Should_BeStatic()
+    public void TypeExtensions_Should_BeStatic()
     {
         var result = AllTypes
             .That()
@@ -47,7 +47,7 @@ public class GeneralArchitectureTests
     }
 
     [Fact]
-    public void AppInitializers_Should_NotBeExposed()
+    public void AppInitializers_Should_NotBeExposedExternally()
     {
         var result = AllTypes
             .That()

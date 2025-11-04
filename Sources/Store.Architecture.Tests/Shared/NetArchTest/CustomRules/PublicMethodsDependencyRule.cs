@@ -4,7 +4,7 @@ using Mono.Cecil.Rocks;
 
 namespace Store.Architecture.Tests;
 
-internal sealed class PublicMethodsUseTypesFromRule(string @namespace) : ICustomRule
+internal sealed class PublicMethodsDependencyRule(string @namespace) : ICustomRule
 {
     public bool MeetsRule(TypeDefinition type)
         => type.GetMethods()
@@ -15,6 +15,6 @@ internal sealed class PublicMethodsUseTypesFromRule(string @namespace) : ICustom
 
 internal static partial class CustomRules
 {
-    public static ConditionList PublicMethodsUseTypesFrom(this Conditions conditions, string @namespace)
-        => conditions.MeetCustomRule(new PublicMethodsUseTypesFromRule(@namespace));
+    public static ConditionList UseTypesOnPublicMethodsFrom(this Conditions conditions, string @namespace)
+        => conditions.MeetCustomRule(new PublicMethodsDependencyRule(@namespace));
 }
