@@ -1,6 +1,6 @@
 ﻿namespace Store.Core.Domain.Entities;
 
-public class Product : BaseEntity
+public sealed class Product : BaseEntity
 {
     public required string Name { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Store.Core.Business.ShoppingCarts;
 
-public static class ShoppingCartErrors
+internal static class ShoppingCartErrors
 {
     public static ShoppingCart EnsureIsNotEmpty(this ShoppingCart? shoppingCart)
     {

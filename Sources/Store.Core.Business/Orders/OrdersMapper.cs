@@ -29,10 +29,11 @@ internal static class OrdersMapper
     {
         ProductId = product.ProductId,
         ProductName = product.ProductName,
-        ProductPrice = product.ProductPrice,
-        Quantity = product.Quantity
+        ProductPrice = PriceModel.Create(product.ProductPrice),
+        Quantity = product.Quantity,
+        TotalPrice = PriceModel.Create(product.TotalPrice)
     };
 
-    private static ValueLabel<DateTime> ToOrderedAt(this DateTime orderedAt)
+    private static ValueLabelModel<DateTime> ToOrderedAt(this DateTime orderedAt)
         => new(orderedAt, orderedAt.ToDateTimeString());
 }

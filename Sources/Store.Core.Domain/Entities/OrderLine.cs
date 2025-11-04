@@ -2,7 +2,7 @@
 
 namespace Store.Core.Domain.Entities;
 
-public record OrderLine
+public sealed record OrderLine
 {
     public required string ProductId { get; init; }
 
