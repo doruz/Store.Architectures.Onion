@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mono.Cecil;
 using Mono.Cecil.Rocks;
+using NetArchTest.Rules.Policies;
 using Store.Infrastructure.Persistence;
 
-namespace Store.Architecture.Tests;
+namespace Store.Architecture.Tests.Presentation;
 
 public class ApiLayerTests
 {
     [Fact]
-    public void ApiController_Should_NotDependOnDomain()
+    public void ApiControllers_Should_NotDependOnDomain()
     {
         var result = SolutionTypes.Presentation.Api
             .That()
@@ -34,28 +35,31 @@ public class ApiLayerTests
     }
 
     [Fact]
-    public void AdminControllersRoutes_Should_BePrefixedWithAdmin()
+    public void ApiControllers_Should_FollowRoutesConventions()
     {
-        var result = SolutionTypes.Presentation.Api
-            .That()
-            .Inherit(typeof(ControllerBase)).And().HaveNameStartingWith("Admin")
-            .Should()
-            .HaveAllRoutesPrefixedWith("admins")
-            .GetResult();
+        var policy = Policy
+            .Define("API routes", "Should follow route conventions")
 
-        result.FailingTypeNames.Should().BeNullOrEmpty();
-    }
+            .For(SolutionTypes.Presentation.Api)
 
-    [Fact]
-    public void CustomerControllersRoutes_Should_BePrefixedWithCustomer()
-    {
-        var result = SolutionTypes.Presentation.Api
-            .That()
-            .Inherit(typeof(BaseApiController)).And().HaveNameStartingWith("Customer")
-            .Should()
-            .HaveAllRoutesPrefixedWith("customers/current")
-            .GetResult();
+            .Add(types => types
+                    .That()
+                    .Inherit(typeof(ControllerBase)).And().HaveNameStartingWith("Admin")
+                    .Should()
+                    .HaveAllRoutesPrefixedWith("admins"),
+                "Admin controllers",
+                "Admin routes should be prefixed with /api/admins/"
+            )
 
-        result.FailingTypeNames.Should().BeNullOrEmpty();
+            .Add(types => types
+                    .That()
+                    .Inherit(typeof(BaseApiController)).And().HaveNameStartingWith("Customer")
+                    .Should()
+                    .HaveAllRoutesPrefixedWith("customers/current"),
+                "Customer controllers",
+                "Customer routes should be prefixed with /api/customers/current/"
+            );
+
+        policy.Evaluate().ShouldBeSuccessful();
     }
 }
