@@ -1,6 +1,4 @@
-﻿using Store.Core.Domain.Entities;
-
-namespace Store.Presentation.Api.IntegrationTests;
+﻿namespace Store.Presentation.Api.IntegrationTests;
 
 public record NewProductTestModel(string Name, decimal Price, int Stock)
 {
