@@ -1,8 +1,8 @@
-# Onion Architecture in .NET
+## Onion Architecture in .NET
 
-## Application
+### Application
 
-### Requirements
+#### Requirements
 Designing a simple Store application with following use cases:
 * **Admin**
   * Managing product details: adding, editing and deleting them.
@@ -10,7 +10,7 @@ Designing a simple Store application with following use cases:
   * Creating new orders by adding or removing available products, updating products quantities.
   * Checking orders history.
 
-### Technologies stack
+#### Technologies stack
 In order to keep things simpler and cleaner, the tools used to build this solution was kept to the minimum:
 * [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
   * [Swagger](https://swagger.io/)
@@ -69,7 +69,7 @@ Store
 Next diagram shows how dependencies look like between each layer of the application.
 This is extracted using Visual Studio and represents the current implementation.  
 
-![Projects dependencies diagram](.\Docs\store_solution_architecture.png)
+![Projects dependencies diagram](https://raw.githubusercontent.com/doruz/Store.Architectures.Onion/refs/heads/main/Docs/store_solution_architecture.png)
 
 ### Solution rules
 While designing the solution there were implemented a few fitness functions, using [NetArchTest](https://github.com/BenMorris/NetArchTest), to make sure that design conventions are not broken:
