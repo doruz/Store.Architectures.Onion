@@ -1,8 +1,8 @@
-## Onion Architecture in .NET
+# Onion Architecture in .NET
 
-### Application
+## Application
 
-#### Requirements
+### Requirements
 Designing a simple Store application with following use cases:
 * **Admin**
   * Managing product details: adding, editing and deleting them.
@@ -10,7 +10,7 @@ Designing a simple Store application with following use cases:
   * Creating new orders by adding or removing available products, updating products quantities.
   * Checking orders history.
 
-#### Technologies stack
+### Technologies stack
 In order to keep things simpler and cleaner, the tools used to build this solution was kept to the minimum:
 * [ASP.NET Core](https://dotnet.microsoft.com/en-us/apps/aspnet)
   * [Swagger](https://swagger.io/)
@@ -26,9 +26,9 @@ In order to keep things simpler and cleaner, the tools used to build this soluti
     * [Fluent Assertions](https://fluentassertions.com/)
     * [NetArchTest](https://github.com/BenMorris/NetArchTest)
 
-### Solution design
+## Solution design
 
-#### Layers
+### Layers
 
  (Onion | Clean) Architecture aims to separate the concerns of the application into distinct layers, promoting high cohesion and low coupling. Current solution consists of the following layers: 
 
@@ -43,7 +43,7 @@ In order to keep things simpler and cleaner, the tools used to build this soluti
 -  **Presentation**: exposes application to the outside world through REST, Web App, gRPC and others. 
    -  **Api**: exposes business use cases as REST endpoints.
 
-#### Solution folders
+### Solution folders
 
 These is the structure of the application using Visual Studio virtual folders.
 ```
@@ -64,14 +64,14 @@ Store
     └───Store.Tests
 ```
 
-#### Solution dependencies
+### Solution dependencies
 
 Next diagram shows how dependencies look like between each layer of the application.
 This is extracted using Visual Studio and represents the current implementation.  
 
 ![Projects dependencies diagram](https://raw.githubusercontent.com/doruz/Store.Architectures.Onion/refs/heads/main/Docs/store_solution_architecture.png)
 
-#### Solution rules
+### Solution rules
 While designing the solution there were implemented a few fitness functions, using [NetArchTest](https://github.com/BenMorris/NetArchTest), to make sure that design conventions are not broken:
 * Solution dependencies from diagram above are not broken.
 * Domain value types and business models are immutable types.
