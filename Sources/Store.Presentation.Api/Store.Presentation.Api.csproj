@@ -8,7 +8,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="Store.Presentation.Api.IntegrationTests" />
-		<InternalsVisibleTo Include="Store.Architecture.Tests" />
+		<InternalsVisibleTo Include="Store.Tests" />
 	</ItemGroup>
 
   <ItemGroup>
