@@ -2,7 +2,7 @@
 
 namespace Store.Infrastructure.Persistence.InMemory;
 
-internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database, ICurrentCustomer currentCustomer)
+internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database)
     : IAppInitializer
 {
     public Task Execute()

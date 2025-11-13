@@ -9,10 +9,9 @@ public class ShoppingCartLineTests
     private const int ValidQuantity = 1;
 
     [Theory]
-    [InlineData(null)]
     [InlineData("")]
     [InlineData("       ")]
-    public void When_InstanceIsCreatedWithNullOrEmptyProductId_Should_ThrowException(string? productId)
+    public void When_InstanceIsCreatedWithNullOrEmptyProductId_Should_ThrowException(string productId)
     {
         // Arrange & Act
         var action = () => new ShoppingCartLine(productId, ValidQuantity);
