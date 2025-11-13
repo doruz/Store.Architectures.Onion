@@ -17,11 +17,17 @@ jobs:
       
     steps:
     - uses: actions/checkout@v4
+   
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
     - name: Restore Depenencies
       run: dotnet restore
+
     - name: Build Solution
-      run: dotnet build --no-restore --configuration 'Release'
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Run Unit Tests
+      run: dotnet test --no-build --configuration Release --filter FullyQualifiedName!~IntegrationTests

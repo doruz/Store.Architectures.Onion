@@ -5,7 +5,7 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ProductTests
 {
-    private readonly Product _systemUnderTest = new Product()
+    private readonly Product _systemUnderTest = new()
     {
         Name = "test",
         Price = 1.0m,
