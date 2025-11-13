@@ -18,7 +18,7 @@ public sealed class ShoppingCartCheckoutService(RepositoriesContext repositories
             .Select(item => OrderLine.Create(item.CartLine, item.Product))
             .ToList();
 
-        var customerOrder = Order.Create(currentCustomer.Id, orderLines);
+        var customerOrder = new Order(currentCustomer.Id, orderLines);
         await repositories.Orders.SaveOrderAsync(customerOrder);
         await repositories.ShoppingCarts.DeleteAsync(currentCustomer.Id);
 
