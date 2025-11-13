@@ -13,17 +13,14 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DOTNET_VERSION: '9.0.x'
-      BUILD_CONFIGURATION: 'release'
       
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET $DOTNET_VERSION
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: $DOTNET_VERSION
+        dotnet-version: 9.0.x
     - name: Restore Depenencies
       run: dotnet restore
     - name: Build Solution
-      run: dotnet build --no-restore ----configuration $BUILD_CONFIGURATION
+      run: dotnet build --no-restore --configuration 'Release'
