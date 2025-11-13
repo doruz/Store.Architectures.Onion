@@ -1,4 +1,4 @@
-name: .NET
+name: .NET PR
 
 on:
   push:
@@ -12,6 +12,7 @@ defaults:
     
 jobs:
   build:
+    name: Check Solution
     runs-on: ubuntu-latest
       
     steps:
