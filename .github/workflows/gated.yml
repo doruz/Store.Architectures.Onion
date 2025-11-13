@@ -1,0 +1,30 @@
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  DOTNET_VERSION: 9.0.x
+  BUILD_CONFIGURATION: 'release'
+
+defaults:
+  run:
+    working-directory: ./Sources
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET $DOTNET_VERSION
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: $DOTNET_VERSION
+    - name: Restore Depenencies
+      run: dotnet restore
+    - name: Build Solution
+      run: dotnet build --no-restore ----configuration $BUILD_CONFIGURATION
