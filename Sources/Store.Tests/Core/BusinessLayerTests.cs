@@ -35,7 +35,7 @@ public class BusinessLayerTests
             .That()
             .HaveNameEndingWith("Model")
             .Should()
-            .BePublic().And().BeRecords().And().HaveOnlyInitProperties()
+            .BePublic().And().BeRecords().And().HaveAllPropertiesWithInitOnly()
             .GetResult();
 
         result.FailingTypeNames.Should().BeNullOrEmpty();

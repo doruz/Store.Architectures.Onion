@@ -17,7 +17,7 @@ public class OrderTests
     public void When_OrderIsCreatedWithEmptyCustomerId_Should_ThrowException()
     {
         // Arrange & Act
-        var action = () => Order.Create(string.Empty, OrderLines);
+        var action = () => new Order(string.Empty, OrderLines);
 
         // Assert
         action.Should().Throw<ArgumentException>();
@@ -27,7 +27,7 @@ public class OrderTests
     public void When_OrderIsCreatedWithNoLines_Should_ThrowException()
     {
         // Arrange & Act
-        var action = () => Order.Create(CustomerId, []);
+        var action = () => new Order(CustomerId, []);
 
         // Assert
         action.Should().Throw<ArgumentException>();
@@ -37,7 +37,7 @@ public class OrderTests
     public void When_OrderIsCreated_Should_ContainProvidedValues()
     {
         // Arrange & Act
-        var systemUnderTest = Order.Create(CustomerId, OrderLines);
+        var systemUnderTest = new Order(CustomerId, OrderLines);
 
         // Assert
         systemUnderTest.CustomerId.Should().Be(CustomerId);
@@ -48,7 +48,7 @@ public class OrderTests
     public void When_OrderIsCreated_Should_ContainCorrectNumberOfProducts()
     {
         // Arrange & Act
-        var systemUnderTest = Order.Create(CustomerId, OrderLines);
+        var systemUnderTest = new Order(CustomerId, OrderLines);
 
         // Assert
         systemUnderTest.TotalProducts.Should().Be(7);
@@ -58,7 +58,7 @@ public class OrderTests
     public void When_OrderIsCreated_Should_ContainCorrectTotalPrice()
     {
         // Arrange & Act
-        var systemUnderTest = Order.Create(CustomerId, OrderLines);
+        var systemUnderTest = new Order(CustomerId, OrderLines);
 
         // Assert
         systemUnderTest.TotalPrice.Should().Be(new Price(4.97m));

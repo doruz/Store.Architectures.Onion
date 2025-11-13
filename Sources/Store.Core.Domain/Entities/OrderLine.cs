@@ -4,17 +4,23 @@ namespace Store.Core.Domain.Entities;
 
 public sealed record OrderLine
 {
-    public required string ProductId { get; init; }
+    public string ProductId { get; }
 
-    public required string ProductName { get; init; }
+    public string ProductName { get; }
 
-    public required Price ProductPrice { get; init; }
+    public Price ProductPrice { get; }
 
-    public required int Quantity { get; init; }
+    public int Quantity { get; }
 
     public Price TotalPrice => ProductPrice * Quantity;
 
-    private OrderLine() { }
+    public OrderLine(string productId, string productName, Price productPrice, int quantity)
+    {
+        ProductId = EnsureArg.IsNotNullOrEmpty(productId);
+        ProductName = EnsureArg.IsNotNullOrEmpty(productName);
+        ProductPrice = EnsureArg.IsNotNull(productPrice);
+        Quantity = EnsureArg.IsGte(quantity, 0);
+    }
 
     public static OrderLine Create(ShoppingCartLine cartLine, Product product)
     {
@@ -22,12 +28,12 @@ public sealed record OrderLine
         EnsureArg.IsInRange(cartLine.Quantity, 0, product.Stock);
 
         return new OrderLine
-        {
-            ProductId = product.Id,
-            ProductName = product.Name,
-            ProductPrice = product.Price,
+        (
+            product.Id,
+            product.Name,
+            product.Price,
 
-            Quantity = cartLine.Quantity
-        };
+            cartLine.Quantity
+        );
     }
 }

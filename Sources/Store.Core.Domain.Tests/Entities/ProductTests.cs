@@ -5,12 +5,7 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ProductTests
 {
-    private readonly Product _systemUnderTest = new()
-    {
-        Name = "test",
-        Price = 1.0m,
-        Stock = 10
-    };
+    private readonly Product _systemUnderTest = new("test", 1.0m, 10);
 
     [Fact]
     public void When_AllProductDetailsAreUpdated_Should_OverwriteAll()

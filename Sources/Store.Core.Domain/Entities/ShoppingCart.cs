@@ -2,13 +2,15 @@
 
 namespace Store.Core.Domain.Entities;
 
-public sealed class ShoppingCart : BaseEntity
+public sealed class ShoppingCart(params IEnumerable<ShoppingCartLine> lines) : BaseEntity
 {
-    public List<ShoppingCartLine> Lines { get; init; } = [];
+    public IReadOnlyList<ShoppingCartLine> Lines { get; private set; } = lines.ToList();
 
-    public static ShoppingCart CreateEmpty(string customerId) => new() { Id = customerId };
+    public static ShoppingCart Empty(string customerId)
+        => new() { Id = EnsureArg.IsNotNullOrEmpty(customerId) };
 
-    public bool IsEmpty() => Lines.All(line => line.Quantity == 0);
+    public bool IsEmpty()
+        => Lines.All(line => line.Quantity == 0);
 
     public void UpdateOrRemoveLines(params ShoppingCartLine[] lines)
         => lines.Merge().ForEach(UpdateOrRemoveLine);
@@ -29,13 +31,15 @@ public sealed class ShoppingCart : BaseEntity
     {
         EnsureArg.IsNotNullOrEmpty(productId, nameof(productId));
 
-        Lines.RemoveAll(line => line.ProductId.IsEqualTo(productId));
+        Lines = Lines
+            .Where(line => line.ProductId.IsNotEqualTo(productId))
+            .ToList();
     }
 
     private void AddLine(ShoppingCartLine line)
     {
         EnsureArg.IsNotNull(line, nameof(line));
 
-        Lines.Add(line);
+        Lines = [.. Lines, line];
     }
 }

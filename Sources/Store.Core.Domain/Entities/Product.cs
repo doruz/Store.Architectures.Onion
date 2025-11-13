@@ -1,23 +1,23 @@
-﻿namespace Store.Core.Domain.Entities;
+﻿using EnsureThat;
 
-public sealed class Product : BaseEntity
+namespace Store.Core.Domain.Entities;
+
+public sealed class Product(string name, Price price, int stock) : BaseEntity
 {
-    public required string Name { get; set; }
+    public string Name { get; private set; } = EnsureArg.IsNotNullOrEmpty(name);
 
-    public required Price Price { get; set; }
+    public Price Price { get; private set; } = EnsureArg.IsNotNull(price);
 
-    public required int Stock { get; set; }
+    public int Stock { get; private set; } = stock;
 
     public void Update(string? name, decimal? price, int? stock)
     {
-        Name = name ?? Name;
-        Price = price ?? Price;
+        Name = EnsureArg.IsNotNullOrEmpty(name ?? Name);
+        Price = EnsureArg.IsNotNull(price ?? Price);
         Stock = stock ?? Stock;
     }
 
-    public bool StockIsAvailable(int quantity)
-        => quantity.IsInRange(0, Stock);
+    public bool StockIsAvailable(int quantity) => quantity.IsInRange(0, Stock);
 
-    public void DecreaseStock(int quantity)
-        => Stock -= quantity;
+    public void DecreaseStock(int quantity) => Stock -= quantity;
 }
