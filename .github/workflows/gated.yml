@@ -27,7 +27,7 @@ jobs:
       run: dotnet restore
 
     - name: Build Solution
-      run: dotnet build --no-restore --configuration 'Release'
+      run: dotnet build --no-restore --configuration Release
 
     - name: Run Unit Tests
-      run: dotnet test --no-build --filter FullyQualifiedName!~IntegrationTests
+      run: dotnet test --no-build --configuration Release --filter FullyQualifiedName!~IntegrationTests
