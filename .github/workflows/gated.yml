@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  DOTNET_VERSION: '9.0.x'
-  BUILD_CONFIGURATION: 'release'
-
 defaults:
   run:
     working-directory: ./Sources
@@ -17,7 +13,10 @@ defaults:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    env:
+      DOTNET_VERSION: '9.0.x'
+      BUILD_CONFIGURATION: 'release'
+      
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET $DOTNET_VERSION
