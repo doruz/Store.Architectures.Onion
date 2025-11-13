@@ -13,7 +13,7 @@ public class ShoppingCartTests
         new ShoppingCartLine("3", 3),
     ];
 
-    private readonly ShoppingCart _systemUnderTest = ShoppingCart.CreateEmpty("1234");
+    private readonly ShoppingCart _systemUnderTest = ShoppingCart.Empty("1234");
 
     [Fact]
     public void When_ProductIsNew_Should_BeAdded()

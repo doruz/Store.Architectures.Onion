@@ -4,7 +4,7 @@ namespace Store.Core.Domain.Entities;
 
 public sealed class Order(string customerId, params IEnumerable<OrderLine> lines) : BaseEntity
 {
-    public string CustomerId { get; private init; } = EnsureArg.IsNotNullOrEmpty(customerId);
+    public string CustomerId { get; } = EnsureArg.IsNotNullOrEmpty(customerId);
 
     public IReadOnlyList<OrderLine> Lines { get; } = Ensure.Enumerable.HasItems(lines).ToList();
 
