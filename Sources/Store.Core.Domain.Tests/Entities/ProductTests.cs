@@ -16,7 +16,7 @@ public class ProductTests
     public void When_AllProductDetailsAreUpdated_Should_OverwriteAll()
     {
         // Act
-        _systemUnderTest.Update("updated=workflow", 1.75m, 20);
+        _systemUnderTest.Update("updated", 1.75m, 20);
 
         // Assert
         _systemUnderTest.Name.Should().Be("updated");
