@@ -14,19 +14,13 @@ internal sealed class InMemoryCollectionsInitializer(InMemoryDatabase database)
 
     private static List<Product> GetProducts() =>
     [
-        new Product
+        new Product("Apple", 2.5m, 10)
         {
             Id = "9952a5da-9945-11f0-9ae5-2f38b5112d0d",
-            Name = "Apple",
-            Price = 2.5m,
-            Stock = 10
         },
-        new Product
+        new Product("Orange", 1.99m, 10)
         {
             Id = "dc552437-0b7d-455a-afa0-e4949142a4ad",
-            Name = "Orange",
-            Price = 1.99m,
-            Stock = 10
         }
     ];
 }

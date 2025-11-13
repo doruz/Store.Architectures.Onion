@@ -12,10 +12,9 @@ internal static class ProductsMapper
         Stock = product.Stock
     };
 
-    public static Product ToProduct(this NewProductModel model) => new()
-    {
-        Name = model.Name,
-        Price = model.Price,
-        Stock = model.Stock
-    };
+    public static Product ToProduct(this NewProductModel model) => new(
+        model.Name,
+        model.Price,
+        model.Stock
+    );
 }

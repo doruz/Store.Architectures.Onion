@@ -44,5 +44,5 @@ internal sealed class TestCosmosDatabase(CosmosDatabaseContainers cosmosContaine
     }
 
     private void EnsureIsTestDatabase()
-        => EnsureArg.IsTrue(cosmosContainers.Products.Database.Id.Contains("IntegrationTests"));
+        => EnsureArg.IsTrue(cosmosContainers.Products.Database.Id.Contains("Tests"));
 }
