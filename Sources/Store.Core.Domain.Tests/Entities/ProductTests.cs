@@ -19,7 +19,7 @@ public class ProductTests
         _systemUnderTest.Update("updated", 1.75m, 20);
 
         // Assert
-        _systemUnderTest.Name.Should().Be("updated");
+        _systemUnderTest.Name.Should().Be("updated-workflow");
         _systemUnderTest.Price.Should().Be(new Price(1.75m));
         _systemUnderTest.Stock.Should().Be(20);
     }
