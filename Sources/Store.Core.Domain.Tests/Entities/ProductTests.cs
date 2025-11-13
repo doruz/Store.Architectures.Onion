@@ -5,7 +5,7 @@ namespace Store.Core.Domain.Tests.Entities;
 
 public class ProductTests
 {
-    private readonly Product _systemUnderTest = new Product()
+    private readonly Product _systemUnderTest = new()
     {
         Name = "test",
         Price = 1.0m,
@@ -19,7 +19,7 @@ public class ProductTests
         _systemUnderTest.Update("updated", 1.75m, 20);
 
         // Assert
-        _systemUnderTest.Name.Should().Be("updated-workflow");
+        _systemUnderTest.Name.Should().Be("updated");
         _systemUnderTest.Price.Should().Be(new Price(1.75m));
         _systemUnderTest.Stock.Should().Be(20);
     }
